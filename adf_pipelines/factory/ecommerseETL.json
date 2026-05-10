@@ -1,0 +1,15 @@
+{
+	"name": "ecommerseETL",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastasia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "f881b01c-e896-4839-a93d-c0e9df48d1f9",
+		"tenantId": "2dff09ac-2b3b-4182-9953-2b548e0d0b39"
+	}
+}
