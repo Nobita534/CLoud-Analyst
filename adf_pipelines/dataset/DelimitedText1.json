@@ -1,6 +1,10 @@
 {
 	"name": "DelimitedText1",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "asdl_con",
+			"type": "LinkedServiceReference"
+		},
 		"parameters": {
 			"folder_name": {
 				"type": "string"
