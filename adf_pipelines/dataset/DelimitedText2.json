@@ -1,6 +1,10 @@
 {
-	"name": "DelimitedText1",
+	"name": "DelimitedText2",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "asdl_con",
+			"type": "LinkedServiceReference"
+		},
 		"parameters": {
 			"folder_name": {
 				"type": "string"
@@ -30,6 +34,5 @@
 			"quoteChar": "\""
 		},
 		"schema": []
-	},
-	"type": "Microsoft.DataFactory/factories/datasets"
+	}
 }

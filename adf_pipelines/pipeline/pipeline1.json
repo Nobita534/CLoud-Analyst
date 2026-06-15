@@ -71,18 +71,8 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "DelimitedText1",
-									"type": "DatasetReference",
-									"parameters": {
-										"folder_name": {
-											"value": "@item().folder_name",
-											"type": "Expression"
-										},
-										"file_name": {
-											"value": "@item().file_name",
-											"type": "Expression"
-										}
-									}
+									"referenceName": "DelimitedText2",
+									"type": "DatasetReference"
 								}
 							]
 						}
