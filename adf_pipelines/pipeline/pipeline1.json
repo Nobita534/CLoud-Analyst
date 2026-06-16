@@ -123,8 +123,8 @@
 						"file_name": "olist_sellers_dataset.csv"
 					},
 					{
-						"folder_name": "olist_order_items_dataset",
-						"file_name": "olist_order_items_dataset.csv"
+						"folder_name": "olist_order_payments_dataset",
+						"file_name": "olist_order_payments_dataset.csv"
 					}
 				]
 			}
