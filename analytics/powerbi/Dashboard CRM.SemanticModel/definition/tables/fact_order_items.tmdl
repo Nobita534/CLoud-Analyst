@@ -1,0 +1,98 @@
+table fact_order_items
+	lineageTag: d970a445-00c8-4de2-92fb-44c8232e912a
+
+	column order_id
+		dataType: string
+		lineageTag: 3f865c6b-acca-4e43-9e30-3c348fd8de6b
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column fact_item_id
+		dataType: int64
+		formatString: 0
+		lineageTag: abfbb7e2-9c12-4cae-90e3-3ce754476252
+		summarizeBy: sum
+		sourceColumn: fact_item_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		dataType: string
+		lineageTag: b46efbf6-7f47-417f-8cd8-fb02680ebb75
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_id
+		dataType: string
+		lineageTag: a9f2dd02-e86b-4ee7-945b-cda6b02f83c6
+		summarizeBy: none
+		sourceColumn: seller_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 52ea4fa0-bdcf-402e-ac7d-bf81f18d34d5
+		summarizeBy: sum
+		sourceColumn: order_date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column price
+		dataType: double
+		lineageTag: a6c437ce-a52e-49da-ad4b-627828749d38
+		summarizeBy: sum
+		sourceColumn: price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column freight_value
+		dataType: double
+		lineageTag: 504a64b4-fc05-4244-9d0a-334615140f06
+		summarizeBy: sum
+		sourceColumn: freight_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column gold_updated_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 68df9be4-af19-49e9-9117-3753aa4f47d3
+		summarizeBy: none
+		sourceColumn: gold_updated_at
+
+		variation Variation
+			isDefault
+			relationship: daf9b333-1a56-4c4a-bd15-65b22d11828a
+			defaultHierarchy: LocalDateTable_8c432c9e-f423-4eaa-b67b-2dc925dd1433.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_order_items = m
+		mode: import
+		source =
+				let
+				    Source = gold_dwh,
+				    #"Filtered Rows" = Table.SelectRows(Source, each ([Table name] = "fact_order_items")),
+				    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows", each [Attributes]?[Hidden]? <> true),
+				    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files1", "Transform File (7)", each #"Transform File (7)"([Content])),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Invoke Custom Function1", {"Transform File (7)"}),
+				    #"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File (7)", Table.ColumnNames(#"Transform File (7)"(#"Sample File (7)"))),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Table Column1",{{"order_id", type text}, {"fact_item_id", Int64.Type}, {"product_id", type text}, {"seller_id", type text}, {"order_date_key", Int64.Type}, {"price", type number}, {"freight_value", type number}, {"gold_updated_at", type datetime}}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Changed Type", each [order_date_key] <> null and [order_date_key] <> "")
+				in
+				    #"Filtered Rows1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

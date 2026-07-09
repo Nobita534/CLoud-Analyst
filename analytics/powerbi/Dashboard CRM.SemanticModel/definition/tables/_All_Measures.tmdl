@@ -1,0 +1,195 @@
+table _All_Measures
+	lineageTag: 874cd361-d6e0-4f27-8c48-31f6e89a21fd
+
+	measure 'Total Payment Value' = SUM(fact_orders[total_payment_value])
+		lineageTag: d40b8173-258c-4aef-9892-b705c3eb2781
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Customers' = DISTINCTCOUNT(fact_crm_rfm[customer_unique_id])
+		formatString: 0
+		lineageTag: 0e49d018-219f-4ff7-a90f-24189fa6ffbf
+
+	measure 'Voucher Impact %' =
+			
+			DIVIDE(
+			    CALCULATE(SUM(fact_order_payments[payment_value]), fact_order_payments[payment_type] = "voucher"),
+			    [Total Payment Value],
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 85176db0-46a1-4f30-b577-a66eaa47cf61
+
+	measure R_Score_Dynamic =
+			
+			VAR R_Val = SUM(fact_crm_rfm[recency])
+			VAR P20 = PERCENTILEX.INC(ALLSELECTED(fact_crm_rfm), fact_crm_rfm[recency], 0.2)
+			VAR P40 = PERCENTILEX.INC(ALLSELECTED(fact_crm_rfm), fact_crm_rfm[recency], 0.4)
+			VAR P60 = PERCENTILEX.INC(ALLSELECTED(fact_crm_rfm), fact_crm_rfm[recency], 0.6)
+			VAR P80 = PERCENTILEX.INC(ALLSELECTED(fact_crm_rfm), fact_crm_rfm[recency], 0.8)
+			RETURN
+			    IF(ISBLANK(R_Val), BLANK(),
+			    IF(R_Val <= P20, 5,
+			    IF(R_Val <= P40, 4,
+			    IF(R_Val <= P60, 3,
+			    IF(R_Val <= P80, 2, 1)))))
+		formatString: 0
+		lineageTag: e5787e25-e826-4f89-bef9-7bc86a14c880
+
+	measure M_Score_Dynamic =
+			
+			VAR M_Val = SUM(fact_crm_rfm[monetary])
+			VAR P20 = PERCENTILEX.INC(ALLSELECTED(fact_crm_rfm), fact_crm_rfm[monetary], 0.2)
+			VAR P40 = PERCENTILEX.INC(ALLSELECTED(fact_crm_rfm), fact_crm_rfm[monetary], 0.4)
+			VAR P60 = PERCENTILEX.INC(ALLSELECTED(fact_crm_rfm), fact_crm_rfm[monetary], 0.6)
+			VAR P80 = PERCENTILEX.INC(ALLSELECTED(fact_crm_rfm), fact_crm_rfm[monetary], 0.8)
+			RETURN
+			    IF(ISBLANK(M_Val), BLANK(),
+			    IF(M_Val <= P20, 1,
+			    IF(M_Val <= P40, 2,
+			    IF(M_Val <= P60, 3,
+			    IF(M_Val <= P80, 4, 5)))))
+		formatString: 0
+		lineageTag: 57f5536a-2490-424c-98e0-068e9ad0a227
+
+	measure 'Retention Rate %' = ```
+			
+			VAR SelectedMonthDiff = SELECTEDVALUE('Cohort_Months'[Month_Index_Diff])
+			
+			VAR CustomerFirstOrder = 
+			    ADDCOLUMNS(
+			        VALUES(fact_orders[customer_id]),
+			        "@FirstOrderDate", CALCULATE(MIN(fact_orders[order_purchase_timestamp]), ALLEXCEPT(fact_orders, fact_orders[customer_id]))
+			    )
+			
+			-- Đếm tổng số khách hàng có đơn hàng đầu tiên 
+			VAR CohortCustomers = 
+			    COUNTROWS(CustomerFirstOrder)
+			
+			-- Kiểm tra xem những khách hàng đó có phát sinh đơn hàng tiếp theo ở tháng thứ N hay không 
+			VAR RetainedCustomers = 
+			    COUNTROWS(
+			        FILTER(
+			            CustomerFirstOrder,
+			            VAR First_Date = [@FirstOrderDate]
+			            -- Tính khoảng thời gian mục tiêu (Tháng mua đầu tiên + Số tháng chênh lệch tương đối)
+			            VAR TargetMonthStart = DATE(YEAR(First_Date), MONTH(First_Date) + SelectedMonthDiff, 1)
+			            VAR TargetMonthEnd = EOMONTH(TargetMonthStart, 0)
+			            RETURN
+			            -- Đếm xem khách hàng này có đơn hàng nằm trong khoảng thời gian mục tiêu hay không
+			            CALCULATE(
+			                COUNTROWS(fact_orders),
+			                fact_orders[order_purchase_timestamp] >= TargetMonthStart && 
+			                fact_orders[order_purchase_timestamp] <= TargetMonthEnd
+			            ) > 0
+			        )
+			    )
+			
+			RETURN
+			    IF(
+			        ISBLANK(SelectedMonthDiff), 
+			        BLANK(),
+			        IF(SelectedMonthDiff = 0, 1, DIVIDE(RetainedCustomers, CohortCustomers, 0))
+			    )
+			```
+		lineageTag: 6b248579-cdd0-4888-b470-5666a979a9cf
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Customer_Count_by_Segment = ```
+			
+			VAR SelectedSegment = SELECTEDVALUE('Segment_Lookup'[Segment_Name])
+			RETURN
+			COUNTROWS(
+			    FILTER(
+			        VALUES(fact_crm_rfm[customer_unique_id]),
+			        VAR R = [R_Score_Dynamic]
+			        VAR F = [F_Score_Dynamic]
+			        VAR M = [M_Score_Dynamic]
+			        
+			        VAR CurrentSegment = 
+			            SWITCH(
+			                TRUE(),
+			                R >= 4 && M >= 4, "VIP / Champions",
+			                R <= 2 && M >= 4, "At Risk / Can't Lose Them",
+			                F = 1 && R >= 4, "New Customers",
+			                "Normal / Hibernating"
+			            )
+			        RETURN CurrentSegment = SelectedSegment
+			    )
+			)
+			```
+		formatString: 0
+		lineageTag: 10060317-532f-4787-82a3-6b5567c60f59
+
+	measure F_Score_Dynamic =
+			
+			VAR F_Val = SUM(fact_crm_rfm[frequency])
+			VAR P20 = PERCENTILEX.INC(ALLSELECTED(fact_crm_rfm), fact_crm_rfm[frequency], 0.2)
+			VAR P40 = PERCENTILEX.INC(ALLSELECTED(fact_crm_rfm), fact_crm_rfm[frequency], 0.4)
+			VAR P60 = PERCENTILEX.INC(ALLSELECTED(fact_crm_rfm), fact_crm_rfm[frequency], 0.6)
+			VAR P80 = PERCENTILEX.INC(ALLSELECTED(fact_crm_rfm), fact_crm_rfm[frequency], 0.8)
+			RETURN
+			    IF(ISBLANK(F_Val), BLANK(),
+			    IF(F_Val <= P20, 1,
+			    IF(F_Val <= P40, 2,
+			    IF(F_Val <= P60, 3,
+			    IF(F_Val <= P80, 4, 5)))))
+		formatString: 0
+		lineageTag: c3927c25-986e-4e95-8c44-c21955b352ee
+
+	measure Voucher_Impact_by_Segment = ```
+			
+			VAR SelectedSegment = SELECTEDVALUE('Segment_Lookup'[Segment_Name])
+			VAR VoucherRevenue = 
+			    CALCULATE(
+			        SUM(fact_order_payments[payment_value]),
+			        fact_order_payments[payment_type] = "voucher",
+			        KEEPFILTERS(
+			            FILTER(
+			                ALL(fact_crm_rfm),
+			                VAR R = [R_Score_Dynamic] VAR F = [F_Score_Dynamic] VAR M = [M_Score_Dynamic]
+			                VAR CurrentSegment = 
+			                    SWITCH(TRUE(), R >= 4 && M >= 4, "VIP / Champions", R <= 2 && M >= 4, "At Risk / Can't Lose Them", F = 1 && R >= 4, "New Customers", "Normal / Hibernating")
+			                RETURN CurrentSegment = SelectedSegment
+			            )
+			        )
+			    )
+			VAR TotalRevenue = 
+			    CALCULATE(
+			        SUM(fact_crm_rfm[monetary]),
+			        KEEPFILTERS(
+			            FILTER(
+			                ALL(fact_crm_rfm),
+			                VAR R = [R_Score_Dynamic] VAR F = [F_Score_Dynamic] VAR M = [M_Score_Dynamic]
+			                VAR CurrentSegment = 
+			                    SWITCH(TRUE(), R >= 4 && M >= 4, "VIP / Champions", R <= 2 && M >= 4, "At Risk / Can't Lose Them", F = 1 && R >= 4, "New Customers", "Normal / Hibernating")
+			                RETURN CurrentSegment = SelectedSegment
+			            )
+			        )
+			    )
+			RETURN DIVIDE(VoucherRevenue, TotalRevenue, 0)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 3c792816-cdfc-470a-a760-f2069cad15b6
+
+	measure Check_RFM_Rows = COUNTROWS(fact_crm_rfm)
+		formatString: 0
+		lineageTag: 5402da92-8c72-4e0a-bb91-2b00dfbbd351
+
+	measure 'Total Customers Orders' = DISTINCTCOUNT(fact_orders[customer_id])
+		formatString: 0
+		lineageTag: 5ed541ed-0d50-4f24-ab14-552b0434a0f0
+
+	partition _All_Measures = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+

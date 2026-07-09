@@ -1,0 +1,74 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "cd4715057133706d2272",
+  "position": {
+    "x": 66.0329591593026,
+    "y": 52.581800812037258,
+    "z": 0,
+    "height": 397.42058753283976,
+    "width": 573.5084786243134
+  },
+  "visual": {
+    "visualType": "columnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Segment_Lookup"
+                    }
+                  },
+                  "Property": "Segment_Name"
+                }
+              },
+              "queryRef": "Segment_Lookup.Segment_Name",
+              "nativeQueryRef": "Segment_Name",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_All_Measures"
+                    }
+                  },
+                  "Property": "Customer_Count_by_Segment"
+                }
+              },
+              "queryRef": "_All_Measures.Customer_Count_by_Segment",
+              "nativeQueryRef": "Customer_Count_by_Segment"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_All_Measures"
+                  }
+                },
+                "Property": "Customer_Count_by_Segment"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

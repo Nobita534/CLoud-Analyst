@@ -1,52 +1,199 @@
-# Olist Ecommerce Data Pipeline & Star Schema Modeling (Azure)
+# Olist Ecommerce Data Pipeline & Star Schema Modeling
 
-## 📌 Tổng quan dự án
+Dự án này mô phỏng một luồng dữ liệu end-to-end cho bài toán thương mại điện tử Olist (Brazil): lấy dữ liệu thô, làm sạch và chuẩn hóa, sau đó mô hình hóa thành kho dữ liệu kiểu **Star Schema** để phục vụ phân tích trên Power BI.
 
-Dự án này xây dựng một luồng **ETL/ELT** toàn diện để xử lý và phân tích dữ liệu thương mại điện tử từ Olist (Brazil). Mục tiêu chính là chuyển đổi dữ liệu thô từ các nguồn phân tán thành một kho dữ liệu (Data Warehouse) chuẩn hóa theo mô hình **Star Schema**, sẵn sàng cho các phân tích chuyên sâu về doanh thu và vận hành.
+Mục tiêu của dự án là biến dữ liệu rời rạc thành một cấu trúc dễ hiểu, dễ mở rộng, và dễ báo cáo cho các câu hỏi như:
 
-## 🛠 Công nghệ sử dụng
+- Tệp khách hàng đang được chia thành những phân khúc nào theo RFM?
+- Phân khúc nào chiếm tỷ trọng lớn nhất trong tập khách hàng?
+- Voucher đang tác động mạnh nhất lên phân khúc nào?
+- Voucher có đang được dùng hiệu quả để kéo nhóm khách hàng tiềm năng quay lại không?
 
-- **Data Ingestion:** Azure Data Factory (ADF).
-- **Data Processing:** Azure Databricks, PySpark (Spark SQL & DataFrame API).
-- **Storage & Governance:** Azure Data Lake Storage (ADLS) Gen2, Unity Catalog.
-- **Data Format:** Delta Lake.
-- **Modeling:** Star Schema (Fact & Dimension Tables).
+## 1. Bức tranh tổng quan
 
-## 🏗 Kiến trúc dữ liệu (Medallion Architecture)
+Luồng xử lý của dự án đi theo 3 lớp chính:
 
-Dự án áp dụng kiến trúc Medallion để đảm bảo chất lượng dữ liệu qua từng giai đoạn:
+1. **Bronze / Raw**: lưu dữ liệu gốc từ bộ Olist.
+2. **Silver**: làm sạch, chuẩn hóa kiểu dữ liệu, tạo các trường trung gian cần thiết.
+3. **Gold**: thiết kế mô hình phân tích gồm fact và dimension để dùng cho BI / dashboard.
 
-1.  **Bronze Layer:** Lưu trữ dữ liệu thô (Raw Data) được Ingest từ GitHub/Kaggle thông qua Azure Data Factory.
-2.  **Silver Layer:**
-    - Làm sạch dữ liệu: Loại bỏ trùng lặp (`dropDuplicates`), chuẩn hóa chuỗi (`lower`, `trim`).
-    - Ép kiểu dữ liệu: Chuyển đổi các cột thời gian và tiền tệ về đúng định dạng `timestamp` và `double`.
-    - Tính toán logic: Tính số ngày giao hàng thực tế (`delivery_days`) để phục vụ phân tích hiệu suất vận chuyển.
-3.  **Gold Layer:**
-    - Thiết kế mô hình đa chiều (Star Schema) tối ưu cho truy vấn.
-    - Tạo bảng **Fact Sales** tập trung các chỉ số đo lường (Price, Freight, Total Amount).
-    - Xây dựng 7 bảng **Dimension** (Customers, Sellers, Products, Orders, Payments, Reviews, Date) để cung cấp ngữ cảnh phân tích đa chiều.
+Nói ngắn gọn: dữ liệu đi từ “thô” đến “sẵn sàng phân tích”.
 
-## 📊 Mô hình dữ liệu (Data Model)
+## 2. Công nghệ sử dụng
 
-Dưới đây là cấu trúc Star Schema được thiết kế để tối ưu hóa hiệu suất báo cáo:
+- **Azure Data Factory**: ingest và điều phối luồng dữ liệu.
+- **Azure Databricks / PySpark**: xử lý dữ liệu ở Silver và Gold.
+- **ADLS Gen2 + Unity Catalog**: lưu trữ và quản trị dữ liệu.
+- **Delta Lake**: định dạng lưu trữ tối ưu cho phân tích.
+- **Power BI**: trực quan hóa và khai thác dữ liệu ở tầng cuối.
 
-[Star Schema](./documents/star_schema_image.png)
+## 3. Kiến trúc dữ liệu
 
-### Các bảng chính:
+Dự án áp dụng tư duy **Medallion Architecture** để tách rõ vai trò của từng tầng.
 
-- **Fact Sales:** Lưu trữ chi tiết từng giao dịch, bao gồm các khóa ngoại nối với các bảng Dimension và các chỉ số doanh thu.
-- **Dim Date:** Bảng lịch chuẩn giúp đồng bộ hóa các phân tích theo Năm, Quý, Tháng, Thứ.
-- **Dim Orders:** Quản lý trạng thái đơn hàng và các mốc thời gian quan trọng.
-- **Dim Products:** Chứa thông tin danh mục và thuộc tính vật lý của sản phẩm (thể tích, trọng lượng).
+### Bronze / Raw
 
-## 🚀 Các tính năng nổi bật trong Code
+Đây là dữ liệu đầu vào chưa xử lý, giữ gần với nguồn gốc nhất có thể. Tầng này hữu ích cho việc truy vết và tái xử lý khi cần.
 
-- **Unity Catalog Integration:** Quản lý dữ liệu tập trung, đảm bảo tính bảo mật và quản trị dữ liệu.
-- **Performance Optimization:** Sử dụng các tính năng của Delta Lake như `optimizeWrite` và `autoCompact` để tăng tốc độ ghi/đọc dữ liệu.
-- **Analytical Ready:** Dữ liệu tại tầng Gold đã được xử lý các lỗi logic (như đơn hàng trùng, khóa ngày `order_date_key` dạng Int) để sẵn sàng sử dụng ngay.
+### Silver
 
-## 📂 Cấu trúc Repository
+Tầng Silver tập trung vào chất lượng dữ liệu:
 
-- `/adf_pipelines`: Chứa file cấu hình JSON của các luồng Ingest dữ liệu.
-- `/notebooks`: Chứa mã nguồn PySpark xử lý tầng Silver và Gold.
-- `/documents`: Sơ đồ mô hình dữ liệu (ERD).
+- loại bỏ trùng lặp;
+- chuẩn hóa chuỗi;
+- ép kiểu dữ liệu;
+- tạo các cột dẫn xuất như thời gian giao hàng;
+- chuẩn bị dữ liệu cho mô hình hóa ở Gold.
+
+### Gold
+
+Tầng Gold là tầng phục vụ phân tích. Dữ liệu được thiết kế lại theo **Star Schema** để tối ưu truy vấn và dễ dùng trong dashboard.
+
+Các bảng chính ở Gold gồm:
+
+- **Fact Orders**: thông tin giao dịch chính và các chỉ số tổng hợp;
+- **Fact Order Items**: chi tiết từng dòng hàng;
+- **Fact Order Payments**: chi tiết thanh toán;
+- **Fact RFM**: bộ chỉ số khách hàng theo mô hình RFM;
+- **Dim Customers**: thông tin khách hàng;
+- **Dim Sellers**: thông tin người bán;
+- **Dim Products**: thông tin sản phẩm;
+- **Dim Date**: bảng thời gian chuẩn để phân tích theo ngày, tháng, quý, năm.
+
+## 4. Business question
+
+Trọng tâm của dự án không chỉ là “xử lý dữ liệu”, mà là trả lời các câu hỏi kinh doanh xoay quanh **CRM insights**, **RFM segmentation** và **voucher optimization**.
+
+Các nhóm câu hỏi chính gồm:
+
+- phân khúc khách hàng nào đang đóng góp nhiều nhất vào tập khách hàng;
+- khách hàng mới, khách hàng trung thành và nhóm có nguy cơ rời bỏ đang phân bố ra sao;
+- voucher đang tạo ảnh hưởng mạnh ở phân khúc nào;
+- tỷ lệ sử dụng voucher hiện tại có đủ tốt để hỗ trợ chiến lược giữ chân khách hàng hay không;
+- phân tích RFM để hiểu hành vi mua lặp lại và mức độ giá trị của từng nhóm khách hàng.
+
+File mô tả bài toán nghiệp vụ nằm ở [documents/business/Business_question.md](documents/business/Business_question.md).
+
+## 5. Mô hình dữ liệu
+
+Star Schema của dự án được mô tả trong:
+
+- [documents/modeling/star_schema.dbml](documents/modeling/star_schema.dbml)
+- [documents/modeling/star_schema.png](documents/modeling/star_schema.png)
+
+Mục đích của mô hình này là:
+
+- giảm độ phức tạp khi truy vấn;
+- gom dữ liệu đo lường vào fact;
+- giữ ngữ cảnh phân tích trong dimension;
+- giúp Power BI đọc dữ liệu rõ ràng và ổn định hơn.
+
+## 6. Cấu trúc thư mục
+
+```text
+Cloud-Analyst/
+    README.md
+
+    Data/
+        olist_*.csv
+
+    Notebook/
+        silver/
+            Silver_Notebook.ipynb
+        gold/
+            Gold Notebook.ipynb
+
+    pipelines/
+        adf_pipelines/
+            dataset/
+            factory/
+            linkedService/
+            pipeline/
+            publish_config.json
+
+    analytics/
+        powerbi/
+            Dashboard CRM.pbip
+            Dashboard CRM.Report/
+            Dashboard CRM.SemanticModel/
+
+    documents/
+        business/
+            Business_question.md
+        modeling/
+            star_schema.dbml
+            star_schema.png
+
+```
+
+### Ý nghĩa từng nhóm
+
+- **Data**: dữ liệu đầu vào gốc.
+- **Notebook**: mã PySpark xử lý Silver và Gold.
+- **pipelines**: cấu hình Azure Data Factory.
+- **analytics**: báo cáo và semantic model Power BI.
+- **documents**: tài liệu nghiệp vụ và mô hình hóa dữ liệu.
+
+## 7. Những điểm nổi bật trong code
+
+- **Unity Catalog Integration**: quản trị dữ liệu tập trung.
+- **Delta optimization**: bật `optimizeWrite` và `autoCompact` để giảm small files.
+- **Star Schema design**: chuẩn hóa theo mô hình phân tích.
+- **RFM metrics**: thêm lớp phân tích khách hàng để phục vụ segmentation.
+- **Date dimension**: tạo bảng lịch chuẩn với `date_key` dạng `yyyyMMdd`.
+
+## 8. Cách đọc project theo đúng thứ tự
+
+Nếu bạn mới mở repo này, nên đọc theo thứ tự sau:
+
+1. Đọc [README.md](README.md) để hiểu bức tranh tổng quan.
+2. Đọc [documents/business/Business_question.md](documents/business/Business_question.md) để hiểu bài toán.
+3. Xem [documents/modeling/star_schema.dbml](documents/modeling/star_schema.dbml) để nắm mô hình dữ liệu.
+4. Mở [Notebook/silver/Silver_Notebook.ipynb](Notebook/silver/Silver_Notebook.ipynb) để xem tầng làm sạch.
+5. Mở [Notebook/gold/Gold Notebook.ipynb](Notebook/gold/Gold%20Notebook.ipynb) để xem tầng mô hình hóa.
+6. Cuối cùng xem [analytics/powerbi](analytics/powerbi) để hiểu đầu ra báo cáo.
+
+## 9. Cách chạy lại dự án
+
+Phần này mang tính định hướng, vì môi trường Azure/Databricks của mỗi người có thể khác nhau.
+
+### Bước 1: Chuẩn bị dữ liệu nguồn
+
+- kiểm tra các file CSV trong [Data](Data);
+- đảm bảo storage / access key / catalog đã được cấu hình đúng.
+
+### Bước 2: Chạy ingestion bằng ADF
+
+- mở cấu hình trong [pipelines/adf_pipelines](pipelines/adf_pipelines);
+- kiểm tra linked service, dataset, pipeline;
+- chạy pipeline ingest dữ liệu vào vùng đích.
+
+### Bước 3: Chạy notebook Silver
+
+- đọc dữ liệu từ tầng Silver / raw theo cấu hình hiện tại;
+- làm sạch và chuẩn hóa dữ liệu.
+
+### Bước 4: Chạy notebook Gold
+
+- tạo dimension tables;
+- tạo fact tables;
+- tạo bảng RFM;
+- ghi toàn bộ kết quả vào Unity Catalog.
+
+### Bước 5: Mở Power BI
+
+- kiểm tra semantic model;
+- refresh report;
+- xác nhận dashboard hiển thị đúng dữ liệu.
+
+## 10. Ghi chú kỹ thuật
+
+- Một số thư mục gốc đã được tổ chức lại theo hướng dễ đọc hơn, nên README này ưu tiên theo **vai trò** thay vì chỉ liệt kê tên file.
+- Các notebook và artifact Power BI có thể thay đổi theo phiên bản export, nên nếu bạn cập nhật file mới thì hãy giữ nguyên logic thư mục để người khác dễ theo dõi.
+- Nếu cần chuyển repo này sang chuẩn production hơn, bước tiếp theo nên là tách rõ `raw / silver / gold`, thêm `configs`, và chuẩn hóa naming convention cho toàn bộ file.
+
+## 11. Kết luận
+
+Đây là một project dữ liệu khá hoàn chỉnh: có nguồn vào, có lớp xử lý, có mô hình dữ liệu, và có đầu ra dashboard. Điểm mạnh lớn nhất của repo là bạn đã đi đúng hướng từ **data engineering** sang **analytics engineering**.
+
+Nếu muốn, bạn có thể dùng README này như “bản đồ đọc project”: người xem chỉ cần đi theo thứ tự ở trên là hiểu được luồng dữ liệu và ý nghĩa của từng thư mục rất nhanh.

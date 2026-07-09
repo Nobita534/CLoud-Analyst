@@ -1,0 +1,74 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "31b0445a39766d8e545a",
+  "position": {
+    "x": 17.142857142857142,
+    "y": 48.571428571428577,
+    "z": 0,
+    "height": 477.14285714285717,
+    "width": 778.57142857142867
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Segment_Lookup"
+                    }
+                  },
+                  "Property": "Segment_Name"
+                }
+              },
+              "queryRef": "Segment_Lookup.Segment_Name",
+              "nativeQueryRef": "Segment_Name",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_All_Measures"
+                    }
+                  },
+                  "Property": "Voucher_Impact_by_Segment"
+                }
+              },
+              "queryRef": "_All_Measures.Voucher_Impact_by_Segment",
+              "nativeQueryRef": "Voucher_Impact_by_Segment"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_All_Measures"
+                  }
+                },
+                "Property": "Voucher_Impact_by_Segment"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,116 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup 'Transform File from gold_dwh'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Transform File from gold_dwh\Helper Queries'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Transform File from dim_customers'
+
+	annotation PBI_QueryGroupOrder = 2
+
+queryGroup 'Transform File from dim_customers\Helper Queries'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Transform File from gold_dwh (3)'
+
+	annotation PBI_QueryGroupOrder = 4
+
+queryGroup 'Transform File from gold_dwh (3)\Helper Queries'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Transform File from gold_dwh (4)'
+
+	annotation PBI_QueryGroupOrder = 6
+
+queryGroup 'Transform File from gold_dwh (4)\Helper Queries'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Transform File from dim_sellers'
+
+	annotation PBI_QueryGroupOrder = 8
+
+queryGroup 'Transform File from dim_sellers\Helper Queries'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Transform File from fact_orders'
+
+	annotation PBI_QueryGroupOrder = 10
+
+queryGroup 'Transform File from fact_orders\Helper Queries'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Transform File from fact_order_items'
+
+	annotation PBI_QueryGroupOrder = 12
+
+queryGroup 'Transform File from fact_order_items\Helper Queries'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Transform File from fact_order_payments'
+
+	annotation PBI_QueryGroupOrder = 14
+
+queryGroup 'Transform File from fact_order_payments\Helper Queries'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Transform File from fact_crm_rfm'
+
+	annotation PBI_QueryGroupOrder = 16
+
+queryGroup 'Transform File from fact_crm_rfm\Helper Queries'
+
+	annotation PBI_QueryGroupOrder = 0
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["gold_dwh","Sample File","Parameter1","Transform Sample File","Transform File","dim_customers","dim_date","dim_products","dim_sellers","fact_orders","Sample File (2)","Parameter2","Transform Sample File (2)","Transform File (2)","Sample File (3)","Parameter3","Transform Sample File (3)","Transform File (3)","Sample File (4)","Parameter4","Transform Sample File (4)","Transform File (4)","Sample File (5)","Parameter5","Transform Sample File (5)","Transform File (5)","fact_order_items","fact_order_payments","Sample File (6)","Parameter6","Transform Sample File (6)","Transform File (6)","Sample File (7)","Parameter7","Transform Sample File (7)","Transform File (7)","Sample File (8)","Parameter8","Transform Sample File (8)","Transform File (8)","fact_crm_rfm","Sample File (9)","Parameter9","Transform Sample File (9)","Transform File (9)","_All_Measures"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table gold_dwh
+ref table DateTableTemplate_05a06911-dae6-4c43-a33f-36ca4d138307
+ref table LocalDateTable_6a769643-4ef3-41e7-aa77-e47b0c0a4e93
+ref table LocalDateTable_b55f75e6-bb1c-46b2-9664-59b951d68ab9
+ref table LocalDateTable_c26f09ab-d836-4828-bdb0-7d83686514fe
+ref table dim_customers
+ref table LocalDateTable_20feec38-3d4b-4f85-9e8c-9a6635337ffe
+ref table dim_date
+ref table LocalDateTable_66fa8c90-b867-41a4-a2c8-dbe97ec35ddf
+ref table LocalDateTable_a5c61c92-bb36-4c88-8e0f-4ee36aa9634c
+ref table dim_products
+ref table LocalDateTable_72cd3ab4-c200-4bb2-b6a9-d65de6e26ac0
+ref table dim_sellers
+ref table LocalDateTable_e3a2cc18-fc8c-424b-a96f-62ee1194f03e
+ref table fact_orders
+ref table LocalDateTable_776a4906-135b-460f-90ba-cbe43e5a5e01
+ref table LocalDateTable_3d314933-692e-4b91-9453-706db468f426
+ref table LocalDateTable_b6e5a9cc-4464-4114-a477-f726041a56a0
+ref table LocalDateTable_2d22d4ed-648c-40e2-ad41-b954665212e3
+ref table fact_order_items
+ref table LocalDateTable_8c432c9e-f423-4eaa-b67b-2dc925dd1433
+ref table fact_order_payments
+ref table LocalDateTable_907818c1-5aa1-4fad-8cff-6fefc7cf365f
+ref table fact_crm_rfm
+ref table _All_Measures
+ref table Cohort_Months
+ref table Segment_Lookup
+
+ref cultureInfo en-US
+

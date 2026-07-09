@@ -1,0 +1,37 @@
+table Cohort_Months
+	lineageTag: 73f6b9de-e5eb-441b-b8f6-46d2595dc9e9
+
+	column Month_Index_Diff
+		formatString: 0
+		lineageTag: 4ae6ee47-f203-447f-9a71-9739ab168900
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Month_Index_Diff]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_Label
+		lineageTag: ce80fbf3-9fea-46e8-9211-89d729d103a8
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month_Label]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Cohort_Months = calculated
+		mode: import
+		source =
+				
+				DATATABLE (
+				    "Month_Index_Diff", INTEGER,
+				    "Month_Label", STRING,
+				    {
+				        { 0, "Tháng mở mới (M0)" },
+				        { 1, "Sau 1 Tháng (M1)" },
+				        { 2, "Sau 2 Tháng (M2)" },
+				        { 3, "Sau 3 Tháng (M3)" }
+				    }
+				)
+
+	annotation PBI_Id = 83ee6adfb25a4906a9f69e5510126b2d
+

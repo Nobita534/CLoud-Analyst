@@ -1,0 +1,66 @@
+table fact_crm_rfm
+	lineageTag: 148847f8-247e-4664-a356-180688ec2fb9
+
+	column customer_unique_id
+		dataType: string
+		lineageTag: 983d8cd6-79c5-4101-81ce-378bd72cf83a
+		summarizeBy: none
+		sourceColumn: customer_unique_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_state
+		dataType: string
+		lineageTag: ec12adad-d828-46ef-ba60-e91ef3e81967
+		summarizeBy: none
+		sourceColumn: customer_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column recency
+		dataType: int64
+		formatString: 0
+		lineageTag: d060bd69-3fc6-4aad-a9df-ef628896b0eb
+		summarizeBy: sum
+		sourceColumn: recency
+
+		annotation SummarizationSetBy = Automatic
+
+	column frequency
+		dataType: int64
+		formatString: 0
+		lineageTag: e928fb12-06ae-4ec8-acee-0ceefc210030
+		summarizeBy: sum
+		sourceColumn: frequency
+
+		annotation SummarizationSetBy = Automatic
+
+	column monetary
+		dataType: double
+		lineageTag: fe57668d-d4d9-45da-a424-f31cc154d37b
+		summarizeBy: sum
+		sourceColumn: monetary
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fact_crm_rfm = m
+		mode: import
+		source =
+				let
+				    Source = gold_dwh,
+				    #"Filtered Rows" = Table.SelectRows(Source, each ([Table name] = "fact_rfm")),
+				    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows", each [Attributes]?[Hidden]? <> true),
+				    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files1", "Transform File (9)", each #"Transform File (9)"([Content])),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Invoke Custom Function1", {"Transform File (9)"}),
+				    #"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File (9)", Table.ColumnNames(#"Transform File (9)"(#"Sample File (9)"))),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Table Column1",{{"customer_unique_id", type text}, {"customer_state", type text}, {"recency", Int64.Type}, {"frequency", Int64.Type}, {"monetary_", type number}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"monetary_", "monetary"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

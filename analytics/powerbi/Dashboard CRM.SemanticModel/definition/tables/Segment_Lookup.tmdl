@@ -1,0 +1,37 @@
+table Segment_Lookup
+	lineageTag: ff62cc95-7a34-4451-8f7f-f7afb2daf039
+
+	column Segment_ID
+		formatString: 0
+		lineageTag: b4bfbcc9-8b23-49c4-bcc1-2f972eff0b73
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: [Segment_ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Segment_Name
+		lineageTag: ed1f96fa-6cd0-4589-9072-64f9024a3442
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Segment_Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Segment_Lookup = calculated
+		mode: import
+		source =
+				
+				DATATABLE (
+				    "Segment_ID", INTEGER,
+				    "Segment_Name", STRING,
+				    {
+				        { 1, "VIP / Champions" },
+				        { 2, "At Risk / Can't Lose Them" },
+				        { 3, "New Customers" },
+				        { 4, "Normal / Hibernating" }
+				    }
+				)
+
+	annotation PBI_Id = a73731e285c64d3b99595b5a6bfe5992
+

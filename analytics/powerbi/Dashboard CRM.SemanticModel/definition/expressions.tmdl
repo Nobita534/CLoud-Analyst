@@ -1,0 +1,396 @@
+expression Parameter1 = #"Sample File" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: 441121c7-b7a6-4660-aa29-31a8c4b55364
+	queryGroup: 'Transform File from gold_dwh\Helper Queries'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Binary
+
+expression Parameter2 = #"Sample File (2)" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File (2)", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: ebf5d254-cdfb-4644-bfda-08a87b8e0513
+	queryGroup: 'Transform File from dim_customers\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression Parameter3 = #"Sample File (3)" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File (3)", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: 2d746009-8a83-4b01-bd1e-626ecacbed98
+	queryGroup: 'Transform File from gold_dwh (3)\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression Parameter4 = #"Sample File (4)" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File (4)", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: 321f3020-dcb5-4c68-add1-ef06d796ff81
+	queryGroup: 'Transform File from gold_dwh (4)\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression Parameter5 = #"Sample File (5)" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File (5)", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: 332207b0-8c29-41af-b263-d2c50a6850d6
+	queryGroup: 'Transform File from dim_sellers\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression Parameter6 = #"Sample File (6)" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File (6)", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: 67a8aafa-e7c1-4e7d-84cf-81c416d58c72
+	queryGroup: 'Transform File from fact_orders\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression Parameter7 = #"Sample File (7)" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File (7)", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: 474c1751-2547-456e-b3bf-2414e891ba14
+	queryGroup: 'Transform File from fact_order_items\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression Parameter8 = #"Sample File (8)" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File (8)", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: 8c4b75f8-15ad-479c-92bd-7fe2801601f7
+	queryGroup: 'Transform File from fact_order_payments\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Sample File' =
+		let
+		    Source = Folder.Files("C:\Users\84352\Downloads\gold_dwh\content\gold_dwh"),
+		    #"Filtered Rows" = Table.SelectRows(Source, each ([Extension] = ".parquet")),
+		    Navigation1 = #"Filtered Rows"{0}[Content]
+		in
+		    Navigation1
+	lineageTag: 280f283a-0467-41e2-af27-566326934faf
+	queryGroup: 'Transform File from gold_dwh\Helper Queries'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File' =
+		let
+		    Source = Parquet.Document(Parameter1, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+	lineageTag: f77a3517-bae3-426b-b949-573a4fe668c5
+	queryGroup: 'Transform File from gold_dwh'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Transform File' =
+		let
+		    Source = (Parameter1 as binary) => let
+		    Source = Parquet.Document(Parameter1, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File""}" ]
+	lineageTag: 25f58160-6359-4dfe-b1f5-1cc15691ecee
+	queryGroup: 'Transform File from gold_dwh\Helper Queries'
+
+	annotation PBI_ResultType = Function
+
+expression 'Sample File (2)' =
+		let
+		    Source = gold_dwh,
+		    #"Filtered Rows" = Table.SelectRows(Source, each ([Table name] = "dim_customers")),
+		    Navigation1 = #"Filtered Rows"{0}[Content]
+		in
+		    Navigation1
+	lineageTag: 2f7f29f8-0275-48e1-a3ec-ea597ee04dc9
+	queryGroup: 'Transform File from dim_customers\Helper Queries'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File (2)' =
+		let
+		    Source = Parquet.Document(Parameter2, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+	lineageTag: fc6e5ae2-7443-44f4-b60b-a33871945821
+	queryGroup: 'Transform File from dim_customers'
+
+	annotation PBI_ResultType = Table
+
+expression 'Transform File (2)' =
+		let
+		    Source = (Parameter2 as binary) => let
+		    Source = Parquet.Document(Parameter2, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File (2)""}" ]
+	lineageTag: f323ecdc-f5c0-40a0-b19f-5ce8d42cee9b
+	queryGroup: 'Transform File from dim_customers\Helper Queries'
+
+	annotation PBI_ResultType = Exception
+
+expression 'Sample File (3)' =
+		let
+		    Source = gold_dwh,
+		    #"Filtered Rows" = Table.SelectRows(Source, each ([Table name] = "dim_date")),
+		    Navigation1 = #"Filtered Rows"{0}[Content]
+		in
+		    Navigation1
+	lineageTag: 772bd2fb-c0ad-4958-a736-3bcb91d1f33a
+	queryGroup: 'Transform File from gold_dwh (3)\Helper Queries'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File (3)' =
+		let
+		    Source = Parquet.Document(Parameter3, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+	lineageTag: 1cd6e09c-e409-436b-a014-c021c784c21a
+	queryGroup: 'Transform File from gold_dwh (3)'
+
+	annotation PBI_ResultType = Table
+
+expression 'Transform File (3)' =
+		let
+		    Source = (Parameter3 as binary) => let
+		    Source = Parquet.Document(Parameter3, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File (3)""}" ]
+	lineageTag: 86d49add-545f-4634-abf5-78da8cbe1e56
+	queryGroup: 'Transform File from gold_dwh (3)\Helper Queries'
+
+	annotation PBI_ResultType = Function
+
+expression 'Sample File (4)' =
+		let
+		    Source = gold_dwh,
+		    #"Filtered Rows" = Table.SelectRows(Source, each ([Table name] = "dim_products")),
+		    Navigation1 = #"Filtered Rows"{0}[Content]
+		in
+		    Navigation1
+	lineageTag: 08fc99b7-85e4-43b9-afbd-db7ce35493f5
+	queryGroup: 'Transform File from gold_dwh (4)\Helper Queries'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File (4)' =
+		let
+		    Source = Parquet.Document(Parameter4, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+	lineageTag: c9bab2fe-de79-4d2e-95e7-75aa6e3ba79e
+	queryGroup: 'Transform File from gold_dwh (4)'
+
+	annotation PBI_ResultType = Table
+
+expression 'Transform File (4)' =
+		let
+		    Source = (Parameter4 as binary) => let
+		    Source = Parquet.Document(Parameter4, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File (4)""}" ]
+	lineageTag: 2aa1f068-c75e-433a-bb8b-aa47903cef33
+	queryGroup: 'Transform File from gold_dwh (4)\Helper Queries'
+
+	annotation PBI_ResultType = Function
+
+expression 'Sample File (5)' =
+		let
+		    Source = gold_dwh,
+		    #"Filtered Rows" = Table.SelectRows(Source, each ([Table name] = "dim_sellers")),
+		    Navigation1 = #"Filtered Rows"{0}[Content]
+		in
+		    Navigation1
+	lineageTag: 1f4a39a7-eaf0-4fd7-ab8e-c43045c12f6f
+	queryGroup: 'Transform File from dim_sellers\Helper Queries'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File (5)' =
+		let
+		    Source = Parquet.Document(Parameter5, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+	lineageTag: 012e40bd-82c3-4927-86e5-ec97aac9a0fd
+	queryGroup: 'Transform File from dim_sellers'
+
+	annotation PBI_ResultType = Table
+
+expression 'Transform File (5)' =
+		let
+		    Source = (Parameter5 as binary) => let
+		    Source = Parquet.Document(Parameter5, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File (5)""}" ]
+	lineageTag: 5385053e-9418-434d-a8c1-b53a7dfc9ea1
+	queryGroup: 'Transform File from dim_sellers\Helper Queries'
+
+	annotation PBI_ResultType = Exception
+
+expression 'Sample File (6)' =
+		let
+		    Source = gold_dwh,
+		    #"Filtered Rows" = Table.SelectRows(Source, each ([Table name] = "fact_orders")),
+		    Navigation1 = #"Filtered Rows"{0}[Content]
+		in
+		    Navigation1
+	lineageTag: 6b7496f9-0dcb-43cd-81f8-7e924e6dc407
+	queryGroup: 'Transform File from fact_orders\Helper Queries'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File (6)' =
+		let
+		    Source = Parquet.Document(Parameter6, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+	lineageTag: 18fd507e-dfff-4526-b690-0ab36d4236dc
+	queryGroup: 'Transform File from fact_orders'
+
+	annotation PBI_ResultType = Table
+
+expression 'Transform File (6)' =
+		let
+		    Source = (Parameter6 as binary) => let
+		    Source = Parquet.Document(Parameter6, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File (6)""}" ]
+	lineageTag: a64a3c9c-c423-494e-a57d-2ff90a6f8c37
+	queryGroup: 'Transform File from fact_orders\Helper Queries'
+
+	annotation PBI_ResultType = Function
+
+expression 'Sample File (7)' =
+		let
+		    Source = gold_dwh,
+		    #"Filtered Rows" = Table.SelectRows(Source, each ([Table name] = "fact_order_items")),
+		    Navigation1 = #"Filtered Rows"{0}[Content]
+		in
+		    Navigation1
+	lineageTag: 3e6e5d64-eddb-445b-9c13-24d23ab36cae
+	queryGroup: 'Transform File from fact_order_items\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File (7)' =
+		let
+		    Source = Parquet.Document(Parameter7, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+	lineageTag: 0ae699ea-e302-47f4-822c-debcb183b416
+	queryGroup: 'Transform File from fact_order_items'
+
+	annotation PBI_ResultType = Table
+
+expression 'Transform File (7)' =
+		let
+		    Source = (Parameter7 as binary) => let
+		    Source = Parquet.Document(Parameter7, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File (7)""}" ]
+	lineageTag: 125bd2e5-92f8-44f4-9a23-5b5c6ef2e960
+	queryGroup: 'Transform File from fact_order_items\Helper Queries'
+
+	annotation PBI_ResultType = Exception
+
+expression 'Sample File (8)' =
+		let
+		    Source = gold_dwh,
+		    #"Filtered Rows" = Table.SelectRows(Source, each ([Table name] = "fact_order_payments")),
+		    Navigation1 = #"Filtered Rows"{0}[Content]
+		in
+		    Navigation1
+	lineageTag: 1f0bd423-604f-474c-bfaa-e97b2ad50c35
+	queryGroup: 'Transform File from fact_order_payments\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File (8)' =
+		let
+		    Source = Parquet.Document(Parameter8, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+	lineageTag: 149d66d3-6ddb-48a3-b1b6-c3b0bacece09
+	queryGroup: 'Transform File from fact_order_payments'
+
+	annotation PBI_ResultType = Table
+
+expression 'Transform File (8)' =
+		let
+		    Source = (Parameter8 as binary) => let
+		    Source = Parquet.Document(Parameter8, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File (8)""}" ]
+	lineageTag: 7be62b62-4458-4b21-98f8-5ed2d33f0f13
+	queryGroup: 'Transform File from fact_order_payments\Helper Queries'
+
+	annotation PBI_ResultType = Exception
+
+expression Parameter9 = #"Sample File (9)" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File (9)", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: 0948f6c6-dcf3-4584-a39d-55fd0eadac61
+	queryGroup: 'Transform File from fact_crm_rfm\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Sample File (9)' =
+		let
+		    Source = gold_dwh,
+		    #"Filtered Rows" = Table.SelectRows(Source, each ([Table name] = "fact_rfm")),
+		    Navigation1 = #"Filtered Rows"{0}[Content]
+		in
+		    Navigation1
+	lineageTag: bc62b281-5e22-49fe-bb88-12c6da63b602
+	queryGroup: 'Transform File from fact_crm_rfm\Helper Queries'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File (9)' =
+		let
+		    Source = Parquet.Document(Parameter9, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+	lineageTag: d0af13a8-3906-4ac8-b9e5-33107b23dcb5
+	queryGroup: 'Transform File from fact_crm_rfm'
+
+	annotation PBI_ResultType = Table
+
+expression 'Transform File (9)' =
+		let
+		    Source = (Parameter9 as binary) => let
+		    Source = Parquet.Document(Parameter9, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File (9)""}" ]
+	lineageTag: 9f1dad88-45cc-4b5c-ad57-0c19a0c581e6
+	queryGroup: 'Transform File from fact_crm_rfm\Helper Queries'
+
+	annotation PBI_ResultType = Function
+

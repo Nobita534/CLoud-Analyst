@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Dashboard CRM"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "efe2096e-3c1b-44c4-8838-611a3dd8e02c"
+  }
+}
