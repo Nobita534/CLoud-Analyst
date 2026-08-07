@@ -16,7 +16,7 @@
 			"location": {
 				"type": "HttpServerLocation",
 				"relativeUrl": {
-					"value": "Nobita534/CLoud-Analyst/tree/feature/phase2-cloud-ETL-refactoring/Data/raw/@{dataset().file_name}",
+					"value": "NNobita534/CLoud-Analyst/refs/heads/feature/phase2-cloud-ETL-refactoring/Data/raw/@{dataset().file_name}",
 					"type": "Expression"
 				}
 			},
