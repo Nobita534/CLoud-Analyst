@@ -127,8 +127,8 @@
 						"file_name": "olist_order_payments_dataset.csv"
 					},
 					{
-						"folder_name": "olist_product_category_name_translation_dataset",
-						"file_name": "olist_product_category_name_translation_dataset.csv"
+						"folder_name": "product_category_name_translation_dataset",
+						"file_name": "product_category_name_translation_dataset.csv"
 					}
 				]
 			}
