@@ -1,10 +1,6 @@
 {
-	"name": "DelimitedText2",
+	"name": "datawarehouse",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "asdl_con",
-			"type": "LinkedServiceReference"
-		},
 		"parameters": {
 			"folder_name": {
 				"type": "string"

@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "olist_pipelines",
 	"properties": {
 		"activities": [
 			{
@@ -59,7 +59,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "git",
+									"referenceName": "source_git",
 									"type": "DatasetReference",
 									"parameters": {
 										"file_name": {
@@ -71,7 +71,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "DelimitedText2",
+									"referenceName": "datawarehouse",
 									"type": "DatasetReference",
 									"parameters": {
 										"folder_name": {
@@ -125,6 +125,10 @@
 					{
 						"folder_name": "olist_order_payments_dataset",
 						"file_name": "olist_order_payments_dataset.csv"
+					},
+					{
+						"folder_name": "olist_product_category_name_translation_dataset",
+						"file_name": "olist_product_category_name_translation_dataset.csv"
 					}
 				]
 			}
