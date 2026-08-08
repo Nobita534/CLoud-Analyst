@@ -1,0 +1,42 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "ecommersedataetl"
+		},
+		"AzurePostgreSql_con_password": {
+			"value": ""
+		},
+		"adls_con_accountKey": {
+			"value": ""
+		},
+		"errordata_con_accountKey": {
+			"value": ""
+		},
+		"AzurePostgreSql_con_properties_typeProperties_server": {
+			"value": "cloud-analyst-pg.postgres.database.azure.com"
+		},
+		"AzurePostgreSql_con_properties_typeProperties_database": {
+			"value": "cloud_analyst"
+		},
+		"AzurePostgreSql_con_properties_typeProperties_username": {
+			"value": "cloudadmin"
+		},
+		"adls_con_properties_typeProperties_url": {
+			"value": "https://ecommersedatawarehouse.dfs.core.windows.net/"
+		},
+		"errordata_con_properties_typeProperties_url": {
+			"value": "https://ecommersedatawarehouse.dfs.core.windows.net/"
+		},
+		"git_con_properties_typeProperties_url": {
+			"value": "https://raw.githubusercontent.com/"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}

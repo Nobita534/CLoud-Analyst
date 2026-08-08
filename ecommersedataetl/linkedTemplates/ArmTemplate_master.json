@@ -1,0 +1,105 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "ecommersedataetl"
+		},
+		"AzurePostgreSql_con_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzurePostgreSql_con'"
+		},
+		"adls_con_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'adls_con'"
+		},
+		"errordata_con_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'errordata_con'"
+		},
+		"AzurePostgreSql_con_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "cloud-analyst-pg.postgres.database.azure.com"
+		},
+		"AzurePostgreSql_con_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "cloud_analyst"
+		},
+		"AzurePostgreSql_con_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "cloudadmin"
+		},
+		"adls_con_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://ecommersedatawarehouse.dfs.core.windows.net/"
+		},
+		"errordata_con_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://ecommersedatawarehouse.dfs.core.windows.net/"
+		},
+		"git_con_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://raw.githubusercontent.com/"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "ecommersedataetl_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzurePostgreSql_con_password": {
+						"value": "[parameters('AzurePostgreSql_con_password')]"
+					},
+					"adls_con_accountKey": {
+						"value": "[parameters('adls_con_accountKey')]"
+					},
+					"errordata_con_accountKey": {
+						"value": "[parameters('errordata_con_accountKey')]"
+					},
+					"AzurePostgreSql_con_properties_typeProperties_server": {
+						"value": "[parameters('AzurePostgreSql_con_properties_typeProperties_server')]"
+					},
+					"AzurePostgreSql_con_properties_typeProperties_database": {
+						"value": "[parameters('AzurePostgreSql_con_properties_typeProperties_database')]"
+					},
+					"AzurePostgreSql_con_properties_typeProperties_username": {
+						"value": "[parameters('AzurePostgreSql_con_properties_typeProperties_username')]"
+					},
+					"adls_con_properties_typeProperties_url": {
+						"value": "[parameters('adls_con_properties_typeProperties_url')]"
+					},
+					"errordata_con_properties_typeProperties_url": {
+						"value": "[parameters('errordata_con_properties_typeProperties_url')]"
+					},
+					"git_con_properties_typeProperties_url": {
+						"value": "[parameters('git_con_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
