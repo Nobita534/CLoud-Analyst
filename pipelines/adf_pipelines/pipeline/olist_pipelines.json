@@ -1,0 +1,274 @@
+{
+	"name": "olist_pipelines",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.p_array",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Bronze layer",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "HttpReadSettings",
+										"requestMethod": "GET"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "source_git",
+									"type": "DatasetReference",
+									"parameters": {
+										"file_name": {
+											"value": "@item().file_name",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "datawarehouse",
+									"type": "DatasetReference",
+									"parameters": {
+										"folder_name": {
+											"value": "@item().folder_name",
+											"type": "Expression"
+										},
+										"file_name": {
+											"value": "@item().file_name",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						},
+						{
+							"name": "Landing schema",
+							"type": "Copy",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
+							"dependsOn": [
+								{
+									"activity": "Bronze layer",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobFSReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "AzurePostgreSqlSink",
+									"writeBatchSize": 1000000,
+									"writeBatchTimeout": "00:30:00",
+									"writeMethod": "CopyCommand"
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "datawarehouse",
+									"type": "DatasetReference",
+									"parameters": {
+										"folder_name": {
+											"value": "@item().folder_name",
+											"type": "Expression"
+										},
+										"file_name": {
+											"value": "@item().file_name",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "AzurePostgreSqlTable1",
+									"type": "DatasetReference",
+									"parameters": {
+										"file_name": {
+											"value": "@replace(item().file_name, '.csv', '')",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						},
+						{
+							"name": "DF_Load_Bronze_to_Landing",
+							"type": "ExecuteDataFlow",
+							"dependsOn": [
+								{
+									"activity": "Bronze layer",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataflow": {
+									"referenceName": "DF_Load_Bronze_to_Landing",
+									"type": "DataFlowReference",
+									"parameters": {
+										"folder_name": {
+											"value": "'@{item().folder_name}'",
+											"type": "Expression"
+										}
+									},
+									"datasetParameters": {
+										"RawReviews": {
+											"folder_name": {
+												"value": "@item().folder_name\r\n",
+												"type": "Expression"
+											},
+											"file_name": {
+												"value": "@item().file_name",
+												"type": "Expression"
+											}
+										},
+										"LandingPostgreSQL": {
+											"file_name": {
+												"value": "@replace(item().file_name, '.csv', '')",
+												"type": "Expression"
+											}
+										}
+									}
+								},
+								"compute": {
+									"coreCount": 8,
+									"computeType": "General"
+								},
+								"traceLevel": "Fine",
+								"continueOnError": true
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"p_array": {
+				"type": "array",
+				"defaultValue": [
+					{
+						"folder_name": "olist_customers_dataset",
+						"file_name": "olist_customers_dataset.csv"
+					},
+					{
+						"folder_name": "olist_geolocation_dataset",
+						"file_name": "olist_geolocation_dataset.csv"
+					},
+					{
+						"folder_name": "olist_order_items_dataset",
+						"file_name": "olist_order_items_dataset.csv"
+					},
+					{
+						"folder_name": "olist_order_reviews_dataset",
+						"file_name": "olist_order_reviews_dataset.csv"
+					},
+					{
+						"folder_name": "olist_orders_dataset",
+						"file_name": "olist_orders_dataset.csv"
+					},
+					{
+						"folder_name": "olist_products_dataset",
+						"file_name": "olist_products_dataset.csv"
+					},
+					{
+						"folder_name": "olist_sellers_dataset",
+						"file_name": "olist_sellers_dataset.csv"
+					},
+					{
+						"folder_name": "olist_order_payments_dataset",
+						"file_name": "olist_order_payments_dataset.csv"
+					},
+					{
+						"folder_name": "product_category_name_translation",
+						"file_name": "product_category_name_translation.csv"
+					}
+				]
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-05-10T15:10:59Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
