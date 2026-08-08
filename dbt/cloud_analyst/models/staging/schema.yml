@@ -1,0 +1,119 @@
+version: 2
+
+sources:
+  - name: olist
+    description: >
+      Raw Brazilian Olist e-commerse data used as a source for the Cloud Analyst project.
+    database: cloud_analyst
+    schema: landing
+    tables:
+      - name: olist_customers_dataset
+        description: >
+          Contains information about customers who placed orders on the Olist platform.
+        columns:
+          - name: customer_id
+            description: >
+              Unique ID of the customer record.
+            tests:
+              - not_null
+              - unique
+      - name: olist_geolocation_dataset
+        description: >
+          Contains geolocation information for ZIP code prefixes in Brazil.
+        columns:
+          - name: geolocation_zip_code_prefix
+            description: >
+              First five digits of the ZIP code.
+            tests:
+              - not_null
+      - name: olist_orders_dataset
+        description: >
+          Contains information about customer orders and their delivery process.
+        columns:
+          - name: order_id
+            description: >
+              Unique ID of the order.
+            tests:
+              - not_null
+              - unique
+          - name: customer_id
+            description: >
+              Unique ID of the customer record.
+            tests:
+              - not_null
+      - name: olist_order_items_dataset
+        description: >
+          Contains information about products included in each order.
+        columns:
+          - name: order_item_id
+            description: >
+              Sequential number of the item within the order.
+            tests:
+              - not_null
+          - name: order_id
+            description: >
+              ID of the order containing the item.
+            tests:
+              - not_null
+          - name: product_id
+            description: >
+              ID of the product.
+            tests:
+              - not_null
+          - name: seller_id
+            description: >
+              ID of the seller who sold the product.
+            tests:
+              - not_null
+      - name: olist_order_payments_dataset
+        description: >
+          Contains payment information for customer orders.
+        columns:
+          - name: order_id
+            description: >
+              ID of the order containing the item.
+            tests:
+              - not_null
+          - name: payment_sequential
+            description: >
+              Sequence number of the payment for the order.
+            tests:
+              - not_null
+      - name: olist_order_reviews_dataset
+        description: >
+          Contains customer reviews and ratings for orders.
+        columns:
+          - name: review_id
+            description: >
+              Unique ID of the review.
+            tests:
+              - not_null
+              - unique
+          - name: order_id
+            description: >
+              ID of the order containing the item.
+            tests:
+              - not_null
+      - name: olist_products_dataset
+        description: >
+          Contains information about products sold on the Olist platform.
+        columns:
+          - name: product_id
+            description: Unique ID of the product.
+            tests:
+              - not_null
+              - unique
+      - name: olist_sellers_dataset
+        description: >
+          Contains information about sellers who sell products on the Olist platform.
+        columns:
+          - name: seller_id
+            description: >
+              Unique ID of the seller.
+            tests:
+              - not_null
+              - unique
+      - name: product_category_name_translation
+        description: Contains English translations of product category names.
+
+
