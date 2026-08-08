@@ -89,6 +89,8 @@
 						{
 							"name": "Landing schema",
 							"type": "Copy",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "Bronze layer",
@@ -161,6 +163,62 @@
 									}
 								}
 							]
+						},
+						{
+							"name": "DF_Load_Bronze_to_Landing",
+							"type": "ExecuteDataFlow",
+							"dependsOn": [
+								{
+									"activity": "Bronze layer",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataflow": {
+									"referenceName": "DF_Load_Bronze_to_Landing",
+									"type": "DataFlowReference",
+									"parameters": {
+										"folder_name": {
+											"value": "'@{item().folder_name}'",
+											"type": "Expression"
+										}
+									},
+									"datasetParameters": {
+										"RawReviews": {
+											"folder_name": {
+												"value": "@item().folder_name\r\n",
+												"type": "Expression"
+											},
+											"file_name": {
+												"value": "@item().file_name",
+												"type": "Expression"
+											}
+										},
+										"LandingPostgreSQL": {
+											"file_name": {
+												"value": "@replace(item().file_name, '.csv', '')",
+												"type": "Expression"
+											}
+										}
+									}
+								},
+								"compute": {
+									"coreCount": 8,
+									"computeType": "General"
+								},
+								"traceLevel": "Fine",
+								"continueOnError": true
+							}
 						}
 					]
 				}

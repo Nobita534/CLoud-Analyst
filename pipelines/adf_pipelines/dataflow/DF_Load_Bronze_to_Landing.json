@@ -1,0 +1,54 @@
+{
+	"name": "DF_Load_Bronze_to_Landing",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "datawarehouse",
+						"type": "DatasetReference"
+					},
+					"name": "RawReviews"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzurePostgreSqlTable1",
+						"type": "DatasetReference"
+					},
+					"name": "LandingPostgreSQL",
+					"description": "Export data to LandingPostgreSQL",
+					"rejectedDataLinkedService": {
+						"referenceName": "errordata_con",
+						"type": "LinkedServiceReference"
+					}
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"parameters{",
+				"     folder_name as string",
+				"}",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     multiLineRow: true) ~> RawReviews",
+				"RawReviews sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     outputAssertFailedRows: true,",
+				"     assertFailure_fileSystem: 'errordata',",
+				"     assertFailure_folderPath: ($folder_name)) ~> LandingPostgreSQL"
+			]
+		}
+	}
+}
