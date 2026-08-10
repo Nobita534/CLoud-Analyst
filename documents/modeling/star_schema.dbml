@@ -1,6 +1,6 @@
 Table dim_customers [headercolor: #175e7a] {
-	customer_id varchar [ pk, unique ]
-	customer_unique_id varchar
+	customer_unique_id varchar [ pk, unique ]
+	customer_id varchar
 	customer_zip_code_prefix integer
 	customer_city varchar
 	customer_state varchar
@@ -21,8 +21,8 @@ Table dim_products [headercolor: #175e7a] {
 }
 
 Table dim_date [headercolor: #175e7a] {
-	date_key integer [ pk, unique ]
-	date date
+	date_key integer
+	full_date timestamp
 	year integer
 	month integer
 	quarter integer
@@ -30,20 +30,14 @@ Table dim_date [headercolor: #175e7a] {
 	month_name varchar
 }
 
-Table fact_orders [headercolor: #175e7a] {
-	fact_order_id varchar [ pk, unique ]
-	customer_id varchar
-	order_date_key integer
+Table dim_orders [headercolor: #175e7a] {
+	order_id varchar [ pk, unique ]
 	order_status varchar
-	order_purchase_timestamp timestamp
-	order_delivered_customer_date timestamp
-	order_estimated_delivery_date timestamp
-	delivery_days integer
-	is_valid_order boolean
-	total_item_price double
-	total_freight double
-	total_payment_value double
-	review_score integer
+	order_purchase_date_key integer
+	order_approved_date_key integer
+	order_delivered_carrier_date_key integer
+	order_delivered_customer_date_key integer
+	order_estimated_delivery_date_key integer
 }
 
 Table fact_order_items [headercolor: #175e7a] {
@@ -59,22 +53,36 @@ Table fact_order_items [headercolor: #175e7a] {
 Table fact_order_payments [headercolor: #175e7a] {
 	fact_payment_id integer [ pk, unique ]
 	order_id varchar
-	order_date_key integer
 	payment_type varchar
 	payment_installments integer
 	payment_value double
 }
 
-Ref fk_dim_customers_customer_id_fact_orders {
-	dim_customers.customer_id < fact_orders.customer_id [ delete: no action, update: no action ]
+Table fact_review [headercolor: #175e7a] {
+	review_id varchar(255) [ pk, not null ]
+	order_id varchar(255)
+	review_comment_title varchar(255)
+	review_comment_message text(65535)
+	review_creation_date timestamp
+	review_answer_timestamp timestamp
+	review_score integer
 }
 
-Ref fk_fact_orders_order_id_fact_order_items {
-	fact_orders.fact_order_id < fact_order_items.order_id [ delete: no action, update: no action ]
+Table fact_customer_rfm [headercolor: #175e7a] {
+	customer_rfm_id integer [ pk, increment, not null ]
+	customer_unique_id varchar(255)
+	"analysis date" integer
+	frequency integer
+	monetary float
+	recency integer
 }
 
-Ref fk_fact_orders_order_id_fact_order_payments {
-	fact_orders.fact_order_id < fact_order_payments.order_id [ delete: no action, update: no action ]
+Table dim_geolocation [headercolor: #175e7a] {
+	geolocation_zip_code_prefix integer [ pk, not null ]
+	geolocation_lat float
+	geolocation_lng float
+	geolocation_city varchar(255)
+	geolocation_state varchar(255)
 }
 
 Ref fk_dim_products_product_id_fact_order_items {
@@ -85,14 +93,50 @@ Ref fk_dim_sellers_seller_id_fact_order_items {
 	dim_sellers.seller_id < fact_order_items.seller_id [ delete: no action, update: no action ]
 }
 
+Ref fk_dim_customers_customer_unique_id_fact_customer_rfm {
+	dim_customers.customer_unique_id < fact_customer_rfm.customer_unique_id [ delete: no action, update: no action ]
+}
+
+Ref fk_fact_orders_fact_order_id_fact_order_payments {
+	dim_orders.order_id < fact_order_payments.order_id [ delete: no action, update: no action ]
+}
+
+Ref fk_fact_orders_fact_order_id_fact_order_items {
+	dim_orders.order_id < fact_order_items.order_id [ delete: no action, update: no action ]
+}
+
+Ref fk_dim_geolocation_geolocation_zip_code_prefix_dim_customers {
+	dim_geolocation.geolocation_zip_code_prefix - dim_customers.customer_zip_code_prefix [ delete: no action, update: no action ]
+}
+
+Ref fk_dim_geolocation_geolocation_zip_code_prefix_dim_sellers {
+	dim_geolocation.geolocation_zip_code_prefix - dim_sellers.seller_zip_code_prefix [ delete: no action, update: no action ]
+}
+
 Ref fk_dim_date_date_key_fact_orders {
-	dim_date.date_key < fact_orders.order_date_key [ delete: no action, update: no action ]
+	dim_date.date_key < dim_orders.order_purchase_date_key [ delete: no action, update: no action ]
 }
 
-Ref fk_dim_date_date_key_fact_order_items {
-	dim_date.date_key < fact_order_items.order_date_key [ delete: no action, update: no action ]
+Ref fk_dim_date_date_key_fact_orders {
+	dim_date.date_key < dim_orders.order_approved_date_key [ delete: no action, update: no action ]
 }
 
-Ref fk_dim_date_date_key_fact_order_payments {
-	dim_date.date_key < fact_order_payments.order_date_key [ delete: no action, update: no action ]
+Ref fk_dim_date_date_key_fact_orders {
+	dim_date.date_key < dim_orders.order_delivered_carrier_date_key [ delete: no action, update: no action ]
+}
+
+Ref fk_dim_date_date_key_fact_orders {
+	dim_date.date_key < dim_orders.order_delivered_customer_date_key [ delete: no action, update: no action ]
+}
+
+Ref fk_dim_date_date_key_fact_orders {
+	dim_date.date_key < dim_orders.order_estimated_delivery_date_key [ delete: no action, update: no action ]
+}
+
+Ref fk_dim_orders_order_id_fact_review {
+	dim_orders.order_id < fact_review.order_id [ delete: no action, update: no action ]
+}
+
+Ref fk_dim_date_date_key_fact_customer_rfm {
+	dim_date.date_key < fact_customer_rfm."analysis date" [ delete: no action, update: no action ]
 }
