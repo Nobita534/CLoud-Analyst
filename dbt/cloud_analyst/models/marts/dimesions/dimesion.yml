@@ -1,0 +1,142 @@
+version: 2
+
+models:
+
+  - name: dim_customers
+    description: >
+      Customer dimension containing customer information and location details.
+    columns:
+      - name: customer_unique_id
+        description: Unique ID that identifies the actual customer.
+        data_tests:
+          - unique
+          - not_null
+
+      - name: customer_id
+        description: ID of the customer record in the source system.
+        data_tests:
+          - not_null
+
+      - name: customer_zip_code_prefix
+        description: First five digits of the customer's ZIP code.
+
+      - name: customer_city
+        description: City where the customer is located.
+
+      - name: customer_state
+        description: State where the customer is located.
+
+
+  - name: dim_sellers
+    description: >
+      Seller dimension containing seller information and location details.
+    columns:
+      - name: seller_id
+        description: Unique ID of the seller.
+        data_tests:
+          - unique
+          - not_null
+
+      - name: seller_zip_code_prefix
+        description: First five digits of the seller's ZIP code.
+
+      - name: seller_city
+        description: City where the seller is located.
+
+      - name: seller_state
+        description: State where the seller is located.
+
+
+  - name: dim_products
+    description: >
+      Product dimension containing product and category information.
+    columns:
+      - name: product_id
+        description: Unique ID of the product.
+        data_tests:
+          - unique
+          - not_null
+
+      - name: product_category_name
+        description: Category name of the product.
+
+
+  - name: dim_date
+    description: >
+      Date dimension used to analyze orders and customer RFM analysis over time.
+    columns:
+      - name: date_key
+        description: Integer key representing the date in YYYYMMDD format.
+        data_tests:
+          - unique
+          - not_null
+
+      - name: full_date
+        description: Full calendar date.
+
+      - name: year
+        description: Year of the date.
+
+      - name: month
+        description: Month number of the date.
+
+      - name: quarter
+        description: Quarter of the year.
+
+      - name: day_name
+        description: Name of the day.
+
+      - name: month_name
+        description: Name of the month.
+
+
+  - name: dim_orders
+    description: >
+      Order dimension containing order status and date keys for important order events.
+    columns:
+      - name: order_id
+        description: Unique ID of the order.
+        data_tests:
+          - unique
+          - not_null
+
+      - name: order_status
+        description: Current status of the order.
+
+      - name: order_purchase_date_key
+        description: Date key for when the order was purchased.
+
+      - name: order_approved_date_key
+        description: Date key for when the order was approved.
+
+      - name: order_delivered_carrier_date_key
+        description: Date key for when the order was delivered to the carrier.
+
+      - name: order_delivered_customer_date_key
+        description: Date key for when the order was delivered to the customer.
+
+      - name: order_estimated_delivery_date_key
+        description: Estimated delivery date key.
+
+
+  - name: dim_geolocation
+    description: >
+      Geolocation dimension containing geographical information for ZIP code prefixes.
+    columns:
+      - name: geolocation_zip_code_prefix
+        description: ZIP code prefix used to identify a geographic area.
+        data_tests:
+          - unique
+          - not_null
+
+      - name: geolocation_lat
+        description: Latitude of the geographic location.
+
+      - name: geolocation_lng
+        description: Longitude of the geographic location.
+
+      - name: geolocation_city
+        description: City of the geographic location.
+
+      - name: geolocation_state
+        description: State of the geographic location.
