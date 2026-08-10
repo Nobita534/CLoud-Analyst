@@ -145,7 +145,7 @@ final AS (
 
         customer_unique_id,
 
-        snapshot_date AS "analysis date",
+        {{generate_date_key('snapshot_date')}} AS "analysis_date_key",
 
         frequency,
 
