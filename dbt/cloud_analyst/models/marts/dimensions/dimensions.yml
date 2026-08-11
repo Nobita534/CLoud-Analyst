@@ -19,6 +19,12 @@ models:
 
       - name: customer_zip_code_prefix
         description: First five digits of the customer's ZIP code.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: 
+                to: ref('dim_geolocation')
+                field: geolocation_zip_code_prefix
 
       - name: customer_city
         description: City where the customer is located.
@@ -39,6 +45,12 @@ models:
 
       - name: seller_zip_code_prefix
         description: First five digits of the seller's ZIP code.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: 
+                to: ref('dim_geolocation')
+                field: geolocation_zip_code_prefix
 
       - name: seller_city
         description: City where the seller is located.
@@ -59,6 +71,8 @@ models:
 
       - name: product_category_name
         description: Category name of the product.
+        data_tests:
+          - not_null
 
 
   - name: dim_date
@@ -73,15 +87,23 @@ models:
 
       - name: full_date
         description: Full calendar date.
+        data_tests:
+          - not_null
 
       - name: year
         description: Year of the date.
+        data_tests:
+          - not_null
 
       - name: month
         description: Month number of the date.
+        data_tests:
+          - not_null
 
       - name: quarter
         description: Quarter of the year.
+        data_tests:
+          - not_null
 
       - name: day_name
         description: Name of the day.
@@ -99,24 +121,70 @@ models:
         data_tests:
           - unique
           - not_null
+      - name: customer_id
+        description: ID of the customer associated with the order.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments: 
+                to: ref('dim_customers')
+                field: customer_id
 
       - name: order_status
         description: Current status of the order.
+        data_tests:
+        - not_null
+        - accepted_values:
+            arguments: 
+              values:
+                - delivered
+                - shipped
+                - canceled
+                - unavailable
+                - invoiced
+                - processing
+                - approved
+                - created
 
       - name: order_purchase_date_key
         description: Date key for when the order was purchased.
+        data_tests:
+          - relationships:
+              arguments: 
+                to: ref('dim_date')
+                field: date_key
 
       - name: order_approved_date_key
         description: Date key for when the order was approved.
+        data_tests:
+          - relationships:
+              arguments: 
+                to: ref('dim_date')
+                field: date_key
 
       - name: order_delivered_carrier_date_key
         description: Date key for when the order was delivered to the carrier.
+        data_tests:
+          - relationships:
+              arguments: 
+                to: ref('dim_date')
+                field: date_key
 
       - name: order_delivered_customer_date_key
         description: Date key for when the order was delivered to the customer.
+        data_tests:
+          - relationships:
+              arguments: 
+                to: ref('dim_date')
+                field: date_key
 
       - name: order_estimated_delivery_date_key
         description: Estimated delivery date key.
+        data_tests:
+          - relationships:
+              arguments: 
+                to: ref('dim_date')
+                field: date_key
 
 
   - name: dim_geolocation
