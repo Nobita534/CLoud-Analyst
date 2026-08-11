@@ -39,5 +39,13 @@ models:
       +schema: intermediate
       +materialized: view
     marts:
-      +schema: marts
-      +materialized: table
+      dimensions:
+        +schema: marts
+        +materialized: table
+      facts:
+        +schema: marts
+        +materialized: table
+      metric_layer:
+        +schema: marts
+        +materialized: table
+
