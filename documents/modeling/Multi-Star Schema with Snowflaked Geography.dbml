@@ -30,6 +30,7 @@ Table dim_date [headercolor: #175e7a] {
 
 Table dim_orders [headercolor: #175e7a] {
 	order_id text(65535) [ pk, unique ]
+	customer_id text(65535)
 	order_status text(65535)
 	order_purchase_date_key integer
 	order_approved_date_key integer
