@@ -7,12 +7,19 @@ models:
       - name: customer_id
         description: >
           Unique ID of the customer record.
+        data_tests:
+          - not_null
+
       - name: customer_unique_id
         description: >
           Unique ID that identifies the actual customer across different orders.
+        data_tests:
+          - not_null
+
       - name: customer_state
         description: >
           State where the customer is located.
+
   - name: int_orders
     description: >
       Prepare order data for downstream models
@@ -20,18 +27,43 @@ models:
       - name: order_id
         description: >
           Unique ID of the order.
+        data_tests:
+          - not_null
+          - unique
+
       - name: customer_id
         description: >
           Unique ID of the customer record.
+        data_tests:
+          - not_null
+
       - name: order_purchase_timestamp
         description: >
           Date and time when the order was placed.
+        data_tests:
+          - not_null
+
       - name: order_approved_at
         description: >
           Date and time when the order payment was approved.
+
       - name: order_status
         description: >
           Current status of the order.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments: 
+                values:
+                  - delivered
+                  - shipped
+                  - canceled
+                  - unavailable
+                  - invoiced
+                  - processing
+                  - approved
+                  - created
+
   - name: int_geolocation
     description: >
       Prepare geolocation data for downstream models
@@ -39,12 +71,21 @@ models:
       - name: geolocation_zip_code_prefix
         description: >
           First five digits of the ZIP code.
+        data_tests:
+          - not_null
+
       - name: geolocation_lat
         description: >
           Latitude of the ZIP code location.
+        data_tests:
+          - not_null
+        
       - name: geolocation_lng
         description: >
           Longitude of the ZIP code location.
+        data_tests:
+          - not_null
+
   - name: int_order_items
     description: >
       Prepare order items data for downstream models
@@ -52,21 +93,39 @@ models:
       - name: order_item_id
         description: >
           Sequential number of the item within the order.
+        data_tests:
+          - not_null
+
       - name: order_id
         description: >
           ID of the order containing the item.
+        data_tests:
+          - not_null
+    
       - name: product_id
         description: >
           ID of the product.
+        data_tests:
+          - not_null
+
       - name: seller_id
         description: >
           ID of the seller who sold the product.
+        data_tests:
+          - not_null
+
       - name: price
         description: >
           Price of the product.
+        data_tests:
+          - not_null
+
       - name: freight_value
         description: >
           Freight cost of the item.
+        data_tests:
+          - not_null
+
     data_tests:
       - dbt_utils.unique_combination_of_columns:
           arguments:
@@ -80,15 +139,34 @@ models:
       - name: payment_sequential
         description: >
           Sequence number of the payment for the order.
+        data_tests:
+          - not_null
+
       - name: order_id
         description: >
           ID of the order containing the item.
+        data_tests:
+          - not_null
+
       - name: payment_type
         description: >
           Payment method used for the order.
+        data_tests:
+          - not_null
+
       - name: payment_value
         description: >
           Amount paid for the order.
+        data_tests:
+          - not_null
+
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - order_id
+              - payment_sequential
+
   - name: int_order_reviews
     description: >
       Prepare order reviews data for downstream models
@@ -96,15 +174,25 @@ models:
       - name: review_id
         description: >
           Unique ID of the review.
+        data_tests:
+          - not_null
+
       - name: order_id
         description: >
           ID of the order containing the item.
+        data_tests:
+          - not_null
+
       - name: review_score
         description: >
           Customer rating from 1 to 5.
+        data_tests:
+          - not_null
+
       - name: review_comment_message
         description: >
           Message written by the customer.
+          
   - name: int_products
     description: >
       Prepare product data for downstream models
@@ -112,9 +200,13 @@ models:
       - name: product_id
         description: >
           Unique ID of the product.
+        data_tests:
+          - not_null
+
       - name: product_category_name
         description: >
           Category name of the product.
+
   - name: int_seller
     description: >
       Prepare seller data for downstream models
@@ -122,12 +214,21 @@ models:
       - name: seller_id
         description: >
           Unique ID of the seller.
+        data_tests:
+          - not_null
+
       - name: seller_zip_code_prefix
         description: >
           First five digits of the seller's ZIP code
+        data_tests:
+          - not_null
+
       - name: seller_state
         description: >
           State where the seller is located.
+        data_tests:
+          - not_null
+
   - name: int_product_category_name_translation
     description:
       Prepare translation product name data for downstream models

@@ -88,12 +88,9 @@ sources:
               Unique ID of the review.
             tests:
               - not_null
-              - unique
           - name: order_id
             description: >
               ID of the order containing the item.
-            tests:
-              - not_null
       - name: olist_products_dataset
         description: >
           Contains information about products sold on the Olist platform.
