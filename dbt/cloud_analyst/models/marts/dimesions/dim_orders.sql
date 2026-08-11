@@ -1,7 +1,7 @@
 WITH int_orders_data AS (
-
     SELECT
         order_id,
+        customer_id,
         order_status,
         order_purchase_timestamp,
         order_approved_at,
@@ -10,12 +10,18 @@ WITH int_orders_data AS (
         order_estimated_delivery_date
 
     FROM {{ ref('int_orders') }}
-
+),
+int_customer_data AS(
+    SELECT 
+        customer_id,
+        customer_unique_id
+    FROM {{ref('int_customer')}}
 )
 
 SELECT
     order_id,
     order_status,
+    customer_unique_id,
 
     {{ generate_date_key('order_purchase_timestamp') }}
         AS order_purchase_date_key,
@@ -33,3 +39,4 @@ SELECT
         AS order_estimated_delivery_date_key
 
 FROM int_orders_data
+JOIN int_customer_data ON int_orders_data.customer_id = int_customer_data.customer_id
