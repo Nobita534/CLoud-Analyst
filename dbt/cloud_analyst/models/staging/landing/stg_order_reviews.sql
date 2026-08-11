@@ -2,7 +2,7 @@ with source as (
 
     select *
     from {{ source('olist', 'olist_order_reviews_dataset') }}
-    where order_id is not null
+    where order_id is not null and review_score is not null
 
 )
 
