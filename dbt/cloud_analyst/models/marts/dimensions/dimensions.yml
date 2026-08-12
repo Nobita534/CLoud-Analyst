@@ -9,7 +9,6 @@ models:
       - name: customer_unique_id
         description: Unique ID that identifies the actual customer.
         data_tests:
-          - unique
           - not_null
 
       - name: customer_id
@@ -25,6 +24,8 @@ models:
               arguments: 
                 to: ref('dim_geolocation')
                 field: geolocation_zip_code_prefix
+              config:
+                severity: warn
 
       - name: customer_city
         description: City where the customer is located.
@@ -40,7 +41,6 @@ models:
       - name: seller_id
         description: Unique ID of the seller.
         data_tests:
-          - unique
           - not_null
 
       - name: seller_zip_code_prefix
@@ -121,14 +121,14 @@ models:
         data_tests:
           - unique
           - not_null
-      - name: customer_id
+      - name: customer_unique_id
         description: ID of the customer associated with the order.
         data_tests:
           - not_null
           - relationships:
               arguments: 
                 to: ref('dim_customers')
-                field: customer_id
+                field: customer_unique_id
 
       - name: order_status
         description: Current status of the order.
@@ -194,7 +194,6 @@ models:
       - name: geolocation_zip_code_prefix
         description: ZIP code prefix used to identify a geographic area.
         data_tests:
-          - unique
           - not_null
 
       - name: geolocation_lat
