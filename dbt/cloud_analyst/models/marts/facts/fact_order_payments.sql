@@ -15,7 +15,7 @@ SELECT
     ROW_NUMBER() OVER (
         ORDER BY order_id, payment_sequential
     ) AS fact_payment_id,
-
+    payment_sequential,
     order_id,
     payment_type,
     payment_installments,
