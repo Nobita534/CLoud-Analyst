@@ -136,3 +136,7 @@ Ref fk_dim_orders_order_id_fact_review {
 Ref fk_dim_date_date_key_fact_customer_rfm {
 	dim_date.date_key < fact_customer_rfm.analysis_date_key [ delete: no action, update: no action ]
 }
+
+Ref fk_dim_customers_customer_id_dim_orders {
+	dim_customers.customer_id < dim_orders.customer_id [ delete: no action, update: no action ]
+}
