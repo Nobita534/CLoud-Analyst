@@ -23,6 +23,11 @@ seller_sales AS (
         ON oi.order_id = o.order_id
 
     WHERE o.order_status = 'delivered'
+    AND EXISTS (
+        SELECT 1
+        FROM {{ref('fact_review')}} r
+        WHERE r.order_id = oi.order_id
+    )
 
 )
 
@@ -46,4 +51,5 @@ LEFT JOIN review_metrics AS rm
 
 GROUP BY
     s.seller_id,
+    ss.order_id,
     s.seller_state
