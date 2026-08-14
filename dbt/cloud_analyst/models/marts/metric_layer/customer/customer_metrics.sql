@@ -1,5 +1,5 @@
 SELECT
-    customer_unique_id,
+    customer_id,
     analysis_date_key,
     monetary,
     frequency,
