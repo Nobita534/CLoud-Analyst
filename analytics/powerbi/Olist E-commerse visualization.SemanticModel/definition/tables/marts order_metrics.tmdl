@@ -1,0 +1,56 @@
+table 'marts order_metrics'
+	lineageTag: 99f41f4b-cab9-4172-8215-63c445f09004
+
+	column total_orders
+		dataType: int64
+		formatString: 0
+		lineageTag: 0ed5f3f7-ab70-4714-8c94-224c98feb808
+		summarizeBy: sum
+		sourceColumn: total_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		lineageTag: 1a5f0d4c-6552-4b1d-9a68-9601b5c2751f
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_id
+		dataType: string
+		lineageTag: 6ee4b33a-d511-451d-a8b5-7d42fb9e4e09
+		summarizeBy: none
+		sourceColumn: seller_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		dataType: string
+		lineageTag: b02f480c-2e1b-4603-ae28-413a9643eb21
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_delivered_customer_date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 2936e9ef-f7cd-4840-82da-23175b99f186
+		summarizeBy: sum
+		sourceColumn: order_delivered_customer_date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'marts order_metrics' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("cloud-analyst-pg.postgres.database.azure.com", "cloud_analyst"),
+				    marts_order_metrics = Source{[Schema="marts",Item="order_metrics"]}[Data]
+				in
+				    marts_order_metrics
+
+	annotation PBI_ResultType = Table
+

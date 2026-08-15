@@ -1,0 +1,57 @@
+table 'marts revenue_metrics'
+	lineageTag: 9a2096bf-fee6-47d1-bed8-f3ef8d1296bf
+
+	column total_revenue
+		dataType: double
+		lineageTag: e3afc4d3-70c2-4667-8380-f1c76cb2c278
+		summarizeBy: sum
+		sourceColumn: total_revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column customer_id
+		dataType: string
+		lineageTag: f70b6e76-7a99-4c99-bdc8-880866715f83
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		dataType: string
+		lineageTag: 4489b8cd-684d-4da9-bf65-63b8a43d1efd
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_id
+		dataType: string
+		lineageTag: af139b18-0100-4c5b-9de8-b6f05e631db2
+		summarizeBy: none
+		sourceColumn: seller_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_delivered_customer_date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 6dae8a3d-473b-4171-aa6d-f9bce4c41a82
+		summarizeBy: sum
+		sourceColumn: order_delivered_customer_date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'marts revenue_metrics' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("cloud-analyst-pg.postgres.database.azure.com", "cloud_analyst"),
+				    marts_revenue_metrics = Source{[Schema="marts",Item="revenue_metrics"]}[Data]
+				in
+				    marts_revenue_metrics
+
+	annotation PBI_ResultType = Table
+

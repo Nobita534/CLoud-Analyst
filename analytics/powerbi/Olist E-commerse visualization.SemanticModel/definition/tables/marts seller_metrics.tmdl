@@ -1,0 +1,61 @@
+table 'marts seller_metrics'
+	lineageTag: c3a4f2ca-1bb8-404a-af45-9de0fbb5c315
+
+	column seller_id
+		dataType: string
+		lineageTag: 5bfa833c-aafa-4657-9c97-147fb63b8e59
+		summarizeBy: none
+		sourceColumn: seller_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_state
+		dataType: string
+		lineageTag: 75d84428-906c-4792-968d-e8aeafadbdfc
+		summarizeBy: none
+		sourceColumn: seller_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_orders
+		dataType: int64
+		formatString: 0
+		lineageTag: 623a1318-f5bc-4b91-80c4-d15ebe934a0d
+		summarizeBy: sum
+		sourceColumn: total_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_sales
+		dataType: double
+		lineageTag: e88717bd-183c-4493-936c-6250c9ff1406
+		summarizeBy: sum
+		sourceColumn: total_sales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column average_review_score
+		dataType: double
+		lineageTag: 519c8e2d-464f-4f88-8850-e3c62028a8c5
+		summarizeBy: sum
+		sourceColumn: average_review_score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'marts seller_metrics' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("cloud-analyst-pg.postgres.database.azure.com", "cloud_analyst"),
+				    marts_seller_metrics = Source{[Schema="marts",Item="seller_metrics"]}[Data]
+				in
+				    marts_seller_metrics
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

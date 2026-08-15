@@ -1,0 +1,67 @@
+table 'marts fact_order_items'
+	lineageTag: 1436600e-3c66-4644-a3a2-1db5def405e0
+
+	column fact_item_id
+		dataType: int64
+		formatString: 0
+		lineageTag: f9c6efd3-384f-4381-9896-419209bad0da
+		summarizeBy: sum
+		sourceColumn: fact_item_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_id
+		dataType: string
+		lineageTag: f37a900f-e4ec-4f16-ae40-09d00881cb71
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		dataType: string
+		lineageTag: 3a3f3001-13c7-48cf-81b2-83bc727205ef
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_id
+		dataType: string
+		lineageTag: 58c070f5-6848-4548-8c9d-6c95f70f7cfa
+		summarizeBy: none
+		sourceColumn: seller_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column price
+		dataType: double
+		lineageTag: b486682b-0257-4fe1-bd81-a515aa20c822
+		summarizeBy: sum
+		sourceColumn: price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column freight_value
+		dataType: double
+		lineageTag: 99ae7749-ecf8-4565-a3d0-650a49e43744
+		summarizeBy: sum
+		sourceColumn: freight_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'marts fact_order_items' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("cloud-analyst-pg.postgres.database.azure.com", "cloud_analyst"),
+				    marts_fact_order_items = Source{[Schema="marts",Item="fact_order_items"]}[Data]
+				in
+				    marts_fact_order_items
+
+	annotation PBI_ResultType = Table
+

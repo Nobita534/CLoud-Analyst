@@ -1,0 +1,32 @@
+table 'marts dim_products'
+	lineageTag: 6e89cb13-994f-4742-97dd-99c716a1138c
+
+	column product_id
+		dataType: string
+		lineageTag: 63ed7df7-1602-486b-b0a3-bfe9b559cbcb
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_category_name
+		dataType: string
+		lineageTag: 3e8085c1-22c5-40f4-9762-285835b368cd
+		summarizeBy: none
+		sourceColumn: product_category_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'marts dim_products' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("cloud-analyst-pg.postgres.database.azure.com", "cloud_analyst"),
+				    marts_dim_products = Source{[Schema="marts",Item="dim_products"]}[Data]
+				in
+				    marts_dim_products
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

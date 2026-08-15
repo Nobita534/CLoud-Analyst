@@ -1,0 +1,78 @@
+table 'All Measure'
+	lineageTag: 18634829-0023-41b0-8e32-4ea3f838e651
+
+	measure 'Total Customer all Years' = DISTINCTCOUNT('marts dim_customers'[customer_unique_id])
+		formatString: 0
+		lineageTag: 5852d3ce-25fe-4a22-878c-ea989d304720
+
+	measure 'Average Customer Value (12M)' = ```
+			
+			    DIVIDE(SUM('marts customer_metrics'[monetary]), [Total Customer all Years])
+			    // AVERAGE('marts customer_metrics'[monetary])
+			```
+		lineageTag: 7a2fd805-6ccb-42ba-9000-c53cec305dd7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average Frequency' = ```
+			
+			    DIVIDE(SUM('marts customer_metrics'[frequency]), [Total Customer all Years])
+			    // AVERAGE('marts customer_metrics'[frequency])
+			```
+		formatString: 0
+		lineageTag: 78fa10c0-f959-4a07-b9ea-e34e005624cd
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'AvAverage Recency' = ```
+			
+			    // AVERAGE('marts customer_metrics'[recency])
+			    DIVIDE(SUM('marts customer_metrics'[recency]), [Total Customer all Years])
+			```
+		lineageTag: 3fd8566a-0214-421d-ba7c-c0c42f0fd007
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Orders' = COUNT('marts dim_orders'[order_id])
+		formatString: 0
+		lineageTag: dc30680a-6aeb-4247-8998-185bedea52ed
+
+	measure 'Average Review Score' = AVERAGE('marts seller_metrics'[average_review_score])
+		lineageTag: bbc51395-d206-463a-be9f-e43c3a569fb8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Previous Customer' =
+			
+			VAR CurrentYear =
+			    MAX('marts dim_date'[year])
+			
+			RETURN
+			    CALCULATE(
+			        [Total Customer all Years],
+			        REMOVEFILTERS('marts dim_date'[year]),
+			        TREATAS(
+			            { CurrentYear - 1 },
+			            'marts dim_date'[year]
+			        )
+			    )
+		formatString: 0
+		lineageTag: c2226c69-33e2-4707-8c0b-07f502ff87d0
+
+	column Column
+		formatString: 0
+		lineageTag: 8546f429-230a-449c-b0e7-ab54e2f2b962
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'All Measure' = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 5d201ae25be24a81b8e77ef86ccde5d7
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

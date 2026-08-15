@@ -1,0 +1,84 @@
+table 'marts dim_date'
+	lineageTag: 46be81e2-59dc-4ca6-b585-e8c0f0365afd
+
+	column date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: be6d6cc1-fc85-40d6-8e9f-f7527af51048
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column full_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ce7369b1-67fc-4e54-b32b-cd2485d62944
+		summarizeBy: none
+		sourceColumn: full_date
+
+		variation Variation
+			isDefault
+			relationship: 07c742fa-d429-4f50-8b32-01a041d23b84
+			defaultHierarchy: LocalDateTable_bb5fdab4-2e81-4922-8adf-6aced64fbf30.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: 0b7c6fda-6429-4f8b-9a28-a3c593ca71cd
+		summarizeBy: sum
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		dataType: int64
+		formatString: 0
+		lineageTag: bd5d20db-c2d9-4c73-b36a-f7e534602c4d
+		summarizeBy: sum
+		sourceColumn: month
+
+		annotation SummarizationSetBy = Automatic
+
+	column quarter
+		dataType: int64
+		formatString: 0
+		lineageTag: ed692d72-32e2-4227-9ec3-c507ea6a6394
+		summarizeBy: sum
+		sourceColumn: quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_name
+		dataType: string
+		lineageTag: d61b0dda-6d33-4abb-b09a-130ce8fed631
+		summarizeBy: none
+		sourceColumn: day_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_name
+		dataType: string
+		lineageTag: d5e7daf6-b5f1-4e03-9302-95c6e19d58e9
+		summarizeBy: none
+		sourceColumn: month_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'marts dim_date' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("cloud-analyst-pg.postgres.database.azure.com", "cloud_analyst"),
+				    marts_dim_date = Source{[Schema="marts",Item="dim_date"]}[Data]
+				in
+				    marts_dim_date
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,85 @@
+table 'marts dim_orders'
+	lineageTag: b18046cf-ff5b-4fbb-bfee-7eb266ae3699
+
+	column order_id
+		dataType: string
+		lineageTag: b27944ed-1ff8-47c5-9b25-754655e3ea76
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_status
+		dataType: string
+		lineageTag: 2da103de-70b6-454e-a322-219ea9eb5053
+		summarizeBy: none
+		sourceColumn: order_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_purchase_date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: f291ffa5-72da-4fb3-a123-3bc70f514070
+		summarizeBy: sum
+		sourceColumn: order_purchase_date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_approved_date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 5924782f-4e44-4cd0-b168-ba7dd1de95aa
+		summarizeBy: none
+		sourceColumn: order_approved_date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_delivered_carrier_date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 1f3525c2-7811-435a-888c-fd67f642da8a
+		summarizeBy: sum
+		sourceColumn: order_delivered_carrier_date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_delivered_customer_date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 4aeba7c2-8032-4ca1-8c7d-5b0229469c70
+		summarizeBy: sum
+		sourceColumn: order_delivered_customer_date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_estimated_delivery_date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 224ed37a-e814-4680-a421-b50416a7bc03
+		summarizeBy: sum
+		sourceColumn: order_estimated_delivery_date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		lineageTag: 9c1aa360-b386-48bb-9991-1fad2702b628
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'marts dim_orders' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("cloud-analyst-pg.postgres.database.azure.com", "cloud_analyst"),
+				    marts_dim_orders = Source{[Schema="marts",Item="dim_orders"]}[Data]
+				in
+				    marts_dim_orders
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
