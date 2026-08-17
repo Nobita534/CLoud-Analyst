@@ -32,6 +32,9 @@
             }
           ]
         },
+        "Series": {
+          "projections": []
+        },
         "Y": {
           "projections": [
             {
@@ -302,6 +305,39 @@
           ]
         },
         "howCreated": "User"
+      },
+      {
+        "name": "fc6aa02c11b33ec3ed94",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "intermediate int_product_category_name_translation"
+              }
+            },
+            "Property": "product_category_name_english"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "5885f51bed1af9d8ec9f",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "marts product_metrics"
+                  }
+                },
+                "Property": "total_product_sales"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
       }
     ]
   }

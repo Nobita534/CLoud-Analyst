@@ -473,45 +473,6 @@
         }
       },
       {
-        "name": "98e196301ec3f24ab87d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Total Product and Seller Sales"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "438470940a658c0ecd6d",
-        "field": {
-          "HierarchyLevel": {
-            "Expression": {
-              "Hierarchy": {
-                "Expression": {
-                  "PropertyVariationSource": {
-                    "Expression": {
-                      "SourceRef": {
-                        "Entity": "marts dim_date"
-                      }
-                    },
-                    "Name": "Variation",
-                    "Property": "full_date"
-                  }
-                },
-                "Hierarchy": "Date Hierarchy"
-              }
-            },
-            "Level": "Quarter"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
         "name": "4e604b097d76fd124731",
         "field": {
           "Column": {
