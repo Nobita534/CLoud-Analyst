@@ -1,18 +1,47 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "a48eae4faa505a460194",
+  "name": "68492c23b675ff675475",
   "position": {
     "x": 707,
     "y": 133,
-    "z": 4000,
+    "z": 0,
     "height": 571,
-    "width": 565,
-    "tabOrder": 3000
+    "width": 565
   },
   "visual": {
     "visualType": "barChart",
     "query": {
       "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "HierarchyLevel": {
+                  "Expression": {
+                    "Hierarchy": {
+                      "Expression": {
+                        "PropertyVariationSource": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "marts dim_date"
+                            }
+                          },
+                          "Name": "Variation",
+                          "Property": "full_date"
+                        }
+                      },
+                      "Hierarchy": "Date Hierarchy"
+                    }
+                  },
+                  "Level": "Year"
+                }
+              },
+              "queryRef": "marts dim_date.full_date.Variation.Date Hierarchy.Year",
+              "nativeQueryRef": "full_date Year",
+              "active": true
+            }
+          ]
+        },
         "Rows": {
           "projections": [
             {
@@ -138,26 +167,6 @@
               "expr": {
                 "Literal": {
                   "Value": "'Product Sales by State'"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "visualTooltip": [
-        {
-          "properties": {
-            "section": {
-              "expr": {
-                "Literal": {
-                  "Value": "'53c54057c16f65c131ec'"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
                 }
               }
             }
@@ -447,7 +456,6 @@
             }
           ]
         },
-        "howCreated": "User",
         "objects": {
           "general": [
             {

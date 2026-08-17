@@ -7,7 +7,7 @@
     "z": 5000,
     "height": 571,
     "width": 565,
-    "tabOrder": 5000
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "filledMap",
@@ -62,6 +62,58 @@
               },
               "queryRef": "marts dim_customers.customer_state",
               "nativeQueryRef": "customer_state"
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "All Measure"
+                    }
+                  },
+                  "Property": "Total Customer all Years"
+                }
+              },
+              "queryRef": "All Measure.Total Customer all Years",
+              "nativeQueryRef": "Total Customer all Years"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "All Measure"
+                    }
+                  },
+                  "Property": "Total Orders"
+                }
+              },
+              "queryRef": "All Measure.Total Orders",
+              "nativeQueryRef": "Total Orders"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "marts revenue_metrics"
+                        }
+                      },
+                      "Property": "total_revenue"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(marts revenue_metrics.total_revenue)",
+              "nativeQueryRef": "Sum of total_revenue",
+              "format": "#,0"
             }
           ]
         }
@@ -132,6 +184,19 @@
             }
           }
         }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "section": {
+              "expr": {
+                "Literal": {
+                  "Value": "'___AUTO___'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true
@@ -139,7 +204,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "e1351e2b14e63eb242c8",
+        "name": "0a607b937767dd25efa6",
         "field": {
           "Column": {
             "Expression": {
@@ -153,7 +218,7 @@
         "type": "Categorical"
       },
       {
-        "name": "7c0cc5df51325340842b",
+        "name": "31be4f0e2741f751dfe2",
         "field": {
           "Column": {
             "Expression": {
@@ -165,6 +230,53 @@
           }
         },
         "type": "Categorical"
+      },
+      {
+        "name": "c38cd17bc51127a5102f",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "All Measure"
+              }
+            },
+            "Property": "Total Orders"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "e0eb52ca34f820357f53",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "marts revenue_metrics"
+                  }
+                },
+                "Property": "total_revenue"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "acb5891a07cf3c78554e",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "All Measure"
+              }
+            },
+            "Property": "Total Customer all Years"
+          }
+        },
+        "type": "Advanced"
       }
     ]
   }

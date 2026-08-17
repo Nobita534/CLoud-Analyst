@@ -7,7 +7,7 @@
     "z": 3000,
     "height": 270,
     "width": 390,
-    "tabOrder": 3000
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "clusteredColumnChart",
@@ -302,39 +302,6 @@
           ]
         },
         "howCreated": "User"
-      },
-      {
-        "name": "86e4372d567b7190195e",
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "marts product_metrics"
-                  }
-                },
-                "Property": "total_product_sales"
-              }
-            },
-            "Function": 0
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "2901c478cb6627e86803",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "intermediate int_product_category_name_translation"
-              }
-            },
-            "Property": "product_category_name_english"
-          }
-        },
-        "type": "Categorical"
       }
     ]
   }

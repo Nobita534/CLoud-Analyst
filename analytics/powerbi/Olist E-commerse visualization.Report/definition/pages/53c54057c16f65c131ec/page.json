@@ -1,0 +1,9 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "53c54057c16f65c131ec",
+  "displayName": "Tooltip_Total_Order_and_Sales by Product in each state",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "type": "Tooltip"
+}

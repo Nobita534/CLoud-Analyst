@@ -4,14 +4,14 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 3242.5660982289346,
-        "y": 316.76922725803536
+        "x": 317.77484768862814,
+        "y": 63.353847369668507
       },
       "nodes": [
         {
           "location": {
-            "x": 524.20589762981228,
-            "y": 265.12986013905169
+            "x": 879.94276792355834,
+            "y": 165.82522143514376
           },
           "nodeIndex": "marts customer_metrics",
           "nodeLineageTag": "d002dcd2-3beb-4e1d-83f7-822b77ea8e96",
@@ -19,7 +19,7 @@
             "height": 200,
             "width": 234
           },
-          "zIndex": 14
+          "zIndex": 11
         },
         {
           "location": {
@@ -32,7 +32,7 @@
             "height": 233.7657386384069,
             "width": 234
           },
-          "zIndex": 15
+          "zIndex": 12
         },
         {
           "location": {
@@ -45,7 +45,7 @@
             "height": 248,
             "width": 234
           },
-          "zIndex": 2
+          "zIndex": 1
         },
         {
           "location": {
@@ -58,25 +58,25 @@
             "height": 200,
             "width": 234
           },
-          "zIndex": 3
+          "zIndex": 2
         },
         {
           "location": {
-            "x": 1469.5278977364462,
-            "y": 678.43890426244525
+            "x": 1464.4998147640963,
+            "y": 694.780173922582
           },
           "nodeIndex": "marts dim_orders",
           "nodeLineageTag": "b18046cf-ff5b-4fbb-bfee-7eb266ae3699",
           "size": {
-            "height": 272,
+            "height": 290.85531114631158,
             "width": 236
           },
-          "zIndex": 13
+          "zIndex": 18
         },
         {
           "location": {
-            "x": 1306.4081029125184,
-            "y": 330.44239202889196
+            "x": 1303.8940614263436,
+            "y": 329.18537128580448
           },
           "nodeIndex": "marts dim_products",
           "nodeLineageTag": "6e89cb13-994f-4742-97dd-99c716a1138c",
@@ -84,7 +84,7 @@
             "height": 146.85531114631158,
             "width": 251.59829040322415
           },
-          "zIndex": 19
+          "zIndex": 17
         },
         {
           "location": {
@@ -97,7 +97,7 @@
             "height": 190.17248800000016,
             "width": 234
           },
-          "zIndex": 4
+          "zIndex": 3
         },
         {
           "location": {
@@ -110,7 +110,7 @@
             "height": 201.60603543335907,
             "width": 234
           },
-          "zIndex": 17
+          "zIndex": 14
         },
         {
           "location": {
@@ -120,10 +120,10 @@
           "nodeIndex": "marts fact_order_items",
           "nodeLineageTag": "1436600e-3c66-4644-a3a2-1db5def405e0",
           "size": {
-            "height": 224,
+            "height": 221.48595851382515,
             "width": 234
           },
-          "zIndex": 5
+          "zIndex": 4
         },
         {
           "location": {
@@ -136,7 +136,7 @@
             "height": 224,
             "width": 234
           },
-          "zIndex": 16
+          "zIndex": 13
         },
         {
           "location": {
@@ -149,7 +149,7 @@
             "height": 200,
             "width": 234
           },
-          "zIndex": 18
+          "zIndex": 15
         },
         {
           "location": {
@@ -162,13 +162,13 @@
             "height": 152,
             "width": 234
           },
-          "zIndex": 6,
+          "zIndex": 5,
           "expandedHeight": 104
         },
         {
           "location": {
-            "x": 1256.0691297748363,
-            "y": 37.5
+            "x": 911.64544616887724,
+            "y": 0
           },
           "nodeIndex": "marts payment_metrics",
           "nodeLineageTag": "039e1db0-f626-4fc9-9097-05a19a173a75",
@@ -176,12 +176,12 @@
             "height": 104,
             "width": 234
           },
-          "zIndex": 7
+          "zIndex": 6
         },
         {
           "location": {
-            "x": 866.80051809058261,
-            "y": 146.40442017903931
+            "x": 1187.3408075778802,
+            "y": 93.6095489693668
           },
           "nodeIndex": "marts product_metrics",
           "nodeLineageTag": "89f45a72-6d30-4b9a-b7c4-e441bbdbb152",
@@ -189,7 +189,7 @@
             "height": 176,
             "width": 234
           },
-          "zIndex": 8
+          "zIndex": 7
         },
         {
           "location": {
@@ -202,13 +202,13 @@
             "height": 152,
             "width": 234
           },
-          "zIndex": 9,
+          "zIndex": 8,
           "expandedHeight": 104
         },
         {
           "location": {
-            "x": 2244.7685058695661,
-            "y": 743.402704863015
+            "x": 1769.6146649825137,
+            "y": 1229.8697324378547
           },
           "nodeIndex": "marts seller_metrics",
           "nodeLineageTag": "c3a4f2ca-1bb8-404a-af45-9de0fbb5c315",
@@ -216,12 +216,12 @@
             "height": 200,
             "width": 208.63200334969997
           },
-          "zIndex": 10
+          "zIndex": 19
         },
         {
           "location": {
-            "x": 1544.5986533499447,
-            "y": 175.77228173961859
+            "x": 1602.4216075319671,
+            "y": 92.808912695847425
           },
           "nodeIndex": "marts customer_count",
           "nodeLineageTag": "b983b302-082d-4b14-9ccb-087bb18d380e",
@@ -229,7 +229,7 @@
             "height": 104,
             "width": 234
           },
-          "zIndex": 11
+          "zIndex": 9
         },
         {
           "location": {
@@ -241,7 +241,7 @@
             "height": 200,
             "width": 234
           },
-          "zIndex": 12
+          "zIndex": 10
         },
         {
           "location": {
@@ -254,7 +254,7 @@
             "height": 128,
             "width": 234
           },
-          "zIndex": 1
+          "zIndex": 16
         }
       ],
       "name": "All tables",

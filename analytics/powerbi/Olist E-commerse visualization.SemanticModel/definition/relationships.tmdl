@@ -25,6 +25,7 @@ relationship ebe09460-e44d-d3b0-8bbf-ea820fc61c6b
 	toColumn: 'marts dim_customers'.customer_id
 
 relationship 12f5880e-7410-5b58-afd4-cc5ea38b85b2
+	isActive: false
 	fromColumn: 'marts dim_orders'.order_approved_date_key
 	toColumn: 'marts dim_date'.date_key
 
@@ -34,7 +35,6 @@ relationship d5d81620-64db-0777-9f47-82a508050ccb
 	toColumn: 'marts dim_date'.date_key
 
 relationship cfad8f9c-ebf6-dd8d-31ee-1742a480a888
-	isActive: false
 	fromColumn: 'marts dim_orders'.order_delivered_customer_date_key
 	toColumn: 'marts dim_date'.date_key
 
@@ -64,12 +64,6 @@ relationship AutoDetected_8ab3a40e-6809-430c-a1df-9194fbaba5ce
 
 relationship AutoDetected_e2b87595-6c8e-47d5-ac42-c11efb872115
 	fromColumn: 'marts order_metrics'.product_id
-	toColumn: 'marts dim_products'.product_id
-
-relationship AutoDetected_91b8baef-23f4-4083-bb74-05fe2c6cf7f9
-	crossFilteringBehavior: bothDirections
-	fromCardinality: one
-	fromColumn: 'marts product_metrics'.product_id
 	toColumn: 'marts dim_products'.product_id
 
 relationship AutoDetected_0b703ec7-f1b5-4904-ac42-8a5f7c5e60c4
@@ -106,6 +100,17 @@ relationship AutoDetected_59cbaee3-10a2-47f3-a91c-42e4a235896e
 	toColumn: 'marts dim_sellers'.seller_id
 
 relationship AutoDetected_a5b6f0b5-dd36-4bef-a004-263ece1ae3e2
+	crossFilteringBehavior: bothDirections
 	fromColumn: 'marts dim_products'.product_category_name
 	toColumn: 'intermediate int_product_category_name_translation'.product_category_name
+
+relationship d1355720-0857-8f96-0568-e2090b825bd2
+	fromColumn: 'marts product_metrics'.product_id
+	toColumn: 'marts dim_products'.product_id
+
+relationship 8dc6fa0c-3efc-c56b-cfc4-094cde48268d
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'marts seller_metrics'.seller_id
+	toColumn: 'marts dim_sellers'.seller_id
 

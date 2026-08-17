@@ -6,7 +6,8 @@
     "y": 156.875,
     "z": 0,
     "height": 70.625,
-    "width": 119.375
+    "width": 119.375,
+    "tabOrder": 7000
   },
   "visual": {
     "visualType": "card",
@@ -116,23 +117,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "a24679d6c1acde96b5e3",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Total Customer all Years"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

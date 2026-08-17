@@ -6,7 +6,8 @@
     "y": 156.875,
     "z": 0,
     "height": 70.625,
-    "width": 119.375
+    "width": 119.375,
+    "tabOrder": 8000
   },
   "visual": {
     "visualType": "card",
@@ -84,14 +85,14 @@
             "labelDisplayUnits": {
               "expr": {
                 "Literal": {
-                  "Value": "1D"
+                  "Value": "0D"
                 }
               }
             },
             "labelPrecision": {
               "expr": {
                 "Literal": {
-                  "Value": "0L"
+                  "Value": "4L"
                 }
               }
             }
@@ -115,23 +116,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "b393cd652d8a272aec52",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Average Frequency"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

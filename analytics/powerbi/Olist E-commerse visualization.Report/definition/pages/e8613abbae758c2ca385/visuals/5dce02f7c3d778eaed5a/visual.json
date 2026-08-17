@@ -7,7 +7,7 @@
     "z": 7000,
     "height": 81.428571428571431,
     "width": 200,
-    "tabOrder": 7000
+    "tabOrder": 6000
   },
   "visual": {
     "visualType": "slicer",
@@ -153,22 +153,72 @@
               "marts dim_date.full_date.Variation.Date Hierarchy.Quarter"
             ],
             "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "LocalDateTable_bb5fdab4-2e81-4922-8adf-6aced64fbf30"
+                    }
+                  },
+                  "Property": "Quarter"
+                }
+              }
+            ],
             "isPinned": true
           },
           {
             "queryRefs": [
               "marts dim_date.full_date.Variation.Date Hierarchy.Month"
             ],
-            "isCollapsed": true
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "LocalDateTable_bb5fdab4-2e81-4922-8adf-6aced64fbf30"
+                    }
+                  },
+                  "Property": "Month"
+                }
+              }
+            ],
+            "isPinned": true
           },
           {
             "queryRefs": [
               "marts dim_date.full_date.Variation.Date Hierarchy.Day"
             ],
-            "isCollapsed": true
+            "isCollapsed": true,
+            "isPinned": true
           }
         ],
-        "root": {}
+        "root": {
+          "children": [
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "2018L"
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "identityValues": [
+                    {
+                      "Literal": {
+                        "Value": "'Qtr 2'"
+                      }
+                    }
+                  ],
+                  "isToggled": true
+                }
+              ]
+            }
+          ]
+        }
       }
     ],
     "objects": {
@@ -388,81 +438,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "17dccb9b1de9d9c81c02",
-        "field": {
-          "HierarchyLevel": {
-            "Expression": {
-              "Hierarchy": {
-                "Expression": {
-                  "PropertyVariationSource": {
-                    "Expression": {
-                      "SourceRef": {
-                        "Entity": "marts dim_date"
-                      }
-                    },
-                    "Name": "Variation",
-                    "Property": "full_date"
-                  }
-                },
-                "Hierarchy": "Date Hierarchy"
-              }
-            },
-            "Level": "Quarter"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "4f96e12e90115cd63829",
-        "field": {
-          "HierarchyLevel": {
-            "Expression": {
-              "Hierarchy": {
-                "Expression": {
-                  "PropertyVariationSource": {
-                    "Expression": {
-                      "SourceRef": {
-                        "Entity": "marts dim_date"
-                      }
-                    },
-                    "Name": "Variation",
-                    "Property": "full_date"
-                  }
-                },
-                "Hierarchy": "Date Hierarchy"
-              }
-            },
-            "Level": "Month"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "abec6f12db948bd4ffab",
-        "field": {
-          "HierarchyLevel": {
-            "Expression": {
-              "Hierarchy": {
-                "Expression": {
-                  "PropertyVariationSource": {
-                    "Expression": {
-                      "SourceRef": {
-                        "Entity": "marts dim_date"
-                      }
-                    },
-                    "Name": "Variation",
-                    "Property": "full_date"
-                  }
-                },
-                "Hierarchy": "Date Hierarchy"
-              }
-            },
-            "Level": "Day"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

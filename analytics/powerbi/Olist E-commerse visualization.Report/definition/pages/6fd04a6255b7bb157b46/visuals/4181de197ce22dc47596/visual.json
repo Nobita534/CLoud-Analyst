@@ -1,33 +1,70 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "a48eae4faa505a460194",
+  "name": "4181de197ce22dc47596",
   "position": {
-    "x": 707,
-    "y": 133,
-    "z": 4000,
-    "height": 571,
-    "width": 565,
-    "tabOrder": 3000
+    "x": 258.75,
+    "y": 256.25,
+    "z": 0,
+    "height": 463.75,
+    "width": 740
   },
   "visual": {
-    "visualType": "barChart",
+    "visualType": "lineClusteredColumnComboChart",
     "query": {
       "queryState": {
-        "Rows": {
+        "Category": {
           "projections": [
             {
               "field": {
-                "Column": {
+                "HierarchyLevel": {
                   "Expression": {
-                    "SourceRef": {
-                      "Entity": "marts dim_customers"
+                    "Hierarchy": {
+                      "Expression": {
+                        "PropertyVariationSource": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "marts dim_date"
+                            }
+                          },
+                          "Name": "Variation",
+                          "Property": "full_date"
+                        }
+                      },
+                      "Hierarchy": "Date Hierarchy"
                     }
                   },
-                  "Property": "customer_state"
+                  "Level": "Year"
                 }
               },
-              "queryRef": "marts dim_customers.customer_state",
-              "nativeQueryRef": "customer_state"
+              "queryRef": "marts dim_date.full_date.Variation.Date Hierarchy.Year",
+              "nativeQueryRef": "full_date Year",
+              "active": true
+            },
+            {
+              "field": {
+                "HierarchyLevel": {
+                  "Expression": {
+                    "Hierarchy": {
+                      "Expression": {
+                        "PropertyVariationSource": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "marts dim_date"
+                            }
+                          },
+                          "Name": "Variation",
+                          "Property": "full_date"
+                        }
+                      },
+                      "Hierarchy": "Date Hierarchy"
+                    }
+                  },
+                  "Level": "Quarter"
+                }
+              },
+              "queryRef": "marts dim_date.full_date.Variation.Date Hierarchy.Quarter",
+              "nativeQueryRef": "full_date Quarter",
+              "active": false
             }
           ]
         },
@@ -53,111 +90,132 @@
           "projections": [
             {
               "field": {
-                "Aggregation": {
+                "Measure": {
                   "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "marts product_metrics"
-                        }
-                      },
-                      "Property": "total_product_sales"
+                    "SourceRef": {
+                      "Entity": "All Measure"
                     }
                   },
-                  "Function": 0
+                  "Property": "Total Product and Seller Sales"
                 }
               },
-              "queryRef": "Sum(marts product_metrics.total_product_sales)",
-              "nativeQueryRef": "Sum of total_product_sales"
+              "queryRef": "All Measure.Total Product and Seller Sales",
+              "nativeQueryRef": "Total Product and Seller Sales"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "marts dim_customers"
-                  }
-                },
-                "Property": "customer_state"
-              }
-            },
-            "direction": "Ascending"
-          }
-        ]
       }
     },
     "objects": {
-      "dataPoint": [
+      "categoryAxis": [
         {
           "properties": {
-            "fillRule": {
-              "linearGradient2": {
-                "min": {
-                  "color": {
-                    "expr": {
-                      "Literal": {
-                        "Value": "'minColor'"
-                      }
-                    }
-                  }
-                },
-                "max": {
-                  "color": {
-                    "expr": {
-                      "Literal": {
-                        "Value": "'maxColor'"
-                      }
-                    }
-                  }
-                },
-                "nullColoringStrategy": {
-                  "strategy": {
-                    "expr": {
-                      "Literal": {
-                        "Value": "'asZero'"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ]
-    },
-    "visualContainerObjects": {
-      "title": [
-        {
-          "properties": {
-            "text": {
+            "axisType": {
               "expr": {
                 "Literal": {
-                  "Value": "'Product Sales by State'"
+                  "Value": "'Scalar'"
                 }
               }
             }
           }
         }
       ],
-      "visualTooltip": [
+      "valueAxis": [
         {
           "properties": {
-            "section": {
+            "gridlineShow": {
               "expr": {
                 "Literal": {
-                  "Value": "'53c54057c16f65c131ec'"
+                  "Value": "true"
                 }
               }
             },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1000D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "labels": [
+        {
+          "properties": {
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "labelPrecision": {
+              "expr": {
+                "Literal": {
+                  "Value": "2L"
+                }
+              }
+            },
+            "showBlankAs": {
+              "expr": {
+                "Literal": {
+                  "Value": "''"
+                }
+              }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1000D"
+                }
+              }
+            },
+            "optimizeLabelDisplay": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "labelContainerMaxWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "200D"
+                }
+              }
+            },
+            "labelPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Auto'"
+                }
+              }
+            },
+            "enableBackground": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "legend": [
+        {
+          "properties": {
+            "titleText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'product_category_name'"
                 }
               }
             }
@@ -170,7 +228,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "5d36fff8fcfe7a303bb8",
+        "name": "ef2a36d587f4df1080ad",
         "field": {
           "Column": {
             "Expression": {
@@ -198,8 +256,8 @@
                         "Type": 0
                       },
                       {
-                        "Name": "m",
-                        "Entity": "marts product_metrics",
+                        "Name": "a",
+                        "Entity": "All Measure",
                         "Type": 0
                       }
                     ],
@@ -220,23 +278,18 @@
                       {
                         "Direction": 2,
                         "Expression": {
-                          "Aggregation": {
+                          "Measure": {
                             "Expression": {
-                              "Column": {
-                                "Expression": {
-                                  "SourceRef": {
-                                    "Source": "m"
-                                  }
-                                },
-                                "Property": "total_product_sales"
+                              "SourceRef": {
+                                "Source": "a"
                               }
                             },
-                            "Function": 0
+                            "Property": "Total Product and Seller Sales"
                           }
                         }
                       }
                     ],
-                    "Top": 10
+                    "Top": 5
                   }
                 }
               },
@@ -273,54 +326,10 @@
               }
             }
           ]
-        },
-        "objects": {
-          "general": [
-            {
-              "properties": {
-                "isInvertedSelectionMode": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "true"
-                    }
-                  }
-                }
-              }
-            }
-          ]
         }
       },
       {
-        "name": "48137f0b9e31251e5207",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "marts dim_customers"
-              }
-            },
-            "Property": "customer_state"
-          }
-        },
-        "type": "Categorical",
-        "objects": {
-          "general": [
-            {
-              "properties": {
-                "isInvertedSelectionMode": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "true"
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        }
-      },
-      {
-        "name": "12f45b646fdceb98d08f",
+        "name": "56d46ce44bf15c3c7880",
         "field": {
           "HierarchyLevel": {
             "Expression": {
@@ -442,6 +451,117 @@
                       "0": "(Blank)"
                     }
                   ]
+                }
+              }
+            }
+          ]
+        },
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "98e196301ec3f24ab87d",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "All Measure"
+              }
+            },
+            "Property": "Total Product and Seller Sales"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "438470940a658c0ecd6d",
+        "field": {
+          "HierarchyLevel": {
+            "Expression": {
+              "Hierarchy": {
+                "Expression": {
+                  "PropertyVariationSource": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "marts dim_date"
+                      }
+                    },
+                    "Name": "Variation",
+                    "Property": "full_date"
+                  }
+                },
+                "Hierarchy": "Date Hierarchy"
+              }
+            },
+            "Level": "Quarter"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "4e604b097d76fd124731",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "intermediate int_product_category_name_translation"
+              }
+            },
+            "Property": "product_category_name_english"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "i",
+              "Entity": "intermediate int_product_category_name_translation",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Not": {
+                  "Expression": {
+                    "In": {
+                      "Expressions": [
+                        {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "i"
+                              }
+                            },
+                            "Property": "product_category_name_english"
+                          }
+                        }
+                      ],
+                      "Values": [
+                        [
+                          {
+                            "Literal": {
+                              "Value": "null"
+                            }
+                          }
+                        ]
+                      ]
+                    }
+                  }
                 }
               }
             }

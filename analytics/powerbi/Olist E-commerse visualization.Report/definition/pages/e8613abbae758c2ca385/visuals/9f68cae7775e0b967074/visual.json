@@ -7,7 +7,7 @@
     "z": 5000,
     "height": 274,
     "width": 551,
-    "tabOrder": 5000
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "scatterChart",
@@ -113,7 +113,7 @@
             "labelDisplayUnits": {
               "expr": {
                 "Literal": {
-                  "Value": "1000D"
+                  "Value": "1D"
                 }
               }
             },
@@ -199,6 +199,13 @@
                   "Value": "0D"
                 }
               }
+            },
+            "end": {
+              "expr": {
+                "Literal": {
+                  "Value": "6D"
+                }
+              }
             }
           }
         }
@@ -225,6 +232,26 @@
               "expr": {
                 "Literal": {
                   "Value": "'Seller Sales vs. Customer Satisfaction'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "section": {
+              "expr": {
+                "Literal": {
+                  "Value": "'6fd04a6255b7bb157b46'"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -310,26 +337,35 @@
         }
       },
       {
-        "name": "08e0b22657ee6b08d78e",
+        "name": "2707c806386dde984379",
         "field": {
-          "Aggregation": {
+          "Column": {
             "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "marts seller_metrics"
-                  }
-                },
-                "Property": "total_orders"
+              "SourceRef": {
+                "Entity": "marts seller_metrics"
               }
             },
-            "Function": 0
+            "Property": "seller_id"
           }
         },
-        "type": "Advanced"
+        "type": "Categorical"
       },
       {
-        "name": "90697066aaa34a273b33",
+        "name": "a5f783f98af551b296a5",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "marts seller_metrics"
+              }
+            },
+            "Property": "seller_state"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "481d4c24e02380e6aeaf",
         "field": {
           "Aggregation": {
             "Expression": {
@@ -348,32 +384,23 @@
         "type": "Advanced"
       },
       {
-        "name": "71ea9c9e23f0b44d3cba",
+        "name": "05824b59fd85ba6acf1c",
         "field": {
-          "Column": {
+          "Aggregation": {
             "Expression": {
-              "SourceRef": {
-                "Entity": "marts seller_metrics"
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "marts seller_metrics"
+                  }
+                },
+                "Property": "total_orders"
               }
             },
-            "Property": "seller_id"
+            "Function": 0
           }
         },
-        "type": "Categorical"
-      },
-      {
-        "name": "8bdc412a9073914e4a75",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "marts seller_metrics"
-              }
-            },
-            "Property": "seller_state"
-          }
-        },
-        "type": "Categorical"
+        "type": "Advanced"
       }
     ]
   }

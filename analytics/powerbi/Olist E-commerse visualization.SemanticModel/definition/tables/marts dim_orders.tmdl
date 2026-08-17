@@ -30,7 +30,7 @@ table 'marts dim_orders'
 		dataType: int64
 		formatString: 0
 		lineageTag: 5924782f-4e44-4cd0-b168-ba7dd1de95aa
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: order_approved_date_key
 
 		annotation SummarizationSetBy = Automatic
@@ -48,7 +48,7 @@ table 'marts dim_orders'
 		dataType: int64
 		formatString: 0
 		lineageTag: 4aeba7c2-8032-4ca1-8c7d-5b0229469c70
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: order_delivered_customer_date_key
 
 		annotation SummarizationSetBy = Automatic

@@ -7,7 +7,7 @@
     "z": 2000,
     "height": 72.5,
     "width": 119.375,
-    "tabOrder": 2000
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "card",
@@ -116,23 +116,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "6ca7fe115775e79d323a",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Average Customer Value (12M)"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

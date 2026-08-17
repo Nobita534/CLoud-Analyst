@@ -6,8 +6,7 @@
     "y": 236.25,
     "z": 1000,
     "height": 70.625,
-    "width": 119.375,
-    "tabOrder": 1000
+    "width": 119.375
   },
   "visual": {
     "visualType": "card",
@@ -127,28 +126,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "2077eff1e21e755eece4",
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "marts customer_metrics"
-                  }
-                },
-                "Property": "monetary"
-              }
-            },
-            "Function": 0
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

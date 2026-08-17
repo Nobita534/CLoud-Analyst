@@ -6,8 +6,7 @@
     "y": 236.25,
     "z": 1000,
     "height": 70.625,
-    "width": 119.375,
-    "tabOrder": 1000
+    "width": 119.375
   },
   "visual": {
     "visualType": "card",
@@ -96,7 +95,7 @@
             "labelDisplayUnits": {
               "expr": {
                 "Literal": {
-                  "Value": "1000000000D"
+                  "Value": "1000000D"
                 }
               }
             },
@@ -127,28 +126,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "d5a07bcb3d09e27914cd",
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "marts seller_metrics"
-                  }
-                },
-                "Property": "total_sales"
-              }
-            },
-            "Function": 0
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

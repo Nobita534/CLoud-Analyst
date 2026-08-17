@@ -7,10 +7,10 @@
     "z": 5000,
     "height": 571,
     "width": 565,
-    "tabOrder": 5000
+    "tabOrder": 4000
   },
   "visual": {
-    "visualType": "barChart",
+    "visualType": "hundredPercentStackedBarChart",
     "query": {
       "queryState": {
         "Category": {
@@ -134,6 +134,26 @@
               "expr": {
                 "Literal": {
                   "Value": "'Customer Segment Value by State'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "section": {
+              "expr": {
+                "Literal": {
+                  "Value": "'f027b6a5f629d17e4bba'"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -317,20 +337,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "46faa7da879f22af5425",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Average Customer Value (12M)"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

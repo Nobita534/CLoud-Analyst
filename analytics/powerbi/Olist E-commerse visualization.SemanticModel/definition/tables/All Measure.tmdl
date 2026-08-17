@@ -19,10 +19,8 @@ table 'All Measure'
 			    DIVIDE(SUM('marts customer_metrics'[frequency]), [Total Customer all Years])
 			    // AVERAGE('marts customer_metrics'[frequency])
 			```
-		formatString: 0
+		formatString: 0.0000
 		lineageTag: 78fa10c0-f959-4a07-b9ea-e34e005624cd
-
-		annotation PBI_FormatHint = {"isDecimal":true}
 
 	measure 'AvAverage Recency' = ```
 			
@@ -33,7 +31,7 @@ table 'All Measure'
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Total Orders' = COUNT('marts dim_orders'[order_id])
+	measure 'Total Orders' = DISTINCTCOUNT('marts dim_orders'[order_id])
 		formatString: 0
 		lineageTag: dc30680a-6aeb-4247-8998-185bedea52ed
 
@@ -42,22 +40,12 @@ table 'All Measure'
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Previous Customer' =
+	measure 'Total Product and Seller Sales' =
 			
-			VAR CurrentYear =
-			    MAX('marts dim_date'[year])
-			
-			RETURN
-			    CALCULATE(
-			        [Total Customer all Years],
-			        REMOVEFILTERS('marts dim_date'[year]),
-			        TREATAS(
-			            { CurrentYear - 1 },
-			            'marts dim_date'[year]
-			        )
-			    )
-		formatString: 0
-		lineageTag: c2226c69-33e2-4707-8c0b-07f502ff87d0
+			SUM('marts fact_order_items'[price])
+		lineageTag: 7a0daa14-e881-40a7-91ea-bee3ad162f5a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	column Column
 		formatString: 0

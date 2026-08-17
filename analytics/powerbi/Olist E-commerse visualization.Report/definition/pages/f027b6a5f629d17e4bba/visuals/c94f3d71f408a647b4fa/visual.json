@@ -1,67 +1,49 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "72a21970c21878b59579",
+  "name": "c94f3d71f408a647b4fa",
   "position": {
-    "x": 127,
-    "y": 430,
-    "z": 4000,
-    "height": 274,
-    "width": 551,
-    "tabOrder": 3000
+    "x": 0,
+    "y": 130.36064255682675,
+    "z": 0,
+    "height": 459.6927921740733,
+    "width": 1280.2787316370459
   },
   "visual": {
-    "visualType": "clusteredColumnChart",
+    "visualType": "lineStackedColumnComboChart",
     "query": {
       "queryState": {
         "Category": {
           "projections": [
             {
               "field": {
-                "Column": {
+                "HierarchyLevel": {
                   "Expression": {
-                    "SourceRef": {
-                      "Entity": "marts customer_metrics"
+                    "Hierarchy": {
+                      "Expression": {
+                        "PropertyVariationSource": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "marts dim_date"
+                            }
+                          },
+                          "Name": "Variation",
+                          "Property": "full_date"
+                        }
+                      },
+                      "Hierarchy": "Date Hierarchy"
                     }
                   },
-                  "Property": "customer_segment"
+                  "Level": "Year"
                 }
               },
-              "queryRef": "marts customer_metrics.customer_segment",
-              "nativeQueryRef": "customer_segment",
+              "queryRef": "marts dim_date.full_date.Variation.Date Hierarchy.Year",
+              "nativeQueryRef": "full_date Year",
               "active": true
             }
           ]
         },
-        "Tooltips": {
+        "Y": {
           "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "All Measure"
-                    }
-                  },
-                  "Property": "Total Customer all Years"
-                }
-              },
-              "queryRef": "All Measure.Total Customer all Years",
-              "nativeQueryRef": "Total Customer all Years"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "All Measure"
-                    }
-                  },
-                  "Property": "Average Frequency"
-                }
-              },
-              "queryRef": "All Measure.Average Frequency",
-              "nativeQueryRef": "Average Frequency"
-            },
             {
               "field": {
                 "Measure": {
@@ -78,7 +60,7 @@
             }
           ]
         },
-        "Y": {
+        "Y2": {
           "projections": [
             {
               "field": {
@@ -88,11 +70,12 @@
                       "Entity": "All Measure"
                     }
                   },
-                  "Property": "AvAverage Recency"
+                  "Property": "Average Frequency"
                 }
               },
-              "queryRef": "All Measure.AvAverage Recency",
-              "nativeQueryRef": "AvAverage Recency"
+              "queryRef": "All Measure.Average Frequency",
+              "nativeQueryRef": "Average Frequency",
+              "format": "0.00"
             }
           ]
         }
@@ -101,18 +84,30 @@
         "sort": [
           {
             "field": {
-              "Measure": {
+              "HierarchyLevel": {
                 "Expression": {
-                  "SourceRef": {
-                    "Entity": "All Measure"
+                  "Hierarchy": {
+                    "Expression": {
+                      "PropertyVariationSource": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "marts dim_date"
+                          }
+                        },
+                        "Name": "Variation",
+                        "Property": "full_date"
+                      }
+                    },
+                    "Hierarchy": "Date Hierarchy"
                   }
                 },
-                "Property": "Total Customer all Years"
+                "Level": "Year"
               }
             },
-            "direction": "Descending"
+            "direction": "Ascending"
           }
-        ]
+        ],
+        "isDefaultSort": true
       }
     },
     "objects": {
@@ -231,6 +226,19 @@
             }
           }
         }
+      ],
+      "seriesLabels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "visualContainerObjects": {
@@ -254,26 +262,6 @@
               "expr": {
                 "Literal": {
                   "Value": "'Average Recency by Segment'"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "visualTooltip": [
-        {
-          "properties": {
-            "section": {
-              "expr": {
-                "Literal": {
-                  "Value": "'___AUTO___'"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
                 }
               }
             }
@@ -341,6 +329,7 @@
             }
           ]
         },
+        "howCreated": "User",
         "objects": {
           "general": [
             {

@@ -6,7 +6,8 @@
     "y": 156.875,
     "z": 0,
     "height": 70.625,
-    "width": 119.375
+    "width": 119.375,
+    "tabOrder": 8000
   },
   "visual": {
     "visualType": "card",
@@ -126,28 +127,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "5ee436e50307b5a96aaa",
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "marts product_metrics"
-                  }
-                },
-                "Property": "total_product_sales"
-              }
-            },
-            "Function": 0
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }
