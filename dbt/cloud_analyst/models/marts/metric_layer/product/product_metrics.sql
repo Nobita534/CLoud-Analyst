@@ -1,5 +1,5 @@
 SELECT
-    oi.order_id,
+    -- oi.order_id,
 
     p.product_id,
 
@@ -20,7 +20,7 @@ INNER JOIN {{ ref('dim_orders') }} AS o
 WHERE o.order_status = 'delivered'
 
 GROUP BY
-    p.product_id,
-    oi.order_id
+    p.product_id
+    -- oi.order_id
 
-ORDER BY oi.order_id
+-- ORDER BY oi.order_id
