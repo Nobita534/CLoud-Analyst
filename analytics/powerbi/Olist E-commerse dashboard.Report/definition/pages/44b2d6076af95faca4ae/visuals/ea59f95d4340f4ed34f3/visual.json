@@ -74,7 +74,7 @@
                       "Entity": "All Measure"
                     }
                   },
-                  "Property": "Total Customer all Years"
+                  "Property": "Active Customer"
                 }
               },
               "queryRef": "All Measure.Total Customer all Years",
@@ -93,7 +93,7 @@
                     "Entity": "All Measure"
                   }
                 },
-                "Property": "Total Customer all Years"
+                "Property": "Active Customer"
               }
             },
             "direction": "Descending"
@@ -268,48 +268,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "02b75b763834a9ff02a6",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Total Customer all Years"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "6ea1811e846d0074484f",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Average Customer Value (12M)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "7e1dd4a6a0d2d7e4b216",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Average Frequency"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

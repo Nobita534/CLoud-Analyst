@@ -115,23 +115,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "6d470c250241a57654ce",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Average Customer Value (12M)"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

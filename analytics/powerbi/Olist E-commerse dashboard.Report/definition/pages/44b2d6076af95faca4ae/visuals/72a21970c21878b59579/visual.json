@@ -42,7 +42,7 @@
                       "Entity": "All Measure"
                     }
                   },
-                  "Property": "Total Customer all Years"
+                  "Property": "Active Customer"
                 }
               },
               "queryRef": "All Measure.Total Customer all Years",
@@ -107,7 +107,7 @@
                     "Entity": "All Measure"
                   }
                 },
-                "Property": "Total Customer all Years"
+                "Property": "Active Customer"
               }
             },
             "direction": "Descending"
@@ -463,62 +463,6 @@
           ]
         },
         "howCreated": "User"
-      },
-      {
-        "name": "3e1cf80b8ebaeaeb5613",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Total Customer all Years"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "f17aa77a141ab88823ce",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Average Frequency"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "762161c176f56c0d8c94",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Average Customer Value (12M)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "6da208fa4d7a594ca736",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Average Recency"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

@@ -1,13 +1,17 @@
 table 'All Measure'
 	lineageTag: 18634829-0023-41b0-8e32-4ea3f838e651
 
-	measure 'Total Customer all Years' = DISTINCTCOUNT('marts dim_customers'[customer_unique_id])
+	measure 'Active Customer' = ```
+			
+			    // DISTINCTCOUNT('marts dim_customers'[customer_unique_id])
+			    CALCULATE(DISTINCTCOUNT('marts dim_orders'[customer_id]), 'marts dim_orders'[order_status] = "delivered")
+			```
 		formatString: 0
 		lineageTag: 5852d3ce-25fe-4a22-878c-ea989d304720
 
 	measure 'Average Customer Value (12M)' = ```
 			
-			    DIVIDE(SUM('marts customer_metrics'[monetary]), [Total Customer all Years])
+			    DIVIDE(SUM('marts customer_metrics'[monetary]), [Active Customer])
 			    // AVERAGE('marts customer_metrics'[monetary])
 			```
 		lineageTag: 7a2fd805-6ccb-42ba-9000-c53cec305dd7
@@ -16,7 +20,7 @@ table 'All Measure'
 
 	measure 'Average Frequency' = ```
 			
-			    DIVIDE(SUM('marts customer_metrics'[frequency]), [Total Customer all Years])
+			    DIVIDE(SUM('marts customer_metrics'[frequency]), [Active Customer])
 			    // AVERAGE('marts customer_metrics'[frequency])
 			```
 		formatString: 0.0000
@@ -25,13 +29,18 @@ table 'All Measure'
 	measure 'Average Recency' = ```
 			
 			    // AVERAGE('marts customer_metrics'[recency])
-			    DIVIDE(SUM('marts customer_metrics'[recency]), [Total Customer all Years])
+			    DIVIDE(SUM('marts customer_metrics'[recency]), [Active Customer])
 			```
 		lineageTag: 3fd8566a-0214-421d-ba7c-c0c42f0fd007
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Total Orders' = DISTINCTCOUNT('marts dim_orders'[order_id])
+	measure 'Total Orders' =
+			DISTINCTCOUNT('marts dim_orders'[order_id])
+			// CALCULATE(
+			//     DISTINCTCOUNT('marts dim_orders'[order_id]),
+			//     'marts dim_orders'[order_status] = "delivered"
+			// )
 		formatString: 0
 		lineageTag: dc30680a-6aeb-4247-8998-185bedea52ed
 
@@ -64,6 +73,110 @@ table 'All Measure'
 		lineageTag: 22b403e1-9303-4b14-a84d-4c88628550d8
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Revenue' = ROUND(SUM('marts revenue_metrics'[total_revenue]), 2)
+		formatString: 0.00
+		lineageTag: b27c1cad-3c75-47a3-b9fa-3ea0b4e734da
+
+	measure 'Revenue SPLY' = ```
+			
+			    CALCULATE(
+			        [Total Revenue],
+			        SAMEPERIODLASTYEAR('marts dim_date'[full_date])
+			    )
+			```
+		lineageTag: 11b18837-f5e2-4ceb-a56f-8b3be0c568a3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'YoY Revenue Growth %' =
+			
+			VAR _Current = [Total Revenue]
+			VAR _Previous = [Revenue SPLY]
+			RETURN
+			    ROUND(
+			        DIVIDE(_Current - _Previous, _Previous, BLANK()),
+			        4
+			    )
+		formatString: +0.0%;-0.0%;0.0%
+		lineageTag: 0120eef6-220b-4cb8-aa28-1ab947dde9bc
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure 'Revenue with YoY Label' = ```
+			
+			VAR _Rev = [Total Revenue]
+			VAR _Growth = [YoY Revenue Growth %]
+			VAR _RevMillions = FORMAT(DIVIDE(_Rev, 1000000), "#,##0.00") & "M"
+			VAR _GrowthFormatted = 
+			    IF(
+			        ISBLANK(_Growth), 
+			        "", 
+			        IF(_Growth >= 0, " (▲ +" & FORMAT(_Growth, "0.0%") & ")", " (▼ " & FORMAT(_Growth, "0.0%") & ")")
+			    )
+			RETURN
+			    _RevMillions & _GrowthFormatted
+			```
+		lineageTag: a7089161-e1ec-4df7-b48b-e5f7285c5da5
+
+	measure 'Total Orders LY' =
+			
+			CALCULATE(
+			    [Total Orders],
+			    SAMEPERIODLASTYEAR('marts dim_date'[full_date])
+			)
+		formatString: 0
+		lineageTag: 500af614-6d66-4d08-a824-121d168a2a31
+
+	measure 'YoY Order Growth %' =
+			
+			VAR _CurrentOrders = [Total Orders]
+			VAR _PreviousOrders = [Total Orders LY]
+			RETURN
+			    DIVIDE(_CurrentOrders - _PreviousOrders, _PreviousOrders, BLANK())
+		formatString: +0.0%;-0.0%;0.0%
+		lineageTag: a80569b4-d634-4774-9592-6aa0bd7a4220
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure AOV = ```
+			[Total Revenue] / [Total Orders] 
+			
+			```
+		lineageTag: b0709ef3-5029-4aec-8f8f-6441a5fe658f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Repeat Purchase Rate (%)' = ```
+			
+			VAR CustomerOrderCounts = 
+			    ADDCOLUMNS(
+			        VALUES('marts dim_customers'[customer_unique_id]),
+			        "@OrdersCount", 
+			        CALCULATE(
+			            DISTINCTCOUNT('marts dim_orders'[order_id]),
+			            'marts dim_orders'[order_status] = "delivered"
+			        )
+			    )
+			VAR RepeatCustomers = 
+			    COUNTROWS(
+			        FILTER(
+			            CustomerOrderCounts, 
+			            [@OrdersCount] >= 2
+			        )
+			    )
+			VAR TotalActiveCustomers = 
+			    COUNTROWS(
+			        FILTER(
+			            CustomerOrderCounts, 
+			            [@OrdersCount] >= 1
+			        )
+			    )
+			RETURN
+			    DIVIDE(RepeatCustomers, TotalActiveCustomers, 0)
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: e63139a0-cb93-4625-a518-4fe930bcf5ad
 
 	column Column
 		formatString: 0

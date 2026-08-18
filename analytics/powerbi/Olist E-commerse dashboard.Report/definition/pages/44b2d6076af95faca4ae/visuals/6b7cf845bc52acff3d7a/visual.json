@@ -384,53 +384,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "9d2eaeffb08b100a62ee",
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "marts fact_customer_rfm"
-                  }
-                },
-                "Property": "monetary"
-              }
-            },
-            "Function": 0
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "5ffde42147612fbd30f6",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Average Customer Value (12M)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "46dcd9e9a7f69d519792",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Average Frequency"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }
