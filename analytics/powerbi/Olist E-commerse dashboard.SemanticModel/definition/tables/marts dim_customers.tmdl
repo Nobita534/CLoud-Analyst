@@ -1,0 +1,67 @@
+table 'marts dim_customers'
+	lineageTag: 55c45968-263b-49f6-b654-c3090d359a9f
+
+	column customer_unique_id
+		dataType: string
+		lineageTag: 8d58fe87-f4ab-44d3-a40e-a7531c62ee11
+		summarizeBy: none
+		sourceColumn: customer_unique_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		lineageTag: 736521f0-f858-4510-af16-439df64ea54e
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_zip_code_prefix
+		dataType: int64
+		formatString: 0
+		lineageTag: c899bc4f-6b47-4feb-a16d-f1a46b9f651d
+		summarizeBy: sum
+		sourceColumn: customer_zip_code_prefix
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_city
+		dataType: string
+		lineageTag: 130ddbcc-e5af-47e5-aa8e-7b912d9b1a0b
+		summarizeBy: none
+		sourceColumn: customer_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_state
+		dataType: string
+		lineageTag: 40b41eb1-dc70-4bf2-9724-d2646b5c8153
+		dataCategory: StateOrProvince
+		summarizeBy: none
+		sourceColumn: customer_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: c4771d47-0f09-405b-8b80-72632c9d8b65
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'marts dim_customers' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("cloud-analyst-pg.postgres.database.azure.com", "cloud_analyst"),
+				    marts_dim_customers = Source{[Schema="marts",Item="dim_customers"]}[Data],
+				    #"Added Custom" = Table.AddColumn(marts_dim_customers, "Country", each "Brazil")
+				in
+				    #"Added Custom"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

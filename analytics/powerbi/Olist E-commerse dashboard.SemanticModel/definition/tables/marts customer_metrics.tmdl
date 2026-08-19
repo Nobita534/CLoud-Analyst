@@ -1,0 +1,105 @@
+table 'marts customer_metrics'
+	lineageTag: d002dcd2-3beb-4e1d-83f7-822b77ea8e96
+
+	column analysis_date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 07234ce4-4ca9-41c3-a3e2-a3858564aa5d
+		summarizeBy: sum
+		sourceColumn: analysis_date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column monetary
+		dataType: double
+		lineageTag: cbcf6d40-d62a-43ee-b6ba-0f9ee9a903de
+		summarizeBy: sum
+		sourceColumn: monetary
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column frequency
+		dataType: int64
+		formatString: 0
+		lineageTag: 42f7eef9-d4b0-4250-9d24-9139f9016906
+		summarizeBy: sum
+		sourceColumn: frequency
+
+		annotation SummarizationSetBy = Automatic
+
+	column recency
+		dataType: int64
+		formatString: 0
+		lineageTag: 8509a677-651a-4df5-a1ca-b02f592cecb6
+		summarizeBy: sum
+		sourceColumn: recency
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		lineageTag: da879aab-6bd8-43ce-a2db-fbe29a089bc3
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column r_score
+		dataType: int64
+		formatString: 0
+		lineageTag: 1f87b8ec-bad1-4b7d-9bed-b634d235602f
+		summarizeBy: sum
+		sourceColumn: r_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column f_score
+		dataType: int64
+		formatString: 0
+		lineageTag: 428eef2f-1848-4d33-ab3a-c941db9f1ed4
+		summarizeBy: sum
+		sourceColumn: f_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column m_score
+		dataType: int64
+		formatString: 0
+		lineageTag: 534145a2-e6a1-44ef-9d45-7b6c2565868f
+		summarizeBy: sum
+		sourceColumn: m_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column rfm_score
+		dataType: int64
+		formatString: 0
+		lineageTag: 414c3ead-0584-4e03-99c5-356aeab23955
+		summarizeBy: sum
+		sourceColumn: rfm_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_segment
+		dataType: string
+		lineageTag: 5c76eeae-c9a2-4670-b61c-4f532d55f526
+		summarizeBy: none
+		sourceColumn: customer_segment
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'marts customer_metrics' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("cloud-analyst-pg.postgres.database.azure.com", "cloud_analyst"),
+				    marts_customer_metrics = Source{[Schema="marts",Item="customer_metrics"]}[Data]
+				in
+				    marts_customer_metrics
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

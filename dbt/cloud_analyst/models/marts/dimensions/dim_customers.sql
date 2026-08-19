@@ -22,8 +22,6 @@ int_customer_data AS (
 
     FROM {{ ref('int_customer') }} AS c
 
-    LEFT JOIN int_geolocation_data AS g
-        ON c.customer_zip_code_prefix = g.geolocation_zip_code_prefix
 
 )
 

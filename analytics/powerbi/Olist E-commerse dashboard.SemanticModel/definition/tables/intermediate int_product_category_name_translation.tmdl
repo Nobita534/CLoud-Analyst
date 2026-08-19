@@ -1,0 +1,28 @@
+table 'intermediate int_product_category_name_translation'
+	lineageTag: 8f22498e-ea20-49e7-8071-2921f172b5bd
+
+	column product_category_name
+		dataType: string
+		lineageTag: f4130e56-6d36-48ae-9302-525527736bbc
+		summarizeBy: none
+		sourceColumn: product_category_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_category_name_english
+		dataType: string
+		lineageTag: e8b3c0a5-df7f-4a55-b098-a00278f764fc
+		summarizeBy: none
+		sourceColumn: product_category_name_english
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'intermediate int_product_category_name_translation' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("cloud-analyst-pg.postgres.database.azure.com", "cloud_analyst"),
+				    intermediate_int_product_category_name_translation = Source{[Schema="intermediate",Item="int_product_category_name_translation"]}[Data]
+				in
+				    intermediate_int_product_category_name_translation
+

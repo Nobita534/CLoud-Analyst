@@ -1,7 +1,9 @@
 SELECT
-    p.product_category_name,
+    -- oi.order_id,
 
-    COUNT(DISTINCT oi.order_id) AS total_orders,
+    p.product_id,
+
+    COUNT(DISTINCT oi.fact_item_id) AS total_orders,
 
     SUM(oi.price) AS total_product_sales,
 
@@ -18,4 +20,7 @@ INNER JOIN {{ ref('dim_orders') }} AS o
 WHERE o.order_status = 'delivered'
 
 GROUP BY
-    p.product_category_name
+    p.product_id
+    -- oi.order_id
+
+-- ORDER BY oi.order_id

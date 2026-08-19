@@ -1,0 +1,38 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["marts customer_metrics","marts dim_customers","marts dim_date","marts dim_geolocation","marts dim_orders","marts dim_products","marts dim_sellers","marts fact_customer_rfm","marts fact_order_items","marts fact_order_payments","marts fact_review","marts order_metrics","marts payment_metrics","marts product_metrics","marts revenue_metrics","marts seller_metrics","marts customer_count","intermediate int_product_category_name_translation"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 'marts customer_metrics'
+ref table 'marts dim_customers'
+ref table 'marts dim_date'
+ref table DateTableTemplate_0bc5e972-b1a8-4c75-9e93-6339126823aa
+ref table LocalDateTable_bb5fdab4-2e81-4922-8adf-6aced64fbf30
+ref table 'marts dim_geolocation'
+ref table 'marts dim_orders'
+ref table 'marts dim_products'
+ref table 'marts dim_sellers'
+ref table 'marts fact_customer_rfm'
+ref table 'marts fact_order_items'
+ref table 'marts fact_order_payments'
+ref table 'marts fact_review'
+ref table 'marts order_metrics'
+ref table 'marts payment_metrics'
+ref table 'marts product_metrics'
+ref table 'marts revenue_metrics'
+ref table 'marts seller_metrics'
+ref table 'marts customer_count'
+ref table 'All Measure'
+ref table 'intermediate int_product_category_name_translation'
+
+ref cultureInfo en-US
+

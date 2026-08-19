@@ -1,0 +1,49 @@
+table 'marts dim_sellers'
+	lineageTag: 54761c08-b2df-4c54-a47f-7055d08a9e65
+
+	column seller_id
+		dataType: string
+		lineageTag: 87cc4b62-becd-4c21-a518-4fdf0d242e5f
+		summarizeBy: none
+		sourceColumn: seller_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_zip_code_prefix
+		dataType: int64
+		formatString: 0
+		lineageTag: 03953f17-2d5e-439f-ad6b-f00ade2e59e1
+		summarizeBy: sum
+		sourceColumn: seller_zip_code_prefix
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_city
+		dataType: string
+		lineageTag: 438c265c-d1a6-40cd-8eb0-59bf9b177a20
+		summarizeBy: none
+		sourceColumn: seller_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_state
+		dataType: string
+		lineageTag: 9774f09a-bcd6-459f-a1c4-a901d9d5cc86
+		summarizeBy: none
+		sourceColumn: seller_state
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'marts dim_sellers' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("cloud-analyst-pg.postgres.database.azure.com", "cloud_analyst"),
+				    marts_dim_sellers = Source{[Schema="marts",Item="dim_sellers"]}[Data]
+				in
+				    marts_dim_sellers
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

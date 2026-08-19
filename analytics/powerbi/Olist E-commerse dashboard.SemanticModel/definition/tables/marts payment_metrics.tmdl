@@ -1,0 +1,24 @@
+table 'marts payment_metrics'
+	lineageTag: 039e1db0-f626-4fc9-9097-05a19a173a75
+
+	column voucher_usage_rate
+		dataType: double
+		lineageTag: 284c085b-3a57-4581-8327-267d194e2487
+		summarizeBy: sum
+		sourceColumn: voucher_usage_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'marts payment_metrics' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("cloud-analyst-pg.postgres.database.azure.com", "cloud_analyst"),
+				    marts_payment_metrics = Source{[Schema="marts",Item="payment_metrics"]}[Data]
+				in
+				    marts_payment_metrics
+
+	annotation PBI_ResultType = Table
+

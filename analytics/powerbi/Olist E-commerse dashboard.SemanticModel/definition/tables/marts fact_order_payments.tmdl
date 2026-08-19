@@ -1,0 +1,67 @@
+table 'marts fact_order_payments'
+	lineageTag: 4d6f9785-c653-4d29-87c2-52c207a1cb6e
+
+	column fact_payment_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 6f314e1e-77e6-43d4-8c71-f923f8ae2bef
+		summarizeBy: sum
+		sourceColumn: fact_payment_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_sequential
+		dataType: int64
+		formatString: 0
+		lineageTag: ce30d363-c100-414f-ad74-5afdd1cdd5d4
+		summarizeBy: sum
+		sourceColumn: payment_sequential
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_id
+		dataType: string
+		lineageTag: 862882bc-5148-45ca-a2eb-858560d0030c
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_type
+		dataType: string
+		lineageTag: 9c0c9680-b00d-4230-9f91-4b75096e54f3
+		summarizeBy: none
+		sourceColumn: payment_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_installments
+		dataType: int64
+		formatString: 0
+		lineageTag: bbdc942f-bd09-4dce-b91b-23da485573f4
+		summarizeBy: sum
+		sourceColumn: payment_installments
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_value
+		dataType: double
+		lineageTag: 7aa134eb-8884-473a-887c-33e35b50fe00
+		summarizeBy: sum
+		sourceColumn: payment_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'marts fact_order_payments' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("cloud-analyst-pg.postgres.database.azure.com", "cloud_analyst"),
+				    marts_fact_order_payments = Source{[Schema="marts",Item="fact_order_payments"]}[Data]
+				in
+				    marts_fact_order_payments
+
+	annotation PBI_ResultType = Table
+

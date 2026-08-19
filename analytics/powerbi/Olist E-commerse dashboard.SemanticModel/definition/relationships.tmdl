@@ -1,0 +1,116 @@
+relationship 07c742fa-d429-4f50-8b32-01a041d23b84
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'marts dim_date'.full_date
+	toColumn: LocalDateTable_bb5fdab4-2e81-4922-8adf-6aced64fbf30.Date
+
+relationship AutoDetected_b53a60ee-cf9a-464b-94b8-b084b8cb62f2
+	fromColumn: 'marts fact_order_items'.order_id
+	toColumn: 'marts dim_orders'.order_id
+
+relationship AutoDetected_2b951c1f-0f71-480d-b449-b14c7567693f
+	fromColumn: 'marts fact_order_payments'.order_id
+	toColumn: 'marts dim_orders'.order_id
+
+relationship AutoDetected_f0292a3d-9758-4e42-957b-bbe551302b9f
+	fromColumn: 'marts fact_review'.order_id
+	toColumn: 'marts dim_orders'.order_id
+
+relationship AutoDetected_094736fa-26f5-4ba2-a7bc-0255f3390872
+	fromColumn: 'marts fact_order_items'.product_id
+	toColumn: 'marts dim_products'.product_id
+
+relationship ebe09460-e44d-d3b0-8bbf-ea820fc61c6b
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'marts dim_orders'.customer_id
+	toColumn: 'marts dim_customers'.customer_id
+
+relationship 12f5880e-7410-5b58-afd4-cc5ea38b85b2
+	isActive: false
+	fromColumn: 'marts dim_orders'.order_approved_date_key
+	toColumn: 'marts dim_date'.date_key
+
+relationship d5d81620-64db-0777-9f47-82a508050ccb
+	isActive: false
+	fromColumn: 'marts dim_orders'.order_delivered_carrier_date_key
+	toColumn: 'marts dim_date'.date_key
+
+relationship cfad8f9c-ebf6-dd8d-31ee-1742a480a888
+	fromColumn: 'marts dim_orders'.order_delivered_customer_date_key
+	toColumn: 'marts dim_date'.date_key
+
+relationship 24de696b-ec01-9f92-66c4-2726a96c6e20
+	isActive: false
+	fromColumn: 'marts dim_orders'.order_estimated_delivery_date_key
+	toColumn: 'marts dim_date'.date_key
+
+relationship 0e27d805-6f45-2043-1d91-929612e1cff8
+	isActive: false
+	fromColumn: 'marts dim_orders'.order_purchase_date_key
+	toColumn: 'marts dim_date'.date_key
+
+relationship AutoDetected_777356fd-70e1-45eb-8afd-af645adaeeac
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'marts customer_metrics'.customer_id
+	toColumn: 'marts dim_customers'.customer_id
+
+relationship AutoDetected_7377b760-35e8-4505-8861-8b5656e065fa
+	fromColumn: 'marts order_metrics'.customer_id
+	toColumn: 'marts dim_customers'.customer_id
+
+relationship AutoDetected_8ab3a40e-6809-430c-a1df-9194fbaba5ce
+	fromColumn: 'marts revenue_metrics'.customer_id
+	toColumn: 'marts dim_customers'.customer_id
+
+relationship AutoDetected_e2b87595-6c8e-47d5-ac42-c11efb872115
+	fromColumn: 'marts order_metrics'.product_id
+	toColumn: 'marts dim_products'.product_id
+
+relationship AutoDetected_0b703ec7-f1b5-4904-ac42-8a5f7c5e60c4
+	fromColumn: 'marts revenue_metrics'.product_id
+	toColumn: 'marts dim_products'.product_id
+
+relationship AutoDetected_b60c4d2c-1135-4e70-a23a-0556a52b8a61
+	fromColumn: 'marts order_metrics'.seller_id
+	toColumn: 'marts dim_sellers'.seller_id
+
+relationship AutoDetected_c9ebb989-68fc-4c40-aa74-a870f05b835a
+	fromColumn: 'marts revenue_metrics'.seller_id
+	toColumn: 'marts dim_sellers'.seller_id
+
+relationship 2816afea-dcd3-1806-9dbf-13cb60abc322
+	fromColumn: 'marts fact_customer_rfm'.customer_id
+	toColumn: 'marts dim_customers'.customer_id
+
+relationship 45279971-8c83-5d58-db12-ccdcb6ccbdd3
+	fromColumn: 'marts fact_order_items'.seller_id
+	toColumn: 'marts dim_sellers'.seller_id
+
+relationship AutoDetected_8b19ff2d-9b2c-4b24-bc49-e6f419f114ac
+	fromColumn: 'marts customer_count'.customer_id
+	toColumn: 'marts dim_customers'.customer_id
+
+relationship AutoDetected_7ebb6adf-ed0d-450e-8f4b-1cb4556d0547
+	isActive: false
+	fromColumn: 'marts customer_count'.order_id
+	toColumn: 'marts dim_orders'.order_id
+
+relationship AutoDetected_59cbaee3-10a2-47f3-a91c-42e4a235896e
+	fromColumn: 'marts customer_count'.seller_id
+	toColumn: 'marts dim_sellers'.seller_id
+
+relationship AutoDetected_a5b6f0b5-dd36-4bef-a004-263ece1ae3e2
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'marts dim_products'.product_category_name
+	toColumn: 'intermediate int_product_category_name_translation'.product_category_name
+
+relationship d1355720-0857-8f96-0568-e2090b825bd2
+	fromColumn: 'marts product_metrics'.product_id
+	toColumn: 'marts dim_products'.product_id
+
+relationship 8dc6fa0c-3efc-c56b-cfc4-094cde48268d
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'marts seller_metrics'.seller_id
+	toColumn: 'marts dim_sellers'.seller_id
+

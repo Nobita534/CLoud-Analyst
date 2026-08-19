@@ -1,0 +1,45 @@
+table 'marts customer_count'
+	lineageTag: b983b302-082d-4b14-9ccb-087bb18d380e
+
+	column count
+		dataType: int64
+		formatString: 0
+		lineageTag: 3e6128d5-a1a9-418e-ae9e-17461656090d
+		summarizeBy: sum
+		sourceColumn: count
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		lineageTag: 5a005745-8a9e-4217-9832-7123ebd23f01
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_id
+		dataType: string
+		lineageTag: b1f50977-2a04-48e0-8a7d-17403a834ecf
+		summarizeBy: none
+		sourceColumn: seller_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_id
+		dataType: string
+		lineageTag: 5408c53a-d2f3-4fbe-9696-dba0411f74dd
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'marts customer_count' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("cloud-analyst-pg.postgres.database.azure.com", "cloud_analyst"),
+				    marts_customer_count = Source{[Schema="marts",Item="customer_count"]}[Data]
+				in
+				    marts_customer_count
+

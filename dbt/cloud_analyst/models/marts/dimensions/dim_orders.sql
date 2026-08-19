@@ -21,7 +21,7 @@ int_customer_data AS(
 SELECT
     order_id,
     order_status,
-    customer_unique_id,
+    int_customer_data.customer_id,
 
     {{ generate_date_key('order_purchase_timestamp') }}
         AS order_purchase_date_key,

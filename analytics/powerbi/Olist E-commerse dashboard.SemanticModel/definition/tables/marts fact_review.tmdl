@@ -1,0 +1,55 @@
+table 'marts fact_review'
+	lineageTag: 6a36fec8-d796-4448-ad31-0eec470f07d1
+
+	column review_id
+		dataType: string
+		lineageTag: a1a57ab7-1735-469f-98c1-e97e5dd1b4a7
+		summarizeBy: none
+		sourceColumn: review_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_id
+		dataType: string
+		lineageTag: a451a34f-0326-45dc-9e23-07b5710d6f6a
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column review_comment_title
+		dataType: string
+		lineageTag: c2c25b43-1fc2-4464-ab89-9c9cd4b2c04b
+		summarizeBy: none
+		sourceColumn: review_comment_title
+
+		annotation SummarizationSetBy = Automatic
+
+	column review_comment_message
+		dataType: string
+		lineageTag: 0f2d4c82-84e8-4890-8ec0-5140d43ed736
+		summarizeBy: none
+		sourceColumn: review_comment_message
+
+		annotation SummarizationSetBy = Automatic
+
+	column review_score
+		dataType: int64
+		formatString: 0
+		lineageTag: d1143d4c-fac2-46af-8d03-2da874108f5f
+		summarizeBy: sum
+		sourceColumn: review_score
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'marts fact_review' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("cloud-analyst-pg.postgres.database.azure.com", "cloud_analyst"),
+				    marts_fact_review = Source{[Schema="marts",Item="fact_review"]}[Data]
+				in
+				    marts_fact_review
+
+	annotation PBI_ResultType = Table
+

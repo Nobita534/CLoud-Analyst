@@ -39,7 +39,7 @@ SELECT
 
     SUM(ss.price) AS total_sales,
 
-    AVG(rm.average_review_score) AS average_review_score
+    CAST(AVG(rm.average_review_score) AS FLOAT) AS average_review_score
 
 FROM seller_sales AS ss
 
@@ -51,5 +51,5 @@ LEFT JOIN review_metrics AS rm
 
 GROUP BY
     s.seller_id,
-    ss.order_id,
     s.seller_state
+ORDER BY s.seller_id ASC
