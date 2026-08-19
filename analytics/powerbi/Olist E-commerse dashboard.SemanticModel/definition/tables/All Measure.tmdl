@@ -9,38 +9,42 @@ table 'All Measure'
 		formatString: 0
 		lineageTag: 5852d3ce-25fe-4a22-878c-ea989d304720
 
-	measure 'Average Customer Value (12M)' = ```
+	measure 'VIP Customers' =
 			
-			    DIVIDE(SUM('marts customer_metrics'[monetary]), [Active Customer])
-			    // AVERAGE('marts customer_metrics'[monetary])
-			```
+			CALCULATE(
+			    DISTINCTCOUNT('marts customer_metrics'[customer_id]),
+			    'marts customer_metrics'[customer_segment] = "VIP"
+			)
+		formatString: 0
 		lineageTag: 7a2fd805-6ccb-42ba-9000-c53cec305dd7
 
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Average Frequency' = ```
+	measure 'Vip Revenue' = ```
 			
-			    DIVIDE(SUM('marts customer_metrics'[frequency]), [Active Customer])
-			    // AVERAGE('marts customer_metrics'[frequency])
+			    CALCULATE(
+			        SUM('marts customer_metrics'[monetary]),
+			        'marts customer_metrics'[customer_segment] = "VIP")
 			```
 		formatString: 0.0000
 		lineageTag: 78fa10c0-f959-4a07-b9ea-e34e005624cd
 
-	measure 'Average Recency' = ```
-			
-			    // AVERAGE('marts customer_metrics'[recency])
-			    DIVIDE(SUM('marts customer_metrics'[recency]), [Active Customer])
-			```
+	measure 'Avg Recency' = DIVIDE(SUM('marts customer_metrics'[recency]), [RFM Base Count])
+		formatString: 0
 		lineageTag: 3fd8566a-0214-421d-ba7c-c0c42f0fd007
 
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
+		annotation PBI_FormatHint = {"isDecimal":true}
 
-	measure 'Total Orders' =
-			DISTINCTCOUNT('marts dim_orders'[order_id])
+	measure 'Total Orders' = ```
+			
+			    DISTINCTCOUNT('marts dim_orders'[order_id])
 			// CALCULATE(
 			//     DISTINCTCOUNT('marts dim_orders'[order_id]),
 			//     'marts dim_orders'[order_status] = "delivered"
 			// )
+			    // CALCULATE(
+			    //     DISTINCTCOUNT('marts dim_orders'[order_id]),
+			    //     'marts fact_order_items'
+			    // )
+			```
 		formatString: 0
 		lineageTag: dc30680a-6aeb-4247-8998-185bedea52ed
 
@@ -49,9 +53,7 @@ table 'All Measure'
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Total Product and Seller Sales' =
-			
-			SUM('marts fact_order_items'[price])
+	measure 'Total Sales' = SUM('marts fact_order_items'[price])
 		lineageTag: 7a0daa14-e881-40a7-91ea-bee3ad162f5a
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -62,12 +64,12 @@ table 'All Measure'
 			    TOPN(
 			        5,
 			        ALLSELECTED('intermediate int_product_category_name_translation'[product_category_name_english]),
-			        [Total Product and Seller Sales],
+			        [Total Sales],
 			        DESC
 			    )
 			RETURN
 			    CALCULATE(
-			        [Total Product and Seller Sales],
+			        [Total Sales],
 			        KEEPFILTERS(TopProducts)
 			    )
 		lineageTag: 22b403e1-9303-4b14-a84d-4c88628550d8
@@ -175,8 +177,106 @@ table 'All Measure'
 			RETURN
 			    DIVIDE(RepeatCustomers, TotalActiveCustomers, 0)
 			```
-		formatString: 0%;-0%;0%
+		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: e63139a0-cb93-4625-a518-4fe930bcf5ad
+
+	measure 'RFM Base Count' =
+			
+			DISTINCTCOUNT('marts customer_metrics'[customer_id])
+		formatString: 0
+		lineageTag: f2db7586-9282-4e40-94d4-20f2e5765ab7
+
+	measure 'Avg Frequency' = DIVIDE(SUM('marts customer_metrics'[frequency]), [RFM Base Count])
+		lineageTag: f8318ac6-7482-401a-bd2c-40875fe4ef1c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Monetary' = DIVIDE(SUM('marts customer_metrics'[monetary]), [RFM Base Count])
+		lineageTag: c7b6f06e-90e5-4b09-a64b-bc67bcf9f727
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Segment Revenue' = SUM('marts customer_metrics'[monetary])
+		lineageTag: 2cdb78f4-cd05-4f77-891f-164e05856776
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Segment Revenue %' = ```
+			DIVIDE(
+			    [Segment Revenue], 
+			    CALCULATE([Segment Revenue], ALLSELECTED('marts customer_metrics')))
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 185bec4e-3d85-4b0b-9e5d-32b2533ab615
+
+	measure 'Segment Customer' = COUNTROWS('marts customer_metrics')
+		formatString: 0
+		lineageTag: b193a25e-5998-4f6d-8d1d-56bbf3c22f9d
+
+	measure 'Total Item Sold' = COUNTROWS('marts fact_order_items')
+		formatString: 0
+		lineageTag: 29fc05d1-89cd-43d7-8b58-6edce4132256
+
+	measure 'Active Seller' = ```
+			
+			    CALCULATE(
+			        DISTINCTCOUNT('marts fact_order_items'[seller_id]),
+			        'marts dim_orders'[order_status] = "delivered"
+			    )
+			```
+		formatString: 0
+		lineageTag: 3a0e94de-34fa-42b2-8bc0-585650a28a19
+
+	measure 'Bad Seller Rate (%)' = ```
+			
+			VAR TotalSellers = COUNTROWS('marts seller_metrics')
+			VAR BadSellers = 
+			    CALCULATE(
+			        COUNTROWS('marts seller_metrics'),
+			        'marts seller_metrics'[average_review_score] <= 2
+			    )
+			RETURN
+			    DIVIDE(BadSellers, TotalSellers, 0)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: ac9d4a21-c2b2-485c-861a-5848f6fa728a
+
+	measure 'Top 10 Product Sales Dynamic' = ```
+			
+			VAR Ranking = 
+			    RANKX(
+			        ALLSELECTED('intermediate int_product_category_name_translation'[product_category_name_english]), 
+			        [Total Sales], 
+			        , 
+			        DESC, 
+			        Dense
+			    )
+			RETURN
+			    IF(Ranking <= 10, [Total Sales], BLANK())
+			```
+		lineageTag: cab61594-5b7e-4adc-93f5-d9ca90ff09b5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Orders by Product' = ```
+			
+			    CALCULATE(
+			        DISTINCTCOUNT('marts dim_orders'[order_id]),
+			        'marts fact_order_items'
+			)
+			```
+		formatString: 0
+		lineageTag: 71954ff5-8ede-4a17-a822-177d0a742e97
+
+	measure 'Product Category Review Score' =
+			
+			CALCULATE(
+			    AVERAGE('marts fact_review'[review_score]),
+			    'marts fact_order_items'
+			)
+		lineageTag: 4e1a847b-fa08-4611-96f4-a60052b150c0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	column Column
 		formatString: 0

@@ -7,7 +7,7 @@
     "z": 4000,
     "height": 38,
     "width": 135.55555555555554,
-    "tabOrder": 4000
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -444,23 +444,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "6ade53d26e9aa5e8b1cf",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "YoY Revenue Growth %"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "e208969ce455b6029aee",
+  "name": "3b52c8fbf89f05668a52",
   "position": {
-    "x": 595.55555555555554,
+    "x": 1058.8888888888889,
     "y": 150,
     "z": 7000,
     "height": 66.666666666666671,
     "width": 207.77777777777777,
-    "tabOrder": 6000
+    "tabOrder": 7000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,12 +23,11 @@
                       "Entity": "All Measure"
                     }
                   },
-                  "Property": "Active Customer"
+                  "Property": "Bad Seller Rate (%)"
                 }
               },
-              "queryRef": "All Measure.Total Customer",
-              "nativeQueryRef": "Active Customer",
-              "format": "#,0"
+              "queryRef": "All Measure.Bad Seller Rate (%)",
+              "nativeQueryRef": "Bad Seller Rate (%)"
             }
           ]
         }
@@ -43,7 +42,7 @@
                     "Entity": "All Measure"
                   }
                 },
-                "Property": "Active Customer"
+                "Property": "Bad Seller Rate (%)"
               }
             },
             "direction": "Descending"
@@ -105,27 +104,6 @@
           },
           "selector": {
             "id": "default"
-          }
-        },
-        {
-          "properties": {
-            "labelDisplayUnits": {
-              "expr": {
-                "Literal": {
-                  "Value": "1D"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "28D"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "All Measure.Total Customer"
           }
         }
       ],

@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "e208969ce455b6029aee",
+  "name": "553347416966c864c8f3",
   "position": {
     "x": 595.55555555555554,
     "y": 150,
-    "z": 7000,
+    "z": 5000,
     "height": 66.666666666666671,
     "width": 207.77777777777777,
-    "tabOrder": 6000
+    "tabOrder": 5000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,12 +23,11 @@
                       "Entity": "All Measure"
                     }
                   },
-                  "Property": "Active Customer"
+                  "Property": "Active Seller"
                 }
               },
-              "queryRef": "All Measure.Total Customer",
-              "nativeQueryRef": "Active Customer",
-              "format": "#,0"
+              "queryRef": "All Measure.Active Seller",
+              "nativeQueryRef": "Active Seller"
             }
           ]
         }
@@ -43,7 +42,7 @@
                     "Entity": "All Measure"
                   }
                 },
-                "Property": "Active Customer"
+                "Property": "Active Seller"
               }
             },
             "direction": "Descending"
@@ -115,17 +114,10 @@
                   "Value": "1D"
                 }
               }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "28D"
-                }
-              }
             }
           },
           "selector": {
-            "metadata": "All Measure.Total Customer"
+            "metadata": "All Measure.Active Seller"
           }
         }
       ],

@@ -46,16 +46,6 @@
       "type": "RegisteredResources",
       "items": [
         {
-          "name": "Screenshot_2026-08-14_11423007992456098032308.png",
-          "path": "Screenshot_2026-08-14_11423007992456098032308.png",
-          "type": "Image"
-        },
-        {
-          "name": "Screenshot_2026-08-17_18581240947072680497854.png",
-          "path": "Screenshot_2026-08-17_18581240947072680497854.png",
-          "type": "Image"
-        },
-        {
           "name": "Screenshot_2026-08-18_1658082762930416559255.png",
           "path": "Screenshot_2026-08-18_1658082762930416559255.png",
           "type": "Image"
@@ -68,6 +58,16 @@
         {
           "name": "increase3298973353081164.png",
           "path": "increase3298973353081164.png",
+          "type": "Image"
+        },
+        {
+          "name": "Screenshot_2026-08-18_1658086872554807448668.png",
+          "path": "Screenshot_2026-08-18_1658086872554807448668.png",
+          "type": "Image"
+        },
+        {
+          "name": "Screenshot_2026-08-18_16580815390249394964728.png",
+          "path": "Screenshot_2026-08-18_16580815390249394964728.png",
           "type": "Image"
         }
       ]

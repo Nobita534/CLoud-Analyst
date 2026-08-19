@@ -1,16 +1,16 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "b5b3e3156ba9ebccf7c4",
+  "name": "37919bd418962587a70f",
   "position": {
     "x": 715.55555555555554,
     "y": 257.77777777777777,
-    "z": 11000,
+    "z": 9000,
     "height": 447.77777777777777,
     "width": 564.44444444444446,
-    "tabOrder": 10000
+    "tabOrder": 9000
   },
   "visual": {
-    "visualType": "clusteredBarChart",
+    "visualType": "scatterChart",
     "query": {
       "queryState": {
         "Category": {
@@ -20,48 +20,81 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "marts dim_customers"
+                      "Entity": "marts seller_metrics"
                     }
                   },
-                  "Property": "customer_state"
+                  "Property": "seller_id"
                 }
               },
-              "queryRef": "marts dim_customers.customer_state",
-              "nativeQueryRef": "customer_state",
+              "queryRef": "marts seller_metrics.seller_id",
+              "nativeQueryRef": "seller_id",
               "active": true
-            },
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
             {
               "field": {
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "marts dim_customers"
+                      "Entity": "marts dim_sellers"
                     }
                   },
-                  "Property": "customer_city"
+                  "Property": "seller_state"
                 }
               },
-              "queryRef": "marts dim_customers.customer_city",
-              "nativeQueryRef": "customer_city",
-              "active": false
+              "queryRef": "marts dim_sellers.seller_state",
+              "nativeQueryRef": "seller_state"
             }
           ]
         },
-        "Tooltips": {
+        "Size": {
           "projections": [
             {
               "field": {
-                "Measure": {
+                "Aggregation": {
                   "Expression": {
-                    "SourceRef": {
-                      "Entity": "All Measure"
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "marts seller_metrics"
+                        }
+                      },
+                      "Property": "total_orders"
                     }
                   },
-                  "Property": "Total Orders"
+                  "Function": 0
                 }
               },
-              "queryRef": "All Measure.Total Orders",
-              "nativeQueryRef": "Total Orders"
+              "queryRef": "Sum(marts seller_metrics.total_orders)",
+              "nativeQueryRef": "Sum of total_orders"
+            }
+          ]
+        },
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "marts seller_metrics"
+                        }
+                      },
+                      "Property": "average_review_score"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(marts seller_metrics.average_review_score)",
+              "nativeQueryRef": "Average Review Score",
+              "active": true,
+              "displayName": "Average Review Score"
             }
           ]
         },
@@ -75,80 +108,23 @@
                       "Entity": "All Measure"
                     }
                   },
-                  "Property": "Total Revenue"
+                  "Property": "Total Sales"
                 }
               },
-              "queryRef": "All Measure.Total Revenue",
-              "nativeQueryRef": "Total Revenue"
+              "queryRef": "All Measure.Total Sales",
+              "nativeQueryRef": "Total Sales"
             }
           ]
         }
       },
       "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "All Measure"
-                  }
-                },
-                "Property": "Total Revenue"
-              }
-            },
-            "direction": "Descending"
-          }
-        ],
         "isDefaultSort": true
       }
     },
     "objects": {
-      "labels": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "labelDisplayUnits": {
-              "expr": {
-                "Literal": {
-                  "Value": "1000D"
-                }
-              }
-            },
-            "labelPrecision": {
-              "expr": {
-                "Literal": {
-                  "Value": "0L"
-                }
-              }
-            }
-          }
-        }
-      ],
       "categoryAxis": [
         {
-          "properties": {
-            "switchAxisPosition": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "concatenateLabels": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
+          "properties": {}
         }
       ]
     },
@@ -159,7 +135,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Top 10 States by Revenue'"
+                  "Value": "'Sellers and Customer Satisfaction'"
                 }
               }
             }
@@ -270,7 +246,88 @@
               }
             }
           ]
-        }
+        },
+        "howCreated": "User"
+      },
+      {
+        "name": "3f66ea49ca128945d0ca",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "marts seller_metrics"
+              }
+            },
+            "Property": "seller_id"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "e555168961c4a7cb600e",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "marts seller_metrics"
+                  }
+                },
+                "Property": "average_review_score"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "4fa9fd1d330e3e56adf7",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "All Measure"
+              }
+            },
+            "Property": "Total Sales"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "ba5daa655bee6549f0df",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "marts seller_metrics"
+                  }
+                },
+                "Property": "total_orders"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "39fed3546e5858806e38",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "marts dim_sellers"
+              }
+            },
+            "Property": "seller_state"
+          }
+        },
+        "type": "Categorical"
       }
     ]
   }

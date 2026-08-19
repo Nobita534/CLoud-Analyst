@@ -4,10 +4,10 @@
   "position": {
     "x": 1058.5714285714287,
     "y": 18.571428571428573,
-    "z": 6000,
+    "z": 0,
     "height": 81.428571428571431,
     "width": 200,
-    "tabOrder": 4000
+    "tabOrder": 10000
   },
   "visual": {
     "visualType": "slicer",
@@ -50,49 +50,7 @@
       ],
       "general": [
         {
-          "properties": {
-            "filter": {
-              "filter": {
-                "Version": 2,
-                "From": [
-                  {
-                    "Name": "m",
-                    "Entity": "marts customer_metrics",
-                    "Type": 0
-                  }
-                ],
-                "Where": [
-                  {
-                    "Condition": {
-                      "In": {
-                        "Expressions": [
-                          {
-                            "Column": {
-                              "Expression": {
-                                "SourceRef": {
-                                  "Source": "m"
-                                }
-                              },
-                              "Property": "analysis_date_key"
-                            }
-                          }
-                        ],
-                        "Values": [
-                          [
-                            {
-                              "Literal": {
-                                "Value": "20181231L"
-                              }
-                            }
-                          ]
-                        ]
-                      }
-                    }
-                  }
-                ]
-              }
-            }
-          }
+          "properties": {}
         }
       ],
       "items": [

@@ -4,10 +4,10 @@
   "position": {
     "x": 828.88888888888891,
     "y": 150,
-    "z": 6002,
+    "z": 8000,
     "height": 66.666666666666671,
     "width": 207.77777777777777,
-    "tabOrder": 6002
+    "tabOrder": 7000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -211,23 +211,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "232f2473ff0c034d2809",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "AOV"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

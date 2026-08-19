@@ -1,0 +1,137 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "5b4f9b6b2d71b515f0b7",
+  "position": {
+    "x": 128.57142857142858,
+    "y": 257.14285714285717,
+    "z": 8000,
+    "height": 201.42857142857144,
+    "width": 560,
+    "tabOrder": 7000
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "marts customer_metrics"
+                    }
+                  },
+                  "Property": "customer_segment"
+                }
+              },
+              "queryRef": "marts customer_metrics.customer_segment",
+              "nativeQueryRef": "customer_segment",
+              "active": true
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "All Measure"
+                    }
+                  },
+                  "Property": "Segment Revenue %"
+                }
+              },
+              "queryRef": "All Measure.Segment Revenue %",
+              "nativeQueryRef": "Segment Revenue %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "All Measure"
+                    }
+                  },
+                  "Property": "Segment Customer"
+                }
+              },
+              "queryRef": "All Measure.Segment Customer",
+              "nativeQueryRef": "Segment Customer"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "All Measure"
+                    }
+                  },
+                  "Property": "Segment Revenue"
+                }
+              },
+              "queryRef": "All Measure.Segment Revenue",
+              "nativeQueryRef": "Segment Revenue"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "All Measure"
+                  }
+                },
+                "Property": "Segment Revenue"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "labels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Annual Total Revenue, Orders Trend'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

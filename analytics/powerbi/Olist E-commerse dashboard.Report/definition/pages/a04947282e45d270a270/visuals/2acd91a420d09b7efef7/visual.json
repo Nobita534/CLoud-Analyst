@@ -4,10 +4,10 @@
   "position": {
     "x": 1058.8888888888889,
     "y": 150,
-    "z": 6003,
+    "z": 9000,
     "height": 66.666666666666671,
     "width": 207.77777777777777,
-    "tabOrder": 6003
+    "tabOrder": 8000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -210,23 +210,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "86745b8b606ed3a16107",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Repeat Purchase Rate (%)"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

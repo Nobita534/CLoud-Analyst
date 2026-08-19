@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "e208969ce455b6029aee",
+  "name": "5002de3e04929a826dd1",
   "position": {
-    "x": 595.55555555555554,
+    "x": 367.77777777777777,
     "y": 150,
-    "z": 7000,
+    "z": 4000,
     "height": 66.666666666666671,
     "width": 207.77777777777777,
-    "tabOrder": 6000
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,12 +23,11 @@
                       "Entity": "All Measure"
                     }
                   },
-                  "Property": "Active Customer"
+                  "Property": "Total Item Sold"
                 }
               },
-              "queryRef": "All Measure.Total Customer",
-              "nativeQueryRef": "Active Customer",
-              "format": "#,0"
+              "queryRef": "All Measure.Total Item Sold",
+              "nativeQueryRef": "Total Item Sold"
             }
           ]
         }
@@ -43,7 +42,7 @@
                     "Entity": "All Measure"
                   }
                 },
-                "Property": "Active Customer"
+                "Property": "Total Item Sold"
               }
             },
             "direction": "Descending"
@@ -112,20 +111,13 @@
             "labelDisplayUnits": {
               "expr": {
                 "Literal": {
-                  "Value": "1D"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "28D"
+                  "Value": "1000D"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "All Measure.Total Customer"
+            "metadata": "All Measure.Total Item Sold"
           }
         }
       ],

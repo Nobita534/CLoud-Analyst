@@ -7,7 +7,7 @@
     "z": 5000,
     "height": 66.666666666666671,
     "width": 207.77777777777777,
-    "tabOrder": 5000
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -211,23 +211,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "0f537d31b9cc7fa1439d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Total Orders"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "a48eae4faa505a460194",
+  "name": "dde883ce42cb0a6d4ab9",
   "position": {
-    "x": 127.61620797668303,
-    "y": 434.99288095277979,
-    "z": 4000,
-    "height": 268.95458885408465,
-    "width": 1137.5681334695723,
-    "tabOrder": 2000
+    "x": 715.55555555555554,
+    "y": 257.77777777777777,
+    "z": 10000,
+    "height": 447.77777777777777,
+    "width": 564.44444444444446,
+    "tabOrder": 9000
   },
   "visual": {
     "visualType": "barChart",
@@ -27,9 +27,23 @@
                 }
               },
               "queryRef": "marts dim_customers.customer_state",
-              "nativeQueryRef": "State",
-              "active": true,
-              "displayName": "State"
+              "nativeQueryRef": "customer_state",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "marts dim_customers"
+                    }
+                  },
+                  "Property": "customer_city"
+                }
+              },
+              "queryRef": "marts dim_customers.customer_city",
+              "nativeQueryRef": "customer_city",
+              "active": false
             }
           ]
         },
@@ -40,14 +54,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "intermediate int_product_category_name_translation"
+                      "Entity": "marts customer_metrics"
                     }
                   },
-                  "Property": "product_category_name_english"
+                  "Property": "customer_segment"
                 }
               },
-              "queryRef": "intermediate int_product_category_name_translation.product_category_name_english",
-              "nativeQueryRef": "product_category_name_english"
+              "queryRef": "marts customer_metrics.customer_segment",
+              "nativeQueryRef": "customer_segment"
             }
           ]
         },
@@ -55,22 +69,17 @@
           "projections": [
             {
               "field": {
-                "Aggregation": {
+                "Measure": {
                   "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "marts product_metrics"
-                        }
-                      },
-                      "Property": "total_orders"
+                    "SourceRef": {
+                      "Entity": "All Measure"
                     }
                   },
-                  "Function": 0
+                  "Property": "Total Orders"
                 }
               },
-              "queryRef": "Sum(marts product_metrics.total_orders)",
-              "nativeQueryRef": "Sum of total_orders"
+              "queryRef": "All Measure.Total Orders",
+              "nativeQueryRef": "Total Orders"
             }
           ]
         },
@@ -84,12 +93,11 @@
                       "Entity": "All Measure"
                     }
                   },
-                  "Property": "Top 5 Product Sales by State"
+                  "Property": "Segment Revenue"
                 }
               },
-              "queryRef": "All Measure.Top 5 Product Sales",
-              "nativeQueryRef": "Product Sales",
-              "displayName": "Product Sales"
+              "queryRef": "All Measure.Segment Revenue",
+              "nativeQueryRef": "Segment Revenue"
             }
           ]
         }
@@ -104,7 +112,7 @@
                     "Entity": "All Measure"
                   }
                 },
-                "Property": "Top 5 Product Sales by State"
+                "Property": "Segment Revenue"
               }
             },
             "direction": "Descending"
@@ -114,43 +122,6 @@
       }
     },
     "objects": {
-      "dataPoint": [
-        {
-          "properties": {
-            "fillRule": {
-              "linearGradient2": {
-                "min": {
-                  "color": {
-                    "expr": {
-                      "Literal": {
-                        "Value": "'minColor'"
-                      }
-                    }
-                  }
-                },
-                "max": {
-                  "color": {
-                    "expr": {
-                      "Literal": {
-                        "Value": "'maxColor'"
-                      }
-                    }
-                  }
-                },
-                "nullColoringStrategy": {
-                  "strategy": {
-                    "expr": {
-                      "Literal": {
-                        "Value": "'asZero'"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
       "labels": [
         {
           "properties": {
@@ -160,17 +131,38 @@
                   "Value": "true"
                 }
               }
-            }
-          }
-        }
-      ],
-      "valueAxis": [
-        {
-          "properties": {
+            },
             "labelDisplayUnits": {
               "expr": {
                 "Literal": {
                   "Value": "1000D"
+                }
+              }
+            },
+            "labelPrecision": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "categoryAxis": [
+        {
+          "properties": {
+            "switchAxisPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "concatenateLabels": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }
@@ -185,27 +177,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Product Sales by State'"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "visualTooltip": [
-        {
-          "properties": {
-            "section": {
-              "expr": {
-                "Literal": {
-                  "Value": "'___AUTO___'"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+                  "Value": "'Top 10 States by Revenue'"
                 }
               }
             }
@@ -218,8 +190,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "48137f0b9e31251e5207",
-        "ordinal": 0,
+        "name": "9985cfd1488e8cf411ea",
         "field": {
           "Column": {
             "Expression": {
@@ -275,12 +246,12 @@
                                 "Source": "a"
                               }
                             },
-                            "Property": "Top 5 Product Sales by State"
+                            "Property": "Segment Revenue"
                           }
                         }
                       }
                     ],
-                    "Top": 5
+                    "Top": 10
                   }
                 }
               },
@@ -333,97 +304,7 @@
             }
           ]
         }
-      },
-      {
-        "name": "5d36fff8fcfe7a303bb8",
-        "ordinal": 1,
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "intermediate int_product_category_name_translation"
-              }
-            },
-            "Property": "product_category_name_english"
-          }
-        },
-        "type": "Categorical",
-        "filter": {
-          "Version": 2,
-          "From": [
-            {
-              "Name": "i",
-              "Entity": "intermediate int_product_category_name_translation",
-              "Type": 0
-            }
-          ],
-          "Where": [
-            {
-              "Condition": {
-                "Not": {
-                  "Expression": {
-                    "In": {
-                      "Expressions": [
-                        {
-                          "Column": {
-                            "Expression": {
-                              "SourceRef": {
-                                "Source": "i"
-                              }
-                            },
-                            "Property": "product_category_name_english"
-                          }
-                        }
-                      ],
-                      "Values": [
-                        [
-                          {
-                            "Literal": {
-                              "Value": "null"
-                            }
-                          }
-                        ]
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        "objects": {
-          "general": [
-            {
-              "properties": {
-                "isInvertedSelectionMode": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "true"
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        }
-      },
-      {
-        "name": "baa05df896e1c258204c",
-        "ordinal": 2,
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Total Product and Seller Sales"
-          }
-        },
-        "type": "Advanced",
-        "howCreated": "User"
       }
-    ],
-    "filterSortOrder": "Custom"
+    ]
   }
 }

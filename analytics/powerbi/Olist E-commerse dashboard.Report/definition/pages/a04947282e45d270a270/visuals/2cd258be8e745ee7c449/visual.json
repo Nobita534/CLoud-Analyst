@@ -7,7 +7,7 @@
     "z": 6000,
     "height": 37.777777777777779,
     "width": 135.55555555555554,
-    "tabOrder": 6000
+    "tabOrder": 5000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -525,23 +525,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "0de187cc86afc8370e77",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "YoY Order Growth %"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

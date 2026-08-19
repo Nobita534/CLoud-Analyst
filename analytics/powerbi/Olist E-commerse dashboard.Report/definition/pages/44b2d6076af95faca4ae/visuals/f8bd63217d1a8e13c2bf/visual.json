@@ -1,8 +1,8 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "e208969ce455b6029aee",
+  "name": "f8bd63217d1a8e13c2bf",
   "position": {
-    "x": 595.55555555555554,
+    "x": 1058.8888888888889,
     "y": 150,
     "z": 7000,
     "height": 66.666666666666671,
@@ -23,12 +23,11 @@
                       "Entity": "All Measure"
                     }
                   },
-                  "Property": "Active Customer"
+                  "Property": "Avg Recency"
                 }
               },
-              "queryRef": "All Measure.Total Customer",
-              "nativeQueryRef": "Active Customer",
-              "format": "#,0"
+              "queryRef": "All Measure.Avg Recency",
+              "nativeQueryRef": "Avg Recency"
             }
           ]
         }
@@ -43,7 +42,7 @@
                     "Entity": "All Measure"
                   }
                 },
-                "Property": "Active Customer"
+                "Property": "Avg Recency"
               }
             },
             "direction": "Descending"
@@ -105,27 +104,6 @@
           },
           "selector": {
             "id": "default"
-          }
-        },
-        {
-          "properties": {
-            "labelDisplayUnits": {
-              "expr": {
-                "Literal": {
-                  "Value": "1D"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "28D"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "All Measure.Total Customer"
           }
         }
       ],

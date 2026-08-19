@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "e208969ce455b6029aee",
+  "name": "aa55b167c66c81d817f9",
   "position": {
-    "x": 595.55555555555554,
+    "x": 137.77777777777777,
     "y": 150,
-    "z": 7000,
+    "z": 3000,
     "height": 66.666666666666671,
     "width": 207.77777777777777,
-    "tabOrder": 6000
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,11 +23,11 @@
                       "Entity": "All Measure"
                     }
                   },
-                  "Property": "Active Customer"
+                  "Property": "VIP Customers"
                 }
               },
-              "queryRef": "All Measure.Total Customer",
-              "nativeQueryRef": "Active Customer",
+              "queryRef": "All Measure.VIP Customers",
+              "nativeQueryRef": "VIP Customers",
               "format": "#,0"
             }
           ]
@@ -43,7 +43,7 @@
                     "Entity": "All Measure"
                   }
                 },
-                "Property": "Active Customer"
+                "Property": "VIP Customers"
               }
             },
             "direction": "Descending"
@@ -98,7 +98,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "24D"
+                  "Value": "30D"
                 }
               }
             }
@@ -115,17 +115,10 @@
                   "Value": "1D"
                 }
               }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "28D"
-                }
-              }
             }
           },
           "selector": {
-            "metadata": "All Measure.Total Customer"
+            "metadata": "All Measure.VIP Customers"
           }
         }
       ],

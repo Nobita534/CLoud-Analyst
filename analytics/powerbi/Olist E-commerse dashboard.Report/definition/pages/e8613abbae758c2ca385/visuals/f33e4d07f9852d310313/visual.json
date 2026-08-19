@@ -1,10 +1,10 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "e208969ce455b6029aee",
+  "name": "f33e4d07f9852d310313",
   "position": {
-    "x": 595.55555555555554,
+    "x": 828.88888888888891,
     "y": 150,
-    "z": 7000,
+    "z": 6000,
     "height": 66.666666666666671,
     "width": 207.77777777777777,
     "tabOrder": 6000
@@ -23,12 +23,11 @@
                       "Entity": "All Measure"
                     }
                   },
-                  "Property": "Active Customer"
+                  "Property": "Average Review Score"
                 }
               },
-              "queryRef": "All Measure.Total Customer",
-              "nativeQueryRef": "Active Customer",
-              "format": "#,0"
+              "queryRef": "All Measure.Average Review Score",
+              "nativeQueryRef": "Average Review Score"
             }
           ]
         }
@@ -43,7 +42,7 @@
                     "Entity": "All Measure"
                   }
                 },
-                "Property": "Active Customer"
+                "Property": "Average Review Score"
               }
             },
             "direction": "Descending"
@@ -105,27 +104,6 @@
           },
           "selector": {
             "id": "default"
-          }
-        },
-        {
-          "properties": {
-            "labelDisplayUnits": {
-              "expr": {
-                "Literal": {
-                  "Value": "1D"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "28D"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "All Measure.Total Customer"
           }
         }
       ],

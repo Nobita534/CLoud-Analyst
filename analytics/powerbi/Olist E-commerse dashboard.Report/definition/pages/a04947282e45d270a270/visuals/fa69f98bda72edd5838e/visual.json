@@ -4,10 +4,10 @@
   "position": {
     "x": 128.88888888888889,
     "y": 257.77777777777777,
-    "z": 6004,
+    "z": 10000,
     "height": 447.77777777777777,
     "width": 560,
-    "tabOrder": 6004
+    "tabOrder": 9000
   },
   "visual": {
     "visualType": "lineClusteredColumnComboChart",
@@ -182,126 +182,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "ed94483200e0fed52e0c",
-        "field": {
-          "HierarchyLevel": {
-            "Expression": {
-              "Hierarchy": {
-                "Expression": {
-                  "PropertyVariationSource": {
-                    "Expression": {
-                      "SourceRef": {
-                        "Entity": "marts dim_date"
-                      }
-                    },
-                    "Name": "Variation",
-                    "Property": "full_date"
-                  }
-                },
-                "Hierarchy": "Date Hierarchy"
-              }
-            },
-            "Level": "Month"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "7ed0697ba98327150f59",
-        "field": {
-          "HierarchyLevel": {
-            "Expression": {
-              "Hierarchy": {
-                "Expression": {
-                  "PropertyVariationSource": {
-                    "Expression": {
-                      "SourceRef": {
-                        "Entity": "marts dim_date"
-                      }
-                    },
-                    "Name": "Variation",
-                    "Property": "full_date"
-                  }
-                },
-                "Hierarchy": "Date Hierarchy"
-              }
-            },
-            "Level": "Quarter"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "1697cb4b6b1143a11ddc",
-        "field": {
-          "HierarchyLevel": {
-            "Expression": {
-              "Hierarchy": {
-                "Expression": {
-                  "PropertyVariationSource": {
-                    "Expression": {
-                      "SourceRef": {
-                        "Entity": "marts dim_date"
-                      }
-                    },
-                    "Name": "Variation",
-                    "Property": "full_date"
-                  }
-                },
-                "Hierarchy": "Date Hierarchy"
-              }
-            },
-            "Level": "Year"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "65490cf7345ff6429504",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Total Revenue"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "c9c55127484603cb64dd",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Total Orders"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "4d50443744dfe61402fc",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Active Customer"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

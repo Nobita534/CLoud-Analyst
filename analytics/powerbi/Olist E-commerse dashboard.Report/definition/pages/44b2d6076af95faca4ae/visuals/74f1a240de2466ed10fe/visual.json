@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "e208969ce455b6029aee",
+  "name": "74f1a240de2466ed10fe",
   "position": {
-    "x": 595.55555555555554,
+    "x": 367.14285714285717,
     "y": 150,
-    "z": 7000,
-    "height": 66.666666666666671,
-    "width": 207.77777777777777,
-    "tabOrder": 6000
+    "z": 4000,
+    "height": 67.142857142857153,
+    "width": 208.57142857142858,
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,12 +23,11 @@
                       "Entity": "All Measure"
                     }
                   },
-                  "Property": "Active Customer"
+                  "Property": "Vip Revenue"
                 }
               },
-              "queryRef": "All Measure.Total Customer",
-              "nativeQueryRef": "Active Customer",
-              "format": "#,0"
+              "queryRef": "All Measure.Vip Revenue",
+              "nativeQueryRef": "Vip Revenue"
             }
           ]
         }
@@ -43,7 +42,7 @@
                     "Entity": "All Measure"
                   }
                 },
-                "Property": "Active Customer"
+                "Property": "Vip Revenue"
               }
             },
             "direction": "Descending"
@@ -98,7 +97,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "24D"
+                  "Value": "30D"
                 }
               }
             }
@@ -112,20 +111,20 @@
             "labelDisplayUnits": {
               "expr": {
                 "Literal": {
-                  "Value": "1D"
+                  "Value": "1000000D"
                 }
               }
             },
-            "fontSize": {
+            "labelPrecision": {
               "expr": {
                 "Literal": {
-                  "Value": "28D"
+                  "Value": "3L"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "All Measure.Total Customer"
+            "metadata": "All Measure.Vip Revenue"
           }
         }
       ],
