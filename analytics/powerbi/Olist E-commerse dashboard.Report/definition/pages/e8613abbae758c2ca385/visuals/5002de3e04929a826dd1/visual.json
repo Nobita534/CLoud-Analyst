@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "All Measure.Total Item Sold",
-              "nativeQueryRef": "Total Item Sold"
+              "nativeQueryRef": "Total Item Sold",
+              "format": "#,0"
             }
           ]
         }
@@ -111,7 +112,7 @@
             "labelDisplayUnits": {
               "expr": {
                 "Literal": {
-                  "Value": "1000D"
+                  "Value": "1D"
                 }
               }
             }
@@ -224,5 +225,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "d1c241dde001be7fa445",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "All Measure"
+              }
+            },
+            "Property": "Total Item Sold"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }
