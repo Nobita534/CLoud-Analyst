@@ -12,13 +12,33 @@ The project is designed around a business-first workflow:
 
 The main analytical focus is **sales performance, customer behavior, customer segmentation, RFM analysis, and voucher usage**.
 
-### Business questions
+### Business Questions
 
-- Which customer segments represent the largest share of the customer base?
-- How are new, loyal, and potentially inactive customers distributed?
-- Which customer segments show the strongest voucher usage?
-- Can voucher usage support customer retention and reactivation strategies?
-- How do customer purchasing patterns differ across RFM segments?
+The project is designed to answer the following business questions:
+
+1. **BQ1 — Customer Segmentation**  
+   Which customer segments should be prioritized for marketing and customer engagement based on purchasing behavior and business value?
+
+2. **BQ2 — Customer Value by Geography**  
+   Which customer segments generate the highest business value across different geographic areas?
+
+3. **BQ3 — Product Performance by Geography**  
+   Which product categories and products contribute the most to sales performance across different geographic areas?
+
+4. **BQ4 — Seller Performance**  
+   Which sellers have the greatest impact on sales performance and customer satisfaction, and which sellers require performance improvement?
+
+5. **BQ5 — Sales Performance Over Time**  
+   How does sales performance change across different time periods, and which periods contribute most to business revenue?
+
+6. **BQ6 — Payment Behavior**  
+   Which payment methods are most commonly used by customers, and how do payment behaviors vary across different customer segments?
+
+7. **BQ7 — Geographic Performance**  
+   Which geographic areas have the highest sales activity and customer concentration?
+
+8. **BQ8 — Customer Satisfaction**  
+   How does customer satisfaction vary across product categories and sellers?
 
 Detailed business documentation is available in [`documents/business-understanding`](documents/business-understanding/).
 
