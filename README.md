@@ -1,187 +1,321 @@
-# Olist Ecommerce Data Pipeline & Star Schema Modeling
+# Cloud Analyst — Olist E-commerce Analytics Platform
 
-Dự án này mô phỏng một luồng dữ liệu end-to-end cho bài toán thương mại điện tử Olist (Brazil): lấy dữ liệu thô, làm sạch và chuẩn hóa, sau đó mô hình hóa thành kho dữ liệu kiểu **Star Schema** để phục vụ phân tích trên Power BI.
+> An end-to-end data platform project that combines **Business Analytics, Cloud ETL, Analytics Engineering, and Business Intelligence** using the Olist Brazilian e-commerce dataset.
 
-Mục tiêu của dự án là biến dữ liệu rời rạc thành một cấu trúc dễ hiểu, dễ mở rộng, và dễ báo cáo cho các câu hỏi như:
+## 1. Project Overview
 
-- Tệp khách hàng đang được chia thành những phân khúc nào theo RFM?
-- Phân khúc nào chiếm tỷ trọng lớn nhất trong tập khách hàng?
-- Voucher đang tác động mạnh nhất lên phân khúc nào?
-- Voucher có đang được dùng hiệu quả để kéo nhóm khách hàng tiềm năng quay lại không?
+**Cloud Analyst** transforms raw Olist e-commerce data into an analytics-ready data warehouse and Power BI dashboard.
 
-## 1. Bức tranh tổng quan
+The project is designed around a business-first workflow:
 
-Luồng xử lý của dự án đi theo 3 lớp chính:
+**Business Problem → Business Questions → Business Requirements → Data Requirements → Metrics → Data Platform → Analytics → Dashboard**
 
-1. **Bronze / Raw**: lưu dữ liệu gốc từ bộ Olist.
-2. **Silver**: làm sạch, chuẩn hóa kiểu dữ liệu, tạo các trường trung gian cần thiết.
-3. **Gold**: thiết kế mô hình phân tích gồm fact và dimension để dùng cho BI / dashboard.
+The main analytical focus is **sales performance, customer behavior, customer segmentation, RFM analysis, and voucher usage**.
 
-Nói ngắn gọn: dữ liệu đi từ “thô” đến “sẵn sàng phân tích”.
+### Business questions
 
-## 2. Công nghệ sử dụng
+- Which customer segments represent the largest share of the customer base?
+- How are new, loyal, and potentially inactive customers distributed?
+- Which customer segments show the strongest voucher usage?
+- Can voucher usage support customer retention and reactivation strategies?
+- How do customer purchasing patterns differ across RFM segments?
 
-- **Azure Data Factory**: ingest và điều phối luồng dữ liệu.
-- **Azure Databricks / PySpark**: xử lý dữ liệu ở Silver và Gold.
-- **ADLS Gen2 + Unity Catalog**: lưu trữ và quản trị dữ liệu.
-- **Delta Lake**: định dạng lưu trữ tối ưu cho phân tích.
-- **Power BI**: trực quan hóa và khai thác dữ liệu ở tầng cuối.
+Detailed business documentation is available in [`documents/business-understanding`](documents/business-understanding/).
 
-## 3. Kiến trúc dữ liệu
+---
 
-Dự án áp dụng tư duy **Medallion Architecture** để tách rõ vai trò của từng tầng.
+## 2. Architecture
 
-### Bronze / Raw
+Cloud Analyst uses a hybrid **ETL + ELT** architecture. Technical ingestion is handled by Azure Data Factory, while downstream business transformation is organized with dbt.
 
-Đây là dữ liệu đầu vào chưa xử lý, giữ gần với nguồn gốc nhất có thể. Tầng này hữu ích cho việc truy vết và tái xử lý khi cần.
+```text
+Business Problem → Questions → Requirements → Metrics
+                              │
+                              ▼
+Source Dataset → Azure Data Factory → ADLS Gen2 / PostgreSQL Landing
+                                             │
+                                             ▼
+                                          dbt Core
+                                             │
+                              ┌──────────────┼──────────────┐
+                              ▼              ▼              ▼
+                           Staging      Intermediate      Marts
+                              │              │              │
+                              └──────────────┴──────────────┘
+                                             │
+                                             ▼
+                                   Analytics Data Warehouse
+                                             │
+                                             ▼
+                                   Power BI Semantic Model
+                                             │
+                                             ▼
+                                   Dashboard & Analysis
+```
+
+### ETL workflow
+
+**Source → Azure Data Factory → ADLS Gen2 / PostgreSQL Landing**
+
+ADF is responsible for data ingestion and pipeline orchestration, including source connections, datasets, schema handling, column mapping, and loading.
+
+See [`pipelines/README.md`](pipelines/README.md) for pipeline documentation.
+
+### ELT workflow
+
+**PostgreSQL Landing → dbt Core → Analytics Data Warehouse → Power BI**
+
+dbt separates analytical transformations into structured layers:
+
+- **Staging** — source-level standardization and preparation.
+- **Intermediate** — reusable business transformations.
+- **Marts** — analytics-ready models designed around business requirements.
+
+The dbt project is located at [`dbt/cloud_analyst`](dbt/cloud_analyst/).
+
+---
+
+## 3. Technology Stack
+
+| Layer | Technology | Purpose |
+|---|---|---|
+| Data Source | Olist Brazilian E-commerce Dataset | Raw transactional data |
+| Cloud ETL | Azure Data Factory | Ingestion and orchestration |
+| Cloud Storage | Azure Data Lake Storage Gen2 | Data lake / landing storage |
+| Data Transformation | PySpark / Databricks | Technical data processing |
+| Analytics Engineering | dbt Core | Business transformation and analytical modeling |
+| Data Warehouse | PostgreSQL | Landing and analytical storage |
+| BI | Power BI | Semantic modeling, metrics, and visualization |
+| Modeling | Snowflake Schema | Analytical data model |
+
+---
+
+## 4. Business Understanding
+
+The project starts from business requirements rather than directly from the dataset.
+
+The business documentation is organized into:
+
+- [Business Problem](documents/business-understanding/Business_problem.md)
+- [Business Questions](documents/business-understanding/Business_question.md)
+- [Business Requirements](documents/business-understanding/Business_requirement.md)
+- [Data Requirements](documents/business-understanding/Data_requirement.md)
+- [Metric Dictionary](documents/business-understanding/Metric_dictionary.md)
+- [Metric Mapping to Business Questions](documents/business-understanding/Metric_mapping_Business_Question.md)
+
+This documentation defines the analytical scope before data modeling and dashboard development.
+
+---
+
+## 5. Data Modeling
+
+The analytical warehouse follows a **Snowflake Schema** designed around the project's business requirements.
+
+The model covers transactional facts and supporting dimensions for orders, order items, payments, customers, sellers, products, dates, and RFM analysis.
+
+Model documentation:
+
+- [`Snowflake Schema – E-commerce Data Warehouse.dbml`](documents/modeling/Snowflake%20Schema%20%E2%80%93%20E-commerce%20Data%20Warehouse.dbml)
+- [`Snowflake Schema – E-commerce Data Warehouse.png`](documents/modeling/Snowflake%20Schema%20%E2%80%93%20E-commerce%20Data%20Warehouse.png)
+
+The model supports:
+
+- sales analysis;
+- customer analysis;
+- product and seller analysis;
+- time-based analysis;
+- RFM segmentation;
+- Power BI reporting.
+
+---
+
+## 6. Analytics Engineering with dbt
+
+The dbt project follows a modular transformation structure:
+
+```text
+dbt/cloud_analyst/
+├── models/
+│   ├── staging/
+│   ├── intermediate/
+│   └── marts/
+├── analyses/
+├── macros/
+├── seeds/
+├── snapshots/
+├── tests/
+├── dbt_project.yml
+└── packages.yml
+```
+
+This structure separates source preparation from reusable business logic and final analytical models.
+
+The dbt layer is intended to make business transformations:
+
+- modular;
+- reusable;
+- testable;
+- easier to maintain;
+- easier to connect to downstream BI.
+
+---
+
+## 7. Data Processing & Analysis
+
+The repository also contains PySpark notebooks for technical transformation and exploratory analysis.
+
+### Analysis
+
+- [`Data_Profiling.ipynb`](Notebook/analysis/Data_Profiling.ipynb) — data quality and structure assessment.
+- [`EDA.ipynb`](Notebook/analysis/EDA.ipynb) — exploratory data analysis.
 
 ### Silver
 
-Tầng Silver tập trung vào chất lượng dữ liệu:
-
-- loại bỏ trùng lặp;
-- chuẩn hóa chuỗi;
-- ép kiểu dữ liệu;
-- tạo các cột dẫn xuất như thời gian giao hàng;
-- chuẩn bị dữ liệu cho mô hình hóa ở Gold.
+- [`Silver_Notebook.ipynb`](Notebook/silver/Silver_Notebook.ipynb) — cleaning, standardization, and preparation of data for analytical modeling.
 
 ### Gold
 
-Tầng Gold là tầng phục vụ phân tích. Dữ liệu được thiết kế lại theo **Star Schema** để tối ưu truy vấn và dễ dùng trong dashboard.
+- [`Gold Notebook.ipynb`](Notebook/gold/Gold%20Notebook.ipynb) — creation of analytical fact and dimension datasets.
 
-Các bảng chính ở Gold gồm:
+---
 
-- **Fact Orders**: thông tin giao dịch chính và các chỉ số tổng hợp;
-- **Fact Order Items**: chi tiết từng dòng hàng;
-- **Fact Order Payments**: chi tiết thanh toán;
-- **Fact RFM**: bộ chỉ số khách hàng theo mô hình RFM;
-- **Dim Customers**: thông tin khách hàng;
-- **Dim Sellers**: thông tin người bán;
-- **Dim Products**: thông tin sản phẩm;
-- **Dim Date**: bảng thời gian chuẩn để phân tích theo ngày, tháng, quý, năm.
+## 8. Power BI Analytics
 
-## 4. Business question
+The Power BI project is stored in [`analytics/powerbi`](analytics/powerbi/).
 
-Trọng tâm của dự án không chỉ là “xử lý dữ liệu”, mà là trả lời các câu hỏi kinh doanh xoay quanh **CRM insights**, **RFM segmentation** và **voucher optimization**.
+It contains:
 
-Các nhóm câu hỏi chính gồm:
+- Power BI report definition;
+- semantic model;
+- `.pbip` project file.
 
-- phân khúc khách hàng nào đang đóng góp nhiều nhất vào tập khách hàng;
-- khách hàng mới, khách hàng trung thành và nhóm có nguy cơ rời bỏ đang phân bố ra sao;
-- voucher đang tạo ảnh hưởng mạnh ở phân khúc nào;
-- tỷ lệ sử dụng voucher hiện tại có đủ tốt để hỗ trợ chiến lược giữ chân khách hàng hay không;
-- phân tích RFM để hiểu hành vi mua lặp lại và mức độ giá trị của từng nhóm khách hàng.
+The dashboard is organized around the project's business questions and metrics, with emphasis on:
 
-File mô tả bài toán nghiệp vụ nằm ở [documents/business/Business_question.md](documents/business/Business_question.md).
+- Executive KPIs;
+- Sales Analytics;
+- Customer Analytics;
+- Customer Segmentation;
+- RFM Analysis.
 
-## 5. Mô hình dữ liệu
+---
 
-Star Schema của dự án được mô tả trong:
-
-- [documents/modeling/star_schema.dbml](documents/modeling/star_schema.dbml)
-- [documents/modeling/star_schema.png](documents/modeling/star_schema.png)
-
-Mục đích của mô hình này là:
-
-- giảm độ phức tạp khi truy vấn;
-- gom dữ liệu đo lường vào fact;
-- giữ ngữ cảnh phân tích trong dimension;
-- giúp Power BI đọc dữ liệu rõ ràng và ổn định hơn.
-
-## 6. Cấu trúc thư mục
+## 9. Repository Structure
 
 ```text
 Cloud-Analyst/
-    README.md
-
-    Data/
-        olist_*.csv
-
-    Notebook/
-        silver/
-            Silver_Notebook.ipynb
-        gold/
-            Gold Notebook.ipynb
-
-    pipelines/
-        adf_pipelines/
-            dataset/
-            factory/
-            linkedService/
-            pipeline/
-            publish_config.json
-
-    analytics/
-        powerbi/
-            Dashboard CRM.pbip
-            Dashboard CRM.Report/
-            Dashboard CRM.SemanticModel/
-
-    documents/
-        business/
-            Business_question.md
-        modeling/
-            star_schema.dbml
-            star_schema.png
-
+│
+├── Data/                         # Source and processed datasets
+├── Notebook/
+│   ├── analysis/                 # Profiling and EDA
+│   ├── silver/                   # Technical transformation
+│   └── gold/                     # Analytical dataset generation
+├── pipelines/
+│   ├── adf_pipelines/            # Azure Data Factory configuration
+│   └── README.md
+├── dbt/
+│   └── cloud_analyst/            # Analytics Engineering project
+│       ├── models/
+│       ├── analyses/
+│       ├── macros/
+│       └── tests/
+├── analytics/
+│   └── powerbi/                  # Power BI report and semantic model
+├── documents/
+│   ├── business-understanding/   # Business and metric documentation
+│   ├── modeling/                 # Data model documentation
+│   └── release.md                # Version 2.0 release documentation
+└── README.md
 ```
 
-### Ý nghĩa từng nhóm
+---
 
-- **Data**: dữ liệu đầu vào gốc.
-- **Notebook**: mã PySpark xử lý Silver và Gold.
-- **pipelines**: cấu hình Azure Data Factory.
-- **analytics**: báo cáo và semantic model Power BI.
-- **documents**: tài liệu nghiệp vụ và mô hình hóa dữ liệu.
+## 10. Project Workflow
 
-## 7. Những điểm nổi bật trong code
+The recommended way to understand the project is to follow the dependency between business, data, and analytics layers:
 
-- **Unity Catalog Integration**: quản trị dữ liệu tập trung.
-- **Delta optimization**: bật `optimizeWrite` và `autoCompact` để giảm small files.
-- **Star Schema design**: chuẩn hóa theo mô hình phân tích.
-- **RFM metrics**: thêm lớp phân tích khách hàng để phục vụ segmentation.
-- **Date dimension**: tạo bảng lịch chuẩn với `date_key` dạng `yyyyMMdd`.
+1. **Understand the business problem** — start with [`Business_problem.md`](documents/business-understanding/Business_problem.md).
+2. **Review business questions and requirements** — read the business question and requirement documents.
+3. **Review metrics** — understand definitions and calculation logic in the [Metric Dictionary](documents/business-understanding/Metric_dictionary.md).
+4. **Review the data model** — open the [Snowflake Schema](documents/modeling/Snowflake%20Schema%20%E2%80%93%20E-commerce%20Data%20Warehouse.dbml).
+5. **Review ingestion** — inspect [`pipelines/adf_pipelines`](pipelines/adf_pipelines).
+6. **Review technical transformation** — inspect the Silver and Gold notebooks.
+7. **Review analytical transformation** — inspect [`dbt/cloud_analyst/models`](dbt/cloud_analyst/models).
+8. **Review the BI layer** — open [`analytics/powerbi`](analytics/powerbi).
 
-## 8. Cách đọc project theo đúng thứ tự
+This order makes it easier to understand not only *how* the data is processed, but also *why* each transformation exists.
 
-Nếu bạn mới mở repo này, nên đọc theo thứ tự sau:
+---
 
-1. Đọc [README.md](README.md) để hiểu bức tranh tổng quan.
-2. Đọc [documents/business/Business_question.md](documents/business/Business_question.md) để hiểu bài toán.
-3. Xem [documents/modeling/star_schema.dbml](documents/modeling/star_schema.dbml) để nắm mô hình dữ liệu.
-4. Mở [Notebook/silver/Silver_Notebook.ipynb](Notebook/silver/Silver_Notebook.ipynb) để xem tầng làm sạch.
-5. Mở [Notebook/gold/Gold Notebook.ipynb](Notebook/gold/Gold%20Notebook.ipynb) để xem tầng mô hình hóa.
-6. Cuối cùng xem [analytics/powerbi](analytics/powerbi) để hiểu đầu ra báo cáo.
+## 11. Running the Project
 
-## 9. Cách chạy lại dự án
+The repository contains cloud-specific configuration, so a complete reproduction requires access to the corresponding Azure, PostgreSQL, and Power BI environments.
 
-Phần này mang tính định hướng, vì môi trường Azure/Databricks của mỗi người có thể khác nhau.
+At a high level:
 
-### Bước 1: Chuẩn bị dữ liệu nguồn
+### Step 1 — Prepare the source data
 
-- kiểm tra các file CSV trong [Data](Data);
-- đảm bảo storage / access key / catalog đã được cấu hình đúng.
+Place or access the Olist source dataset according to the project's configured data locations.
 
-### Bước 2: Chạy ingestion bằng ADF
+### Step 2 — Run the ETL pipeline
 
-- mở cấu hình trong [pipelines/adf_pipelines](pipelines/adf_pipelines);
-- kiểm tra linked service, dataset, pipeline;
-- chạy pipeline ingest dữ liệu vào vùng đích.
+Use the Azure Data Factory configuration under [`pipelines/adf_pipelines`](pipelines/adf_pipelines) to ingest data into the landing layer.
 
-### Bước 3: Chạy notebook Silver
+### Step 3 — Run technical transformations
 
-- đọc dữ liệu từ tầng Silver / raw theo cấu hình hiện tại;
-- làm sạch và chuẩn hóa dữ liệu.
+Execute the required PySpark notebooks in the appropriate Databricks environment.
 
-### Bước 4: Chạy notebook Gold
+### Step 4 — Run dbt transformations
 
-- tạo dimension tables;
-- tạo fact tables;
-- tạo bảng RFM;
-- ghi toàn bộ kết quả vào Unity Catalog.
+From [`dbt/cloud_analyst`](dbt/cloud_analyst/), configure the target profile and run the required dbt models and tests.
 
-### Bước 5: Mở Power BI
+Typical commands are:
 
-- kiểm tra semantic model;
-- refresh report;
-- xác nhận dashboard hiển thị đúng dữ liệu.
+```bash
+dbt deps
+dbt build
+```
+
+### Step 5 — Refresh Power BI
+
+Open the Power BI project under [`analytics/powerbi`](analytics/powerbi/), verify the semantic model, and refresh the report.
+
+> **Note:** Environment-specific credentials, connection strings, and cloud resources are intentionally not included in the repository.
+
+---
+
+## 12. Version 2.0
+
+Version 2.0 evolves the project from a cloud data pipeline into a broader **Modern Data Platform** combining:
+
+- Business Understanding;
+- Cloud ETL;
+- Analytics Engineering;
+- Data Warehouse Modeling;
+- Business Intelligence.
+
+Key improvements include:
+
+- standardized business documentation;
+- Azure Data Factory ETL platform;
+- PostgreSQL landing and analytical storage;
+- dbt staging, intermediate, and mart layers;
+- business-oriented metrics and analytical models;
+- refactored Power BI dashboard;
+- portfolio-oriented project documentation.
+
+See [`documents/release.md`](documents/release.md) for the complete Version 2.0 release note.
+
+---
+
+## 13. Project Outcome
+
+Cloud Analyst demonstrates an end-to-end workflow in which **business requirements drive data modeling, data transformation, analytical metrics, and dashboard design**.
+
+The project demonstrates practical understanding of:
+
+- **Data Analytics** — business questions, metrics, EDA, and customer analysis;
+- **Data Engineering** — cloud ingestion, orchestration, storage, and transformation;
+- **Analytics Engineering** — modular dbt transformations and analytical marts;
+- **Business Intelligence** — semantic modeling, KPI design, and Power BI reporting.
+
+The main lesson from the project is that a useful analytics platform is not only a collection of pipelines and dashboards: the business definition, data model, transformation logic, and analytical output must remain connected throughout the workflow.
