@@ -1,21 +1,13 @@
-WITH int_orders_data AS (
+WITH int_customer_orders_data AS (
 
     SELECT
         order_id,
-        customer_id,
+        customer_unique_id,
         order_purchase_timestamp,
         order_status
 
-    FROM {{ ref('int_orders') }}
-
-),
-
-int_customer_data AS (
-
-    SELECT
-        customer_id
-
-    FROM {{ ref('int_customer') }}
+    FROM {{ ref('int_customer_order') }}
+    where order_status = 'delivered'
 
 ),
 
@@ -23,38 +15,21 @@ int_order_payments_data AS (
 
     SELECT
         order_id,
-        payment_value
+        order_payment_value
 
-    FROM {{ ref('int_order_payments') }}
-
-),
-
-customer_orders AS (
-
-    SELECT
-        c.customer_id,
-        o.order_id,
-        o.order_purchase_timestamp,
-        o.order_status
-
-    FROM int_orders_data o
-
-    INNER JOIN int_customer_data c
-        ON o.customer_id = c.customer_id
-
-    WHERE o.order_status = 'delivered'
+    FROM {{ ref('int_order_payment_summary') }}
 
 ),
 
 customer_payments AS (
 
     SELECT
-        co.customer_id,
+        co.customer_unique_id,
         co.order_id,
         co.order_purchase_timestamp,
-        COALESCE(p.payment_value, 0) AS payment_value
+        COALESCE(p.order_payment_value, 0) AS payment_value
 
-    FROM customer_orders co
+    FROM int_customer_orders_data co
 
     LEFT JOIN int_order_payments_data p
         ON co.order_id = p.order_id
@@ -62,35 +37,31 @@ customer_payments AS (
 ),
 
 snapshot_dates AS (
-
-    SELECT
-        DATE '2016-12-31' AS snapshot_date
+    SELECT DATE '2016-12-31' AS snapshot_date
 
     UNION ALL
 
-    SELECT
-        DATE '2017-12-31'
+    SELECT DATE '2017-12-31'
 
     UNION ALL
 
-    SELECT
-        DATE '2018-12-31'
-
+    SELECT MAX(order_purchase_timestamp)::date + 1
+    FROM int_customer_orders_data
 ),
 
 customer_snapshot AS (
 
     SELECT DISTINCT
         s.snapshot_date,
-        c.customer_id
+        c.customer_unique_id
 
     FROM snapshot_dates s
 
     CROSS JOIN (
         SELECT DISTINCT
-            customer_id
+            customer_unique_id
 
-        FROM customer_orders
+        FROM int_customer_orders_data
     ) c
 
 ),
@@ -99,7 +70,7 @@ rfm_metrics AS (
 
     SELECT
         cs.snapshot_date,
-        cs.customer_id,
+        cs.customer_unique_id,
 
         COUNT(DISTINCT cp.order_id) AS frequency,
 
@@ -118,7 +89,7 @@ rfm_metrics AS (
     FROM customer_snapshot cs
 
     LEFT JOIN customer_payments cp
-        ON cs.customer_id = cp.customer_id
+        ON cs.customer_unique_id = cp.customer_unique_id
 
         -- Rolling 12-month window
         AND cp.order_purchase_timestamp::date
@@ -129,7 +100,7 @@ rfm_metrics AS (
 
     GROUP BY
         cs.snapshot_date,
-        cs.customer_id
+        cs.customer_unique_id
 
 ),
 
@@ -139,10 +110,10 @@ final AS (
         ROW_NUMBER() OVER (
             ORDER BY
                 snapshot_date,
-                customer_id
+                customer_unique_id
         ) AS customer_rfm_id,
 
-        customer_id,
+        customer_unique_id,
 
         {{generate_date_key('snapshot_date')}} AS "analysis_date_key",
 

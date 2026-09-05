@@ -1,5 +1,5 @@
 SELECT
-    customer_id,
+    customer_unique_id,
     analysis_date_key,
 
     recency,
