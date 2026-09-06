@@ -18,7 +18,6 @@ This project focuses on building a data analytics platform to support Olist's bu
 - Customer value and retention analysis across geographic areas.
 - Sales performance analysis by product, product category, geography, and time period.
 - Seller performance and customer satisfaction analysis.
-- Payment behavior analysis.
 - Customer satisfaction analysis based on customer reviews.
 - Standardization of Business Metrics for data analysis and visualization.
 - Development of analytical datasets and dashboards to support business decision-making.
@@ -50,8 +49,6 @@ The project does not cover the following:
 | **BR8** | BQ4 | The platform shall identify sellers with significant business contribution and comparatively low customer satisfaction. | Support prioritization of seller performance improvement programs. |
 | **BR9** | BQ5 | The platform shall provide sales performance metrics across different time periods. | Support sales planning, performance monitoring, and resource allocation. |
 | **BR10** | BQ5 | The platform shall identify high- and low-performing periods based on revenue, order activity, and customer purchasing behavior. | Support promotional planning and identification of temporal business trends. |
-| **BR11** | BQ6 | The platform shall provide payment behavior metrics by payment method, payment value, and installment usage. | Support optimization of payment options and sales strategies. |
-| **BR12** | BQ6 | The platform shall enable comparison of payment behavior across customer segments and geographic areas. | Help stakeholders understand differences in customer payment preferences. |
 | **BR13** | BQ7 | The platform shall identify geographic areas with high customer concentration, order activity, and revenue contribution. | Support localized marketing, seller development, and business expansion strategies. |
 | **BR14** | BQ8 | The platform shall measure customer satisfaction across products, product categories, and sellers using customer review data. | Support identification of products and sellers associated with high or low customer satisfaction. |
 | **BR15** | BQ8 | The platform shall identify areas where low customer satisfaction has a significant impact on business performance. | Support prioritization of product and seller improvement initiatives. |

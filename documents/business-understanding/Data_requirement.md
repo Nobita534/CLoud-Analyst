@@ -1,152 +1,99 @@
-# Data Requirement
+# Data Requirements
 
 ## 1. Overview
 
-This document defines the data requirements needed to satisfy each Business Requirement of the project. It identifies the required business metrics, dimensions, measures, business attributes, and source tables that will be used throughout the Analytics Engineering process.
+This document translates approved Business Questions, Business Requirements,
+and Metric Dictionary definitions into concrete data requirements.
 
-The information documented in this file serves as the foundation for designing the Data Warehouse, building dbt models, defining the Business Metric Layer, and developing Business Intelligence dashboards.
+Traceability flow:
+
+*Business Question → Business Requirement → Metric Definition → Data Requirement*
+
+Each data requirement defines the analytical grain, dimensions, required
+fields, source entities, and business rules needed for implementation in dbt
+and Power BI.
 
 ---
 
-## 2. Data Requirements
+## 2. Data Requirement Traceability
 
-### BR1. Customer Segmentation
+| DR ID | BQ | BR | Required Metrics | Analytical Grain |
+|---|---|---|---|---|
+| DR-01 | BQ1 | BR1 | KPI-02, KPI-03, KPI-09 | One customer × one snapshot date |
+| DR-02 | BQ1 | BR2 | KPI-02, KPI-03, KPI-04, KPI-06, KPI-09 | One customer segment × one snapshot date |
+| DR-03 | BQ2 | BR3 | KPI-01, KPI-04, KPI-09 | Segment × customer geography × snapshot |
+| DR-04 | BQ2 | BR4 | KPI-02, KPI-03, KPI-04, KPI-06, KPI-09 | Customer geography × segment × snapshot |
+| DR-05 | BQ3 | BR5 | KPI-07, KPI-10, KPI-11, KPI-12 | Product × customer geography × purchase date |
+| DR-06 | BQ3 | BR6 | KPI-07, KPI-10, KPI-11, KPI-12 | Product category × customer geography × purchase date |
+| DR-07 | BQ4 | BR7 | KPI-07, KPI-08, KPI-10, KPI-13, KPI-14, KPI-15 | Seller × purchase period |
+| DR-08 | BQ4 | BR8 | KPI-07, KPI-08, KPI-10, KPI-13, KPI-14, KPI-15 | Seller × geography × purchase period |
+| DR-09 | BQ5 | BR9 | KPI-01, KPI-04, KPI-07, KPI-16, KPI-17 | Purchase period |
+| DR-10 | BQ5 | BR10 | KPI-01, KPI-04, KPI-07, KPI-16, KPI-17 | Comparable purchase period |
+| DR-11 | BQ7 | BR13 | KPI-01, KPI-04, KPI-07 | Customer geography × purchase period |
+| DR-12 | BQ8 | BR14 | KPI-08, KPI-13 | Product/category/seller × purchase period |
+| DR-13 | BQ8 | BR15 | KPI-07, KPI-08, KPI-10, KPI-13 | Product/category/seller × purchase period |
 
-**Business Requirement**
+---
 
-> The platform shall classify customers into meaningful customer segments based on purchasing behavior.
+## 3. Required Data by Analytical Domain
+
+### 3.1. Customer and RFM Analysis
 
 | Category | Required Data |
-|----------|---------------|
-| **Business Metrics** | Purchase Frequency, Recency, Total Revenue |
-| **Dimensions** | Customer, Date |
-| **Measures** | Payment Value |
-| **Business Attributes** | Customer ID, Customer Unique ID, Order Purchase Timestamp |
-| **Source Tables** | customers, orders, order_payments |
+|---|---|
+| Dimensions | Customer, Customer Segment, Snapshot Date, Customer Geography |
+| Required Fields | customer_unique_id, customer_id, order_id, order_status, order_purchase_timestamp, payment_value, snapshot_date |
+| Derived Attributes | recency, frequency, monetary, r_score, f_score, m_score, customer_segment |
+| Source Entities | customers, orders, order_payments |
+| Business Rules | Delivered orders only; rolling 12-month window; one customer × one snapshot; payment aggregated to order-grain before calculating Monetary |
 
----
-
-### BR2. Customer Segment Characteristics
-
-**Business Requirement**
-
-> The platform shall provide the characteristics and distribution of each customer segment.
+### 3.2. Product and Category Analysis
 
 | Category | Required Data |
-|----------|---------------|
-| **Business Metrics** | Number of Customers, Voucher Usage Rate |
-| **Dimensions** | Customer Segment, State |
-| **Measures** | Payment Value |
-| **Business Attributes** | Customer State, Payment Type |
-| **Source Tables** | customers, orders, order_payments |
+|---|---|
+| Dimensions | Product, Product Category, Customer State, Customer City, Purchase Date |
+| Required Fields | product_id, product_category_name, order_id, order_item_id, price, freight_value, customer_state, customer_city, order_purchase_timestamp, order_status |
+| Source Entities | products, product_category_translation, order_items, orders, customers |
+| Business Rules | Delivered orders only; use item price for product sales; do not assign the full order payment to every product |
 
----
-
-### BR3. High-value Customer Segments by State
-
-**Business Requirement**
-
-> The platform shall identify high-value customer segments across different states.
+### 3.3. Seller Performance Analysis
 
 | Category | Required Data |
-|----------|---------------|
-| **Business Metrics** | Total Revenue |
-| **Dimensions** | Customer Segment, State |
-| **Measures** | Payment Value |
-| **Business Attributes** | Customer State |
-| **Source Tables** | customers, orders, order_payments |
+|---|---|
+| Dimensions | Seller, Seller Geography, Customer Geography, Purchase Date |
+| Required Fields | seller_id, order_id, order_item_id, price, review_score, order_purchase_timestamp, order_delivered_customer_date, order_estimated_delivery_date, seller_state |
+| Source Entities | sellers, order_items, orders, order_reviews, customers |
+| Business Rules | Aggregate to seller-order grain before seller aggregation; orders without reviews remain in sales/order denominators; review metrics only use available reviews |
 
----
-
-### BR4. Customer Value & Repeat Purchase Performance
-
-**Business Requirement**
-
-> The platform shall measure customer value and repeat purchase performance for each customer segment.
+### 3.4. Revenue and Time Analysis
 
 | Category | Required Data |
-|----------|---------------|
-| **Business Metrics** | Total Revenue, Purchase Frequency, Repeat Purchase Rate |
-| **Dimensions** | Customer Segment, Date |
-| **Measures** | Payment Value |
-| **Business Attributes** | Customer Unique ID, Order Purchase Timestamp |
-| **Source Tables** | customers, orders, order_payments |
+|---|---|
+| Dimensions | Purchase Date, Customer Geography |
+| Required Fields | order_id, customer_unique_id, order_status, order_purchase_timestamp, payment_value |
+| Source Entities | orders, customers, order_payments |
+| Business Rules | One row per delivered order with a payment record; payment aggregated before joining; partial-year periods must use same-period comparison |
 
----
-
-### BR5. Product Category Performance
-
-**Business Requirement**
-
-> The platform shall identify the highest-performing product categories in each state.
+### 3.5. Customer Satisfaction Analysis
 
 | Category | Required Data |
-|----------|---------------|
-| **Business Metrics** | Total Revenue, Total Orders |
-| **Dimensions** | Product Category, State |
-| **Measures** | Payment Value |
-| **Business Attributes** | Product Category Name, Customer State |
-| **Source Tables** | customers, orders, order_items, order_payments, products, product_translation |
+|---|---|
+| Dimensions | Product, Product Category, Seller, Purchase Date |
+| Required Fields | review_id, review_score, order_id, product_id, seller_id, order_purchase_timestamp |
+| Source Entities | order_reviews, orders, order_items, products, sellers |
+| Business Rules | Review is recorded at order-grain; product/seller analysis represents association with an order review, not a product-specific or seller-specific review |
 
 ---
 
-### BR6. Product Category Comparison
+## 4. Data Quality Requirements
 
-**Business Requirement**
-
-> The platform shall compare sales performance across product categories.
-
-| Category | Required Data |
-|----------|---------------|
-| **Business Metrics** | Total Revenue, Total Orders |
-| **Dimensions** | Product Category |
-| **Measures** | Payment Value |
-| **Business Attributes** | Product Category Name |
-| **Source Tables** | orders, order_items, order_payments, products, product_translation |
-
----
-
-### BR7. Seller Performance Evaluation
-
-**Business Requirement**
-
-> The platform shall evaluate seller performance using standardized business metrics.
-
-| Category | Required Data |
-|----------|---------------|
-| **Business Metrics** | Total Revenue, Total Orders, Average Review Score |
-| **Dimensions** | Seller, Date |
-| **Measures** | Payment Value, Review Score |
-| **Business Attributes** | Seller ID, Order Purchase Timestamp |
-| **Source Tables** | sellers, orders, order_items, order_payments, order_reviews |
-
----
-
-### BR8. Seller Performance Improvement by State
-
-**Business Requirement**
-
-> The platform shall identify sellers that should be prioritized for performance improvement in each state.
-
-| Category | Required Data |
-|----------|---------------|
-| **Business Metrics** | Total Revenue, Total Orders, Average Review Score |
-| **Dimensions** | Seller, State |
-| **Measures** | Payment Value, Review Score |
-| **Business Attributes** | Seller State, Customer State |
-| **Source Tables** | sellers, customers, orders, order_items, order_payments, order_reviews |
-
----
-
-## 3. Data Quality Considerations
-
-The required data should satisfy the following quality requirements before being integrated into the Data Warehouse:
-
-- Business entities should be uniquely identified using standardized primary keys.
-- Relationships between tables should preserve referential integrity.
-- Business metrics should be calculated using consistent business definitions.
-- Missing values should be handled according to predefined business rules.
-- Data types should be standardized before being loaded into the Data Warehouse.
-
----
-
+- customer_unique_id must be used as the customer-level analytical key.
+- order_id must remain unique in order-grain metric datasets.
+- Payment data must be aggregated to one row per order before downstream joins.
+- Product and seller sales must be calculated from order_items.price.
+- RFM data must be unique by customer_unique_id + snapshot_date.
+- Product metrics must conform to their declared composite grain.
+- Seller metrics must be aggregated through seller-order grain.
+- Date keys must have valid relationships with the date dimension.
+- Missing source relationships must be reported and must not be silently removed.
+- Metric calculations must follow the definitions in the Metric Dictionary.
