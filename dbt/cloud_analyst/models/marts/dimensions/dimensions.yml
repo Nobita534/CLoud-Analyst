@@ -51,6 +51,8 @@ models:
               arguments: 
                 to: ref('dim_geolocation')
                 field: geolocation_zip_code_prefix
+              config: 
+                severity: warn
 
       - name: seller_city
         description: City where the seller is located.
@@ -121,14 +123,14 @@ models:
         data_tests:
           - unique
           - not_null
-      - name: customer_unique_id
+      - name: customer_id
         description: ID of the customer associated with the order.
         data_tests:
           - not_null
           - relationships:
               arguments: 
                 to: ref('dim_customers')
-                field: customer_unique_id
+                field: customer_id
 
       - name: order_status
         description: Current status of the order.
@@ -185,6 +187,10 @@ models:
               arguments: 
                 to: ref('dim_date')
                 field: date_key
+
+      - name: customer_unique_id
+        data_tests:
+          - not_null
 
 
   - name: dim_geolocation

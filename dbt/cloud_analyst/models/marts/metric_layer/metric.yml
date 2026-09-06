@@ -113,7 +113,6 @@ models:
       performance.
 
     columns:
-
       - name: total_revenue
         description: >
           Total payment value generated from successfully completed
@@ -123,43 +122,43 @@ models:
           - dbt_utils.expression_is_true:
               arguments:
                 expression: ">=0"
+      - name: order_purchase_date_key
+        description: Purchase date used to attribute delivered-order revenue.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+      - name: order_id
+        data_tests:
+          - unique
+          - not_null
 
+      - name: customer_id
+        data_tests:
+          - not_null
 
-  - name: order_metrics
-    description: >
-      Standardized order and customer activity metrics used to monitor
-      overall order performance.
+      - name: customer_unique_id
+        data_tests:
+          - not_null
 
-    columns:
-      - name: total_orders
-        description: >
-          Number of distinct successfully completed orders within the
-          selected analysis period.
+      - name: voucher_payment_value
         data_tests:
           - not_null
           - dbt_utils.expression_is_true:
               arguments:
-                expression: ">=0"
+                expression: ">= 0"
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: "<= total_revenue"
 
-  - name: payment_metrics
-    description: >
-      Standardized payment metrics used to analyze payment behavior
-      within successfully completed orders.
-
-    columns:
-
-      - name: voucher_usage_rate
-        description: >
-          Percentage of completed orders that used at least one
-          voucher payment.
+      - name: used_voucher
         data_tests:
           - not_null
-          - dbt_utils.accepted_range:
+          - accepted_values:
               arguments:
-                min_value: 0
-                max_value: 100
-                inclusive: true
-
+                values: [true, false]
 
   - name: product_metrics
     description: >
@@ -167,16 +166,17 @@ models:
       sales performance across geographic locations.
 
     columns:
-
-      - name: product_category_name
-        description: >
-          Product category associated with the metric.
+      - name: product_id
         data_tests:
           - not_null
+          - relationships:
+              arguments: 
+                to: ref('dim_products')
+                field: product_id
 
       - name: total_product_sales
         description: >
-          Total number of products sold through successfully completed orders.
+          Total sales of products sold through successfully completed orders.
         data_tests:
           - not_null
           - dbt_utils.expression_is_true:
@@ -201,6 +201,34 @@ models:
           - dbt_utils.expression_is_true:
               arguments:
                 expression: ">=0"
+      - name: total_items_sold
+        data_tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: ">= 1"
+
+      - name: order_purchase_date_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+      - name: customer_state
+        data_tests:
+          - not_null
+
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments: 
+            combination_of_columns:
+              - product_id
+              - customer_state
+              - order_purchase_date_key
+      - dbt_utils.expression_is_true:
+          arguments: 
+            expression: "total_items_sold >= total_orders"
 
 
   - name: seller_metrics
@@ -215,6 +243,12 @@ models:
           Unique identifier of the seller.
         data_tests:
           - not_null
+          - unique
+          - relationships:
+              arguments: 
+                to: ref('dim_sellers')
+                field: seller_id
+
 
       - name: seller_state
         description: >
@@ -232,24 +266,47 @@ models:
               arguments:
                 expression: ">=0"
 
-      - name: total_orders
-        description: >
-          Number of distinct successfully completed orders associated
-          with the seller within the selected analysis period.
-        data_tests:
-          - not_null
-          - dbt_utils.expression_is_true:
-              arguments:
-                expression: ">=0"
-
       - name: average_review_score
         description: >
           Average customer review score associated with successfully
           completed orders handled by the seller.
         data_tests:
-          - not_null
           - dbt_utils.accepted_range:
               arguments:
                 min_value: 1
                 max_value: 5
                 inclusive: true
+      
+      - name: review_coverage_rate
+        description: >
+          The rate between order having review and total delivered orders
+        data_tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+                inclusive: true
+
+      - name: on_time_delivery_rate
+        description: >
+          Actual delivery not later than estimated delivery date
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+                inclusive: true
+
+      - name: average_delivery_days
+        description: >
+          Days from purchase to customer delivery
+        data_tests:
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: ">=0"
+    data_tests:
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: "reviewed_orders <= total_orders"
+

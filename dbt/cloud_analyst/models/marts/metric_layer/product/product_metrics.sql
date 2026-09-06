@@ -1,26 +1,48 @@
-SELECT
-    -- oi.order_id,
+WITH delivered_order_items AS (
 
-    p.product_id,
+    SELECT
+        oi.fact_item_id,
+        oi.order_id,
+        oi.product_id,
+        oi.price,
+        oi.freight_value,
 
-    COUNT(DISTINCT oi.fact_item_id) AS total_orders,
+        o.customer_id,
+        o.order_purchase_date_key
 
-    SUM(oi.price) AS total_product_sales,
+    FROM {{ ref('fact_order_items') }} oi
 
-    SUM(oi.freight_value) AS total_freight_value
+    INNER JOIN {{ ref('dim_orders') }} o
+        ON oi.order_id = o.order_id
 
-FROM {{ ref('fact_order_items') }} AS oi
+    WHERE o.order_status = 'delivered'
 
-INNER JOIN {{ ref('dim_products') }} AS p
-    ON oi.product_id = p.product_id
+),
 
-INNER JOIN {{ ref('dim_orders') }} AS o
-    ON oi.order_id = o.order_id
+final AS (
 
-WHERE o.order_status = 'delivered'
+    SELECT
+        doi.product_id,
+        c.customer_state,
+        doi.order_purchase_date_key,
 
-GROUP BY
-    p.product_id
-    -- oi.order_id
+        COUNT(DISTINCT doi.fact_item_id) AS total_items_sold,
+        COUNT(DISTINCT doi.order_id) AS total_orders,
 
--- ORDER BY oi.order_id
+        SUM(doi.price) AS total_product_sales,
+        SUM(doi.freight_value) AS total_freight_value
+
+    FROM delivered_order_items doi
+
+    INNER JOIN {{ ref('dim_customers') }} c
+        ON doi.customer_id = c.customer_id
+
+    GROUP BY
+        doi.product_id,
+        c.customer_state,
+        doi.order_purchase_date_key
+
+)
+
+SELECT *
+FROM final
