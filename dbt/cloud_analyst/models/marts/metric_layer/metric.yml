@@ -143,23 +143,6 @@ models:
         data_tests:
           - not_null
 
-      - name: voucher_payment_value
-        data_tests:
-          - not_null
-          - dbt_utils.expression_is_true:
-              arguments:
-                expression: ">= 0"
-          - dbt_utils.expression_is_true:
-              arguments:
-                expression: "<= total_revenue"
-
-      - name: used_voucher
-        data_tests:
-          - not_null
-          - accepted_values:
-              arguments:
-                values: [true, false]
-
   - name: product_metrics
     description: >
       Standardized product and product-category metrics used to analyze

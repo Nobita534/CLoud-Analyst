@@ -23,26 +23,6 @@ order_payments AS (
 
 ),
 
-voucher_payments AS (
-
-    SELECT
-        order_id,
-
-        SUM(
-            CASE
-                WHEN payment_type = 'voucher' THEN payment_value
-                ELSE 0
-            END
-        ) AS voucher_payment_value,
-
-        BOOL_OR(payment_type = 'voucher') AS used_voucher
-
-    FROM {{ ref('fact_order_payments') }}
-
-    GROUP BY order_id
-
-),
-
 final AS (
 
     SELECT
@@ -51,9 +31,7 @@ final AS (
         o.customer_unique_id,
         o.order_purchase_date_key,
 
-        p.order_payment_value AS total_revenue,
-        COALESCE(vp.voucher_payment_value, 0) AS voucher_payment_value,
-        COALESCE(vp.used_voucher, FALSE) AS used_voucher
+        p.order_payment_value AS total_revenue
 
     FROM delivered_orders o
 
