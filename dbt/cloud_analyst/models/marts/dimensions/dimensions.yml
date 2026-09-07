@@ -20,12 +20,6 @@ models:
         description: First five digits of the customer's ZIP code.
         data_tests:
           - not_null
-          - relationships:
-              arguments: 
-                to: ref('dim_geolocation')
-                field: geolocation_zip_code_prefix
-              config:
-                severity: warn
 
       - name: customer_city
         description: City where the customer is located.
@@ -47,12 +41,6 @@ models:
         description: First five digits of the seller's ZIP code.
         data_tests:
           - not_null
-          - relationships:
-              arguments: 
-                to: ref('dim_geolocation')
-                field: geolocation_zip_code_prefix
-              config: 
-                severity: warn
 
       - name: seller_city
         description: City where the seller is located.
@@ -192,43 +180,3 @@ models:
         data_tests:
           - not_null
 
-
-  - name: dim_geolocation
-    description: >
-      Geolocation dimension containing geographical information for ZIP code prefixes.
-    columns:
-      - name: geolocation_zip_code_prefix
-        description: ZIP code prefix used to identify a geographic area.
-        data_tests:
-          - not_null
-
-      - name: geolocation_lat
-        description: Latitude of the geographic location.
-
-      - name: geolocation_lng
-        description: Longitude of the geographic location.
-
-      - name: geolocation_city
-        description: City of the geographic location.
-
-      - name: geolocation_state
-        description: State of the geographic location.
-
-  - name: dim_unique_customers
-    description: >
-      Customer dimension containing one row for each actual customer
-      identified across multiple customer records.
-
-    columns:
-      - name: customer_unique_id
-        description: >
-          Unique identifier representing one actual customer across
-          multiple orders.
-
-        data_tests:
-          - not_null
-          - unique
-          - relationships:
-              arguments:
-                to: ref('dim_customers')
-                field: customer_unique_id
