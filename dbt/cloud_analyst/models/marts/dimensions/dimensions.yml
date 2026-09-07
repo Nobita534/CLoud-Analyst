@@ -213,3 +213,22 @@ models:
 
       - name: geolocation_state
         description: State of the geographic location.
+
+  - name: dim_unique_customers
+    description: >
+      Customer dimension containing one row for each actual customer
+      identified across multiple customer records.
+
+    columns:
+      - name: customer_unique_id
+        description: >
+          Unique identifier representing one actual customer across
+          multiple orders.
+
+        data_tests:
+          - not_null
+          - unique
+          - relationships:
+              arguments:
+                to: ref('dim_customers')
+                field: customer_unique_id

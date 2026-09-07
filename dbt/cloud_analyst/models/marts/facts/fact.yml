@@ -159,7 +159,7 @@ models:
           - not_null
           - relationships:
               arguments:
-                to: ref('dim_customers')
+                to: ref('dim_unique_customer')
                 field: customer_unique_id
 
       - name: analysis_date_key

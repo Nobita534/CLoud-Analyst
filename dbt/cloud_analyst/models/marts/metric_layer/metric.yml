@@ -15,7 +15,7 @@ models:
           - not_null
           - relationships:
               arguments:
-                to: ref('dim_customers')
+                to: ref('dim_unique_customers')
                 field: customer_unique_id
 
       - name: analysis_date_key
@@ -142,6 +142,10 @@ models:
       - name: customer_unique_id
         data_tests:
           - not_null
+          - relationships: 
+              arguments: 
+                to: ref('dim_unique_customer')
+                field: customer_unique_id
 
   - name: product_metrics
     description: >

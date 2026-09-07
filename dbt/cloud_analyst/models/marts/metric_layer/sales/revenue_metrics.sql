@@ -38,9 +38,6 @@ final AS (
     INNER JOIN order_payments p
         ON o.order_id = p.order_id
 
-    LEFT JOIN voucher_payments vp 
-        ON o.order_id = vp.order_id
-
 )
 
 SELECT *
