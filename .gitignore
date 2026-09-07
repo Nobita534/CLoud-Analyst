@@ -1,2 +1,6 @@
+# Power BI local artifacts
 **/.pbi/localSettings.json
 **/.pbi/cache.abf
+
+# dbt-generated logs
+**/logs/
