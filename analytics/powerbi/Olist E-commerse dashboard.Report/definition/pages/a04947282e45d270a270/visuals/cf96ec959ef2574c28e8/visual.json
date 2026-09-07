@@ -211,5 +211,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "1ecf6ccbfd231c61fb3c",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "All Measure"
+              }
+            },
+            "Property": "AOV"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

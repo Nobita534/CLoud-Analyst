@@ -1,11 +1,12 @@
 table 'All Measure'
 	lineageTag: 18634829-0023-41b0-8e32-4ea3f838e651
 
-	measure 'Active Customer' = ```
+	measure 'Active Customer' =
 			
-			    // DISTINCTCOUNT('marts dim_customers'[customer_unique_id])
-			    CALCULATE(DISTINCTCOUNT('marts dim_orders'[customer_id]), 'marts dim_orders'[order_status] = "delivered")
-			```
+			CALCULATE(
+			    DISTINCTCOUNT('marts dim_orders'[customer_unique_id]),
+			    'marts dim_orders'[order_status] = "delivered"
+			)
 		formatString: 0
 		lineageTag: 5852d3ce-25fe-4a22-878c-ea989d304720
 
@@ -145,10 +146,9 @@ table 'All Measure'
 
 		annotation PBI_FormatHint = {"isCustom":true}
 
-	measure AOV = ```
-			[Total Revenue] / [Total Orders] 
+	measure AOV =
 			
-			```
+			DIVIDE([Total Revenue], [Revenue Orders])
 		lineageTag: b0709ef3-5029-4aec-8f8f-6441a5fe658f
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -281,6 +281,12 @@ table 'All Measure'
 		lineageTag: 4e1a847b-fa08-4611-96f4-a60052b150c0
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Revenue Orders' =
+			
+			DISTINCTCOUNT('marts revenue_metrics'[order_id])
+		formatString: 0
+		lineageTag: 95db8c89-8ba8-4ae7-884f-820cdb629241
 
 	column Column
 		formatString: 0
