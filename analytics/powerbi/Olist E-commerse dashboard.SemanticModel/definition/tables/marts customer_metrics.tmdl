@@ -38,14 +38,6 @@ table 'marts customer_metrics'
 
 		annotation SummarizationSetBy = Automatic
 
-	column customer_id
-		dataType: string
-		lineageTag: da879aab-6bd8-43ce-a2db-fbe29a089bc3
-		summarizeBy: none
-		sourceColumn: customer_id
-
-		annotation SummarizationSetBy = Automatic
-
 	column r_score
 		dataType: int64
 		formatString: 0
@@ -87,6 +79,14 @@ table 'marts customer_metrics'
 		lineageTag: 5c76eeae-c9a2-4670-b61c-4f532d55f526
 		summarizeBy: none
 		sourceColumn: customer_segment
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_unique_id
+		dataType: string
+		lineageTag: f3a4c86b-b604-4dbc-b9a3-70f5e0ebbc67
+		summarizeBy: none
+		sourceColumn: customer_unique_id
 
 		annotation SummarizationSetBy = Automatic
 

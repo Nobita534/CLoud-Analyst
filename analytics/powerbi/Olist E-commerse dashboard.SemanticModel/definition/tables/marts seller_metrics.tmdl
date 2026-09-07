@@ -46,6 +46,45 @@ table 'marts seller_metrics'
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	column reviewed_orders
+		dataType: int64
+		formatString: 0
+		lineageTag: 7c5010ac-04c4-4ab6-ad9d-7f1417ec063e
+		summarizeBy: sum
+		sourceColumn: reviewed_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column review_coverage_rate
+		dataType: double
+		lineageTag: 4b00a2c7-e702-4ba5-bd1d-18a8af7049ad
+		summarizeBy: sum
+		sourceColumn: review_coverage_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column average_delivery_days
+		dataType: double
+		lineageTag: 299b9a40-c76e-450f-98fc-0654f2695d99
+		summarizeBy: sum
+		sourceColumn: average_delivery_days
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column on_time_delivery_rate
+		dataType: double
+		lineageTag: 6796b522-98de-447f-8ae8-0ce96e26b2b6
+		summarizeBy: sum
+		sourceColumn: on_time_delivery_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	partition 'marts seller_metrics' = m
 		mode: import
 		source =

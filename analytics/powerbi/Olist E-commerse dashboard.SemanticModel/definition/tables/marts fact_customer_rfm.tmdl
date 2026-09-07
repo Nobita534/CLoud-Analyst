@@ -47,11 +47,11 @@ table 'marts fact_customer_rfm'
 
 		annotation SummarizationSetBy = Automatic
 
-	column customer_id
+	column customer_unique_id
 		dataType: string
-		lineageTag: 8fee5ce9-f208-4e21-84eb-3adcb22ddab1
+		lineageTag: 5ea1ea2b-63ed-4e22-95e7-d80bd1762865
 		summarizeBy: none
-		sourceColumn: customer_id
+		sourceColumn: customer_unique_id
 
 		annotation SummarizationSetBy = Automatic
 

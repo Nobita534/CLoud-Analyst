@@ -19,28 +19,28 @@ table 'marts revenue_metrics'
 
 		annotation SummarizationSetBy = Automatic
 
-	column product_id
+	column order_id
 		dataType: string
-		lineageTag: 4489b8cd-684d-4da9-bf65-63b8a43d1efd
+		lineageTag: f85a8a5e-f7cd-4677-b009-bcf052f60fef
 		summarizeBy: none
-		sourceColumn: product_id
+		sourceColumn: order_id
 
 		annotation SummarizationSetBy = Automatic
 
-	column seller_id
+	column customer_unique_id
 		dataType: string
-		lineageTag: af139b18-0100-4c5b-9de8-b6f05e631db2
+		lineageTag: 0f2b1ec4-f0bb-4e51-91e4-816c1f524b9f
 		summarizeBy: none
-		sourceColumn: seller_id
+		sourceColumn: customer_unique_id
 
 		annotation SummarizationSetBy = Automatic
 
-	column order_delivered_customer_date_key
+	column order_purchase_date_key
 		dataType: int64
 		formatString: 0
-		lineageTag: 6dae8a3d-473b-4171-aa6d-f9bce4c41a82
+		lineageTag: e31e7640-6fcb-40b1-adc8-c5a60ddcf8db
 		summarizeBy: sum
-		sourceColumn: order_delivered_customer_date_key
+		sourceColumn: order_purchase_date_key
 
 		annotation SummarizationSetBy = Automatic
 

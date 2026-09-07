@@ -7,7 +7,7 @@
     "z": 9000,
     "height": 447.77777777777777,
     "width": 564.44444444444446,
-    "tabOrder": 9000
+    "tabOrder": 8000
   },
   "visual": {
     "visualType": "scatterChart",
@@ -248,86 +248,6 @@
           ]
         },
         "howCreated": "User"
-      },
-      {
-        "name": "3f66ea49ca128945d0ca",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "marts seller_metrics"
-              }
-            },
-            "Property": "seller_id"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "e555168961c4a7cb600e",
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "marts seller_metrics"
-                  }
-                },
-                "Property": "average_review_score"
-              }
-            },
-            "Function": 0
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "4fa9fd1d330e3e56adf7",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Total Sales"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "ba5daa655bee6549f0df",
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "marts seller_metrics"
-                  }
-                },
-                "Property": "total_orders"
-              }
-            },
-            "Function": 0
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "39fed3546e5858806e38",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "marts dim_sellers"
-              }
-            },
-            "Property": "seller_state"
-          }
-        },
-        "type": "Categorical"
       }
     ]
   }

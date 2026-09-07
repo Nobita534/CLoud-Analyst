@@ -38,6 +38,62 @@ table 'marts product_metrics'
 
 		annotation SummarizationSetBy = Automatic
 
+	column customer_state
+		dataType: string
+		lineageTag: 6e652f8a-af7c-4ebc-a2a3-f42272a5e4f6
+		summarizeBy: none
+		sourceColumn: customer_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_purchase_date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 04357197-e1ce-4d81-8397-ed1f8fef729c
+		summarizeBy: sum
+		sourceColumn: order_purchase_date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_items_sold
+		dataType: double
+		lineageTag: b4bf6030-b299-4bb1-8605-45a1f2ee308a
+		summarizeBy: sum
+		sourceColumn: total_items_sold
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column reviewed_orders
+		dataType: int64
+		formatString: 0
+		lineageTag: 57ba581d-4426-4b9e-be91-59226ef9f7dd
+		summarizeBy: sum
+		sourceColumn: reviewed_orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column average_review_score
+		dataType: double
+		lineageTag: 03d9e6ad-938a-4f24-a6be-ea3491bc3ba4
+		summarizeBy: sum
+		sourceColumn: average_review_score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column review_coverage_rate
+		dataType: double
+		lineageTag: 3af16a0a-760f-4e2a-a752-8ea47119eb1a
+		summarizeBy: sum
+		sourceColumn: review_coverage_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	partition 'marts product_metrics' = m
 		mode: import
 		source =

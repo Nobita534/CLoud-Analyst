@@ -12,7 +12,7 @@ table 'All Measure'
 	measure 'VIP Customers' =
 			
 			CALCULATE(
-			    DISTINCTCOUNT('marts customer_metrics'[customer_id]),
+			    DISTINCTCOUNT('marts customer_metrics'[customer_unique_id]),
 			    'marts customer_metrics'[customer_segment] = "VIP"
 			)
 		formatString: 0
@@ -77,38 +77,38 @@ table 'All Measure'
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Total Revenue' = ROUND(SUM('marts revenue_metrics'[total_revenue]), 2)
-		formatString: 0.00
+		formatString: """R$""#,##0.00"""
 		lineageTag: b27c1cad-3c75-47a3-b9fa-3ea0b4e734da
 
-	measure 'Revenue SPLY' = ```
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure 'Revenue SPLY' =
 			
+			VAR PreviousDates =
+			    SAMEPERIODLASTYEAR('marts dim_date'[full_date])
+			RETURN
 			    CALCULATE(
 			        [Total Revenue],
-			        SAMEPERIODLASTYEAR('marts dim_date'[full_date])
+			        REMOVEFILTERS('marts dim_date'),
+			        PreviousDates
 			    )
-			```
 		lineageTag: 11b18837-f5e2-4ceb-a56f-8b3be0c568a3
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'YoY Revenue Growth %' =
+	measure 'Revenue YoY %' =
 			
-			VAR _Current = [Total Revenue]
-			VAR _Previous = [Revenue SPLY]
-			RETURN
-			    ROUND(
-			        DIVIDE(_Current - _Previous, _Previous, BLANK()),
-			        4
-			    )
-		formatString: +0.0%;-0.0%;0.0%
+			DIVIDE(
+			    [Total Revenue] - [Revenue SPLY],
+			    [Revenue SPLY]
+			)
+		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: 0120eef6-220b-4cb8-aa28-1ab947dde9bc
-
-		annotation PBI_FormatHint = {"isCustom":true}
 
 	measure 'Revenue with YoY Label' = ```
 			
 			VAR _Rev = [Total Revenue]
-			VAR _Growth = [YoY Revenue Growth %]
+			VAR _Growth = [Revenue YoY %]
 			VAR _RevMillions = FORMAT(DIVIDE(_Rev, 1000000), "#,##0.00") & "M"
 			VAR _GrowthFormatted = 
 			    IF(
@@ -123,19 +123,23 @@ table 'All Measure'
 
 	measure 'Total Orders LY' =
 			
-			CALCULATE(
-			    [Total Orders],
+			VAR PreviousDates =
 			    SAMEPERIODLASTYEAR('marts dim_date'[full_date])
-			)
+			RETURN
+			    CALCULATE(
+			        [Total Orders],
+			        REMOVEFILTERS('marts dim_date'),
+			        PreviousDates
+			    )
 		formatString: 0
 		lineageTag: 500af614-6d66-4d08-a824-121d168a2a31
 
-	measure 'YoY Order Growth %' =
+	measure 'Orders YoY %' =
 			
-			VAR _CurrentOrders = [Total Orders]
-			VAR _PreviousOrders = [Total Orders LY]
-			RETURN
-			    DIVIDE(_CurrentOrders - _PreviousOrders, _PreviousOrders, BLANK())
+			DIVIDE(
+			    [Total Orders] - [Total Orders LY],
+			    [Total Orders LY]
+			)
 		formatString: +0.0%;-0.0%;0.0%
 		lineageTag: a80569b4-d634-4774-9592-6aa0bd7a4220
 
@@ -182,7 +186,7 @@ table 'All Measure'
 
 	measure 'RFM Base Count' =
 			
-			DISTINCTCOUNT('marts customer_metrics'[customer_id])
+			DISTINCTCOUNT('marts customer_metrics'[customer_unique_id])
 		formatString: 0
 		lineageTag: f2db7586-9282-4e40-94d4-20f2e5765ab7
 

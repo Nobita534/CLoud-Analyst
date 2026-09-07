@@ -1,0 +1,20 @@
+table 'marts dim_unique_customer'
+	lineageTag: 69656bbd-9cf5-4659-9c60-337175b99b67
+
+	column customer_unique_id
+		dataType: string
+		lineageTag: ef46a02d-9597-4828-9846-d33f51e6fa36
+		summarizeBy: none
+		sourceColumn: customer_unique_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'marts dim_unique_customer' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("cloud-analyst-pg.postgres.database.azure.com", "cloud_analyst"),
+				    marts_dim_unique_customer = Source{[Schema="marts",Item="dim_unique_customer"]}[Data]
+				in
+				    marts_dim_unique_customer
+

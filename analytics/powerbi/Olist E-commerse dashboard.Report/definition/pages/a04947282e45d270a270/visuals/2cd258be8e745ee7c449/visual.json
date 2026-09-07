@@ -7,7 +7,7 @@
     "z": 6000,
     "height": 37.777777777777779,
     "width": 135.55555555555554,
-    "tabOrder": 5000
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,11 +23,11 @@
                       "Entity": "All Measure"
                     }
                   },
-                  "Property": "YoY Order Growth %"
+                  "Property": "Orders YoY %"
                 }
               },
               "queryRef": "All Measure.YoY Order Growth %",
-              "nativeQueryRef": "YoY Order Growth %"
+              "nativeQueryRef": "Orders YoY %"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "All Measure"
                   }
                 },
-                "Property": "YoY Order Growth %"
+                "Property": "Orders YoY %"
               }
             },
             "direction": "Descending"
@@ -139,7 +139,7 @@
                                       "Entity": "All Measure"
                                     }
                                   },
-                                  "Property": "YoY Revenue Growth %"
+                                  "Property": "Revenue YoY %"
                                 }
                               },
                               "Right": {
@@ -166,7 +166,7 @@
                                       "Entity": "All Measure"
                                     }
                                   },
-                                  "Property": "YoY Revenue Growth %"
+                                  "Property": "Revenue YoY %"
                                 }
                               },
                               "Right": {
@@ -525,5 +525,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "8850739f18eed386de45",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "All Measure"
+              }
+            },
+            "Property": "Orders YoY %"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

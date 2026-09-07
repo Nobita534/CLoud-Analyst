@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
   "name": "974dfd8ba0af2eef659f",
   "position": {
-    "x": 232,
-    "y": 170,
+    "x": 239,
+    "y": 173,
     "z": 4000,
-    "height": 38,
-    "width": 135.55555555555554,
-    "tabOrder": 3000
+    "height": 37.5,
+    "width": 135,
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,11 +23,11 @@
                       "Entity": "All Measure"
                     }
                   },
-                  "Property": "YoY Revenue Growth %"
+                  "Property": "Revenue YoY %"
                 }
               },
               "queryRef": "All Measure.YoY Revenue Growth %",
-              "nativeQueryRef": "YoY Revenue Growth %"
+              "nativeQueryRef": "Revenue YoY %"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "All Measure"
                   }
                 },
-                "Property": "YoY Revenue Growth %"
+                "Property": "Revenue YoY %"
               }
             },
             "direction": "Descending"
@@ -104,7 +104,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "14D"
+                  "Value": "13D"
                 }
               }
             },
@@ -125,7 +125,7 @@
                                       "Entity": "All Measure"
                                     }
                                   },
-                                  "Property": "YoY Revenue Growth %"
+                                  "Property": "Revenue YoY %"
                                 }
                               },
                               "Right": {
@@ -152,7 +152,7 @@
                                       "Entity": "All Measure"
                                     }
                                   },
-                                  "Property": "YoY Revenue Growth %"
+                                  "Property": "Revenue YoY %"
                                 }
                               },
                               "Right": {
@@ -346,7 +346,7 @@
             "imageAreaSize": {
               "expr": {
                 "Literal": {
-                  "Value": "34L"
+                  "Value": "40L"
                 }
               }
             }
@@ -444,5 +444,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "3e54ab4098c21a29b7c9",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "All Measure"
+              }
+            },
+            "Property": "Revenue YoY %"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

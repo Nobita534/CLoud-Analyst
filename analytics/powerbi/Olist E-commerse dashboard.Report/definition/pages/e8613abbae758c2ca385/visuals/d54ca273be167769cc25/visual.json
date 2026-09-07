@@ -7,7 +7,7 @@
     "z": 10001,
     "height": 80.96082011423978,
     "width": 200.34372435049164,
-    "tabOrder": 10001
+    "tabOrder": 9000
   },
   "visual": {
     "visualType": "slicer",
@@ -298,34 +298,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "ee7c2163b7a3bdd74722",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "marts dim_sellers"
-              }
-            },
-            "Property": "seller_state"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "0e1ff8d2ccca08be1d57",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "marts dim_sellers"
-              }
-            },
-            "Property": "seller_city"
-          }
-        },
-        "type": "Categorical"
       }
     ]
   }

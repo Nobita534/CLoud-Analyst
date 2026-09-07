@@ -7,7 +7,7 @@
     "z": 4000,
     "height": 66.666666666666671,
     "width": 207.77777777777777,
-    "tabOrder": 4000
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -225,23 +225,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "d1c241dde001be7fa445",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Total Item Sold"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

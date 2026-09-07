@@ -70,6 +70,14 @@ table 'marts dim_orders'
 
 		annotation SummarizationSetBy = Automatic
 
+	column customer_unique_id
+		dataType: string
+		lineageTag: 7aa986bc-7654-44f8-8ef6-337fc3277191
+		summarizeBy: none
+		sourceColumn: customer_unique_id
+
+		annotation SummarizationSetBy = Automatic
+
 	partition 'marts dim_orders' = m
 		mode: import
 		source =
