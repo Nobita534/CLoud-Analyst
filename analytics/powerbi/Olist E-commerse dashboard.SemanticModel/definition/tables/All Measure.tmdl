@@ -78,10 +78,10 @@ table 'All Measure'
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Total Revenue' = ROUND(SUM('marts revenue_metrics'[total_revenue]), 2)
-		formatString: """R$""#,##0.00"""
+		formatString: "R$"#,0.00;-"R$"#,0.00;"R$"#,0.00
 		lineageTag: b27c1cad-3c75-47a3-b9fa-3ea0b4e734da
 
-		annotation PBI_FormatHint = {"isCustom":true}
+		annotation PBI_FormatHint = {"currencyCulture":"es-BR"}
 
 	measure 'Revenue SPLY' =
 			
@@ -361,8 +361,7 @@ table 'All Measure'
 			VAR PeriodEnd = [YoY Period End]
 			
 			VAR OneYearSelected =
-			    ISFILTERED('marts dim_date')
-			        && HASONEVALUE('marts dim_date'[year])
+			    HASONEVALUE('marts dim_date'[year])
 			
 			VAR ContinuousPeriod =
 			    COUNTROWS(VALUES('marts dim_date'[full_date]))
@@ -424,6 +423,54 @@ table 'All Measure'
 			    )
 		formatString: 0
 		lineageTag: 8c64ce16-ca9a-40e0-b78c-8238c47d2a12
+
+	measure 'Revenue SPLY Display' = ```
+			
+			    IF(
+			        ISBLANK([Revenue SPLY]),
+			        "--",
+			        [Revenue SPLY]
+			    )
+			```
+		lineageTag: 8fb21348-0b93-4484-bf5b-261d41f10158
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Orders LY Display' = ```
+			
+			    IF(
+			        ISBLANK( [Total Orders LY] ),
+			        "--",
+			        [Total Orders LY]
+			    )
+			```
+		lineageTag: 8a9c09d0-2532-4438-a4d9-3d7690b93ff4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Revenue Yoy Display' = ```
+			
+			    IF(
+			        ISBLANK( [Revenue YoY %] ),
+			        "--",
+			        [Revenue YoY %]
+			    )
+			```
+		lineageTag: 89981b9a-a2eb-4e75-9bce-cc8ca0b76543
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Orders Yoy Display' = ```
+			
+			    IF(
+			        ISBLANK( [Orders YoY %] ),
+			        "--",
+			        [Orders YoY %]
+			    )
+			```
+		lineageTag: 84e7e061-bee6-4e61-b73c-2be6c0c80160
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	column Column
 		formatString: 0

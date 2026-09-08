@@ -231,5 +231,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "06253e20b5812ce3e706",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "All Measure"
+              }
+            },
+            "Property": "Vip Revenue"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

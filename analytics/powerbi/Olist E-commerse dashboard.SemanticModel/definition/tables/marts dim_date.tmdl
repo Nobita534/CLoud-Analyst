@@ -69,6 +69,21 @@ table 'marts dim_date'
 
 		annotation SummarizationSetBy = Automatic
 
+	hierarchy 'year Hierarchy'
+		lineageTag: 051771f0-f815-4261-8809-1322d9fe7fcb
+
+		level year
+			lineageTag: 17cb9bcd-11ce-4529-805a-54f5309d6c18
+			column: year
+
+		level quarter
+			lineageTag: 07a839f4-7290-4bef-a681-df501a28d564
+			column: quarter
+
+		level month
+			lineageTag: 3e99635c-c685-4edf-8023-83360cac47e6
+			column: month
+
 	partition 'marts dim_date' = m
 		mode: import
 		source =

@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
   "name": "974dfd8ba0af2eef659f",
   "position": {
-    "x": 239,
-    "y": 173,
+    "x": 238.76580847250375,
+    "y": 172.89937854905443,
     "z": 4000,
-    "height": 37.5,
-    "width": 135,
+    "height": 37.049866831940236,
+    "width": 142.71059816747351,
     "tabOrder": 2000
   },
   "visual": {
@@ -273,6 +273,13 @@
                   "Value": "true"
                 }
               }
+            },
+            "size": {
+              "expr": {
+                "Literal": {
+                  "Value": "4L"
+                }
+              }
             }
           },
           "selector": {
@@ -397,6 +404,23 @@
           },
           "selector": {
             "id": "default"
+          }
+        }
+      ],
+      "referenceLabel": [
+        {
+          "properties": {},
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 0
+                }
+              }
+            ],
+            "metadata": "All Measure.YoY Revenue Growth %",
+            "id": "field-cd268b31-00db-6582-ed33-3f9d5496a373",
+            "order": 0
           }
         }
       ]

@@ -304,6 +304,62 @@
             }
           ]
         }
+      },
+      {
+        "name": "cda81820400c05103554",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "marts dim_customers"
+              }
+            },
+            "Property": "customer_city"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "c909bcad5a2e53abc878",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "marts customer_metrics"
+              }
+            },
+            "Property": "customer_segment"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "d095fe13a6423bbe65c9",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "All Measure"
+              }
+            },
+            "Property": "Total Orders"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "4a11ddcbb0121ba1777b",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "All Measure"
+              }
+            },
+            "Property": "Segment Revenue"
+          }
+        },
+        "type": "Advanced"
       }
     ]
   }
