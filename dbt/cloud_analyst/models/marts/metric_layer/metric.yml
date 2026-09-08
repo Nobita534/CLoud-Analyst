@@ -8,6 +8,12 @@ models:
       for each analysis snapshot.
 
     columns:
+      - name: customer_snapshot_key
+        description: Customer and snapshot composite key for Power BI relationships.
+        data_tests:
+          - not_null
+          - unique
+
       - name: customer_unique_id
         description: >
           Unique identifier representing the actual customer across orders.
@@ -15,7 +21,7 @@ models:
           - not_null
           - relationships:
               arguments:
-                to: ref('dim_unique_customers')
+                to: ref('dim_unique_customer')
                 field: customer_unique_id
 
       - name: analysis_date_key

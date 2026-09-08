@@ -180,3 +180,50 @@ models:
         data_tests:
           - not_null
 
+  - name: dim_customer_snapshot_location
+    description: >
+      One row per customer and RFM snapshot. Assigns the customer's full
+      rolling-window monetary value to the location of the latest purchased
+      delivered order on or before the snapshot date. This is customer value
+      attribution, not transaction revenue by location. Delivered refers to
+      dataset status; delivery completion at the snapshot is not required.
+    columns:
+      - name: customer_snapshot_key
+        description: Customer and snapshot composite key for Power BI relationships.
+        data_tests:
+          - not_null
+          - unique
+      - name: customer_unique_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_unique_customer')
+                field: customer_unique_id
+      - name: analysis_date_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+      - name: location_order_id
+        description: Order supplying the representative location for this snapshot.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_orders')
+                field: order_id
+      - name: customer_state
+        data_tests:
+          - not_null
+      - name: customer_city
+        data_tests:
+          - not_null
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - customer_unique_id
+              - analysis_date_key
