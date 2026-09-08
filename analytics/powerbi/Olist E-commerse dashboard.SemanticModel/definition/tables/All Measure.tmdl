@@ -85,13 +85,22 @@ table 'All Measure'
 
 	measure 'Revenue SPLY' =
 			
-			VAR PreviousDates =
-			    SAMEPERIODLASTYEAR('marts dim_date'[full_date])
+			VAR PreviousStart =
+			    EDATE(MIN('marts dim_date'[full_date]), -12)
+			VAR PreviousEnd =
+			    EDATE([YoY Period End], -12)
 			RETURN
-			    CALCULATE(
-			        [Total Revenue],
-			        REMOVEFILTERS('marts dim_date'),
-			        PreviousDates
+			    IF(
+			        [YoY Period Valid],
+			        CALCULATE(
+			            [Total Revenue],
+			            REMOVEFILTERS('marts dim_date'),
+			            DATESBETWEEN(
+			                'marts dim_date'[full_date],
+			                PreviousStart,
+			                PreviousEnd
+			            )
+			        )
 			    )
 		lineageTag: 11b18837-f5e2-4ceb-a56f-8b3be0c568a3
 
@@ -99,47 +108,48 @@ table 'All Measure'
 
 	measure 'Revenue YoY %' =
 			
-			DIVIDE(
-			    [Total Revenue] - [Revenue SPLY],
-			    [Revenue SPLY]
+			IF(
+			    [YoY Period Valid],
+			    DIVIDE(
+			        [Revenue Comparable Period] - [Revenue SPLY],
+			        [Revenue SPLY]
+			    )
 			)
-		formatString: 0.00%;-0.00%;0.00%
+		formatString: +0.0%;-0.0%;0.0%
 		lineageTag: 0120eef6-220b-4cb8-aa28-1ab947dde9bc
 
-	measure 'Revenue with YoY Label' = ```
-			
-			VAR _Rev = [Total Revenue]
-			VAR _Growth = [Revenue YoY %]
-			VAR _RevMillions = FORMAT(DIVIDE(_Rev, 1000000), "#,##0.00") & "M"
-			VAR _GrowthFormatted = 
-			    IF(
-			        ISBLANK(_Growth), 
-			        "", 
-			        IF(_Growth >= 0, " (▲ +" & FORMAT(_Growth, "0.0%") & ")", " (▼ " & FORMAT(_Growth, "0.0%") & ")")
-			    )
-			RETURN
-			    _RevMillions & _GrowthFormatted
-			```
-		lineageTag: a7089161-e1ec-4df7-b48b-e5f7285c5da5
+		annotation PBI_FormatHint = {"isCustom":true}
 
 	measure 'Total Orders LY' =
 			
-			VAR PreviousDates =
-			    SAMEPERIODLASTYEAR('marts dim_date'[full_date])
+			VAR PreviousStart =
+			    EDATE(MIN('marts dim_date'[full_date]), -12)
+			VAR PreviousEnd =
+			    EDATE([YoY Period End], -12)
 			RETURN
-			    CALCULATE(
-			        [Total Orders],
-			        REMOVEFILTERS('marts dim_date'),
-			        PreviousDates
+			    IF(
+			        [YoY Period Valid],
+			        CALCULATE(
+			            [Total Orders],
+			            REMOVEFILTERS('marts dim_date'),
+			            DATESBETWEEN(
+			                'marts dim_date'[full_date],
+			                PreviousStart,
+			                PreviousEnd
+			            )
+			        )
 			    )
 		formatString: 0
 		lineageTag: 500af614-6d66-4d08-a824-121d168a2a31
 
 	measure 'Orders YoY %' =
 			
-			DIVIDE(
-			    [Total Orders] - [Total Orders LY],
-			    [Total Orders LY]
+			IF(
+			    [YoY Period Valid],
+			    DIVIDE(
+			        [Orders Comparable Period] - [Total Orders LY],
+			        [Total Orders LY]
+			    )
 			)
 		formatString: +0.0%;-0.0%;0.0%
 		lineageTag: a80569b4-d634-4774-9592-6aa0bd7a4220
@@ -287,6 +297,133 @@ table 'All Measure'
 			DISTINCTCOUNT('marts revenue_metrics'[order_id])
 		formatString: 0
 		lineageTag: 95db8c89-8ba8-4ae7-884f-820cdb629241
+
+	measure 'Data Start Date' =
+			
+			VAR DateKey =
+			    CALCULATE(
+			        MIN('marts revenue_metrics'[order_purchase_date_key]),
+			        REMOVEFILTERS()
+			    )
+			RETURN
+			    IF(
+			        NOT ISBLANK(DateKey),
+			        DATE(
+			            INT(DateKey / 10000),
+			            INT(MOD(DateKey, 10000) / 100),
+			            MOD(DateKey, 100)
+			        )
+			    )
+		formatString: General Date
+		lineageTag: 4cefe0a8-d42f-46ad-baae-01e67e32622b
+
+	measure 'Data End Date' =
+			
+			VAR DateKey =
+			    CALCULATE(
+			        MAX('marts revenue_metrics'[order_purchase_date_key]),
+			        REMOVEFILTERS()
+			    )
+			RETURN
+			    IF(
+			        NOT ISBLANK(DateKey),
+			        DATE(
+			            INT(DateKey / 10000),
+			            INT(MOD(DateKey, 10000) / 100),
+			            MOD(DateKey, 100)
+			        )
+			    )
+		formatString: General Date
+		lineageTag: 25901373-499c-4588-8a47-ce05c9a3069d
+
+	measure 'YoY Period End' =
+			
+			VAR SelectedStart =
+			    MIN('marts dim_date'[full_date])
+			VAR SelectedEnd =
+			    MAX('marts dim_date'[full_date])
+			VAR Cutoff = [Data End Date]
+			RETURN
+			    IF(
+			        NOT ISBLANK(Cutoff)
+			            && SelectedStart <= Cutoff,
+			        MIN(SelectedEnd, Cutoff)
+			    )
+		formatString: General Date
+		lineageTag: b83c78ba-d824-4c15-930d-64a5156f7eae
+
+	measure 'YoY Period Valid' =
+			
+			VAR SelectedStart =
+			    MIN('marts dim_date'[full_date])
+			VAR SelectedEnd =
+			    MAX('marts dim_date'[full_date])
+			VAR PeriodEnd = [YoY Period End]
+			
+			VAR OneYearSelected =
+			    ISFILTERED('marts dim_date')
+			        && HASONEVALUE('marts dim_date'[year])
+			
+			VAR ContinuousPeriod =
+			    COUNTROWS(VALUES('marts dim_date'[full_date]))
+			        = DATEDIFF(SelectedStart, SelectedEnd, DAY) + 1
+			
+			VAR PreviousStart =
+			    EDATE(SelectedStart, -12)
+			
+			RETURN
+			    OneYearSelected
+			        && ContinuousPeriod
+			        && NOT ISBLANK(PeriodEnd)
+			        && NOT ISBLANK([Data Start Date])
+			        && PreviousStart >= [Data Start Date]
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: c45af5b3-920b-4d23-84a1-40ff3fa40613
+
+	measure 'Revenue Comparable Period' =
+			
+			VAR PeriodStart =
+			    MIN('marts dim_date'[full_date])
+			VAR PeriodEnd =
+			    [YoY Period End]
+			RETURN
+			    IF(
+			        [YoY Period Valid],
+			        CALCULATE(
+			            [Total Revenue],
+			            REMOVEFILTERS('marts dim_date'),
+			            DATESBETWEEN(
+			                'marts dim_date'[full_date],
+			                PeriodStart,
+			                PeriodEnd
+			            )
+			        )
+			    )
+		lineageTag: 8cf4801e-5c46-4202-8243-15d7f9654cbc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Orders Comparable Period' =
+			
+			VAR PeriodStart =
+			    MIN('marts dim_date'[full_date])
+			VAR PeriodEnd =
+			    [YoY Period End]
+			RETURN
+			    IF(
+			        [YoY Period Valid],
+			        CALCULATE(
+			            [Total Orders],
+			            REMOVEFILTERS('marts dim_date'),
+			            DATESBETWEEN(
+			                'marts dim_date'[full_date],
+			                PeriodStart,
+			                PeriodEnd
+			            )
+			        )
+			    )
+		formatString: 0
+		lineageTag: 8c64ce16-ca9a-40e0-b78c-8238c47d2a12
 
 	column Column
 		formatString: 0

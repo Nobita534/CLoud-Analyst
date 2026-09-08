@@ -65,7 +65,7 @@
               },
               "queryRef": "marts dim_date.full_date.Variation.Date Hierarchy.Quarter",
               "nativeQueryRef": "full_date Quarter",
-              "active": true
+              "active": false
             },
             {
               "field": {
@@ -168,20 +168,7 @@
             "isCollapsed": true
           }
         ],
-        "root": {
-          "children": [
-            {
-              "identityValues": [
-                {
-                  "Literal": {
-                    "Value": "2018L"
-                  }
-                }
-              ],
-              "isToggled": true
-            }
-          ]
-        }
+        "root": {}
       }
     ],
     "objects": {
