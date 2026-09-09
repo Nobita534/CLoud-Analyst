@@ -107,7 +107,6 @@ relationship c7dff49a-d06a-f5ce-0155-2590a30fbe02
 	toColumn: 'marts dim_customer_snapshot_location'.customer_snapshot_key
 
 relationship fcea991b-bccd-39b1-94fb-9526bd1e00f0
-	crossFilteringBehavior: bothDirections
 	fromColumn: 'marts seller_metrics'.seller_id
 	toColumn: 'marts dim_sellers'.seller_id
 
