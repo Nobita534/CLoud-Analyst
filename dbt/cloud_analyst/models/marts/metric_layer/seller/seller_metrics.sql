@@ -3,7 +3,8 @@ WITH seller_order_sales AS (
     SELECT
         seller_id,
         order_id,
-        SUM(price) AS order_sales
+        SUM(price) AS order_sales,
+        COUNT(fact_item_id) AS total_item_sold
 
     FROM {{ ref('fact_order_items') }}
 
@@ -31,6 +32,7 @@ seller_orders AS (
         sos.seller_id,
         sos.order_id,
         sos.order_sales,
+        total_item_sold,
 
         o.order_purchase_timestamp,
         o.order_delivered_customer_date,
@@ -53,8 +55,10 @@ seller_orders AS (
 SELECT
     s.seller_id,
     s.seller_state,
+    {{generate_date_key('so.order_purchase_timestamp')}} AS order_purchase_date_key,
 
     COUNT(*) AS total_orders,
+    SUM(total_item_sold) AS total_item_sold,
     SUM(so.order_sales) AS total_sales,
 
     COUNT(so.average_review_score) AS reviewed_orders,
@@ -88,4 +92,5 @@ INNER JOIN {{ ref('dim_sellers') }} s
 
 GROUP BY
     s.seller_id,
-    s.seller_state
+    s.seller_state,
+    {{generate_date_key('so.order_purchase_timestamp')}}
