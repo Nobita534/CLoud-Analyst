@@ -7,7 +7,7 @@
     "z": 10000,
     "height": 453.33333333333337,
     "width": 558.33333333333337,
-    "tabOrder": 8000
+    "tabOrder": 7000
   },
   "visual": {
     "visualType": "lineClusteredColumnComboChart",
@@ -21,24 +21,18 @@
                   "Expression": {
                     "Hierarchy": {
                       "Expression": {
-                        "PropertyVariationSource": {
-                          "Expression": {
-                            "SourceRef": {
-                              "Entity": "marts dim_date"
-                            }
-                          },
-                          "Name": "Variation",
-                          "Property": "full_date"
+                        "SourceRef": {
+                          "Entity": "marts dim_date"
                         }
                       },
-                      "Hierarchy": "Date Hierarchy"
+                      "Hierarchy": "year Hierarchy"
                     }
                   },
-                  "Level": "Year"
+                  "Level": "year"
                 }
               },
-              "queryRef": "marts dim_date.full_date.Variation.Date Hierarchy.Year",
-              "nativeQueryRef": "full_date Year",
+              "queryRef": "marts dim_date.year Hierarchy.year",
+              "nativeQueryRef": "year Hierarchy year",
               "active": true
             },
             {
@@ -47,24 +41,18 @@
                   "Expression": {
                     "Hierarchy": {
                       "Expression": {
-                        "PropertyVariationSource": {
-                          "Expression": {
-                            "SourceRef": {
-                              "Entity": "marts dim_date"
-                            }
-                          },
-                          "Name": "Variation",
-                          "Property": "full_date"
+                        "SourceRef": {
+                          "Entity": "marts dim_date"
                         }
                       },
-                      "Hierarchy": "Date Hierarchy"
+                      "Hierarchy": "year Hierarchy"
                     }
                   },
-                  "Level": "Quarter"
+                  "Level": "quarter"
                 }
               },
-              "queryRef": "marts dim_date.full_date.Variation.Date Hierarchy.Quarter",
-              "nativeQueryRef": "full_date Quarter",
+              "queryRef": "marts dim_date.year Hierarchy.quarter",
+              "nativeQueryRef": "year Hierarchy quarter",
               "active": false
             },
             {
@@ -73,24 +61,18 @@
                   "Expression": {
                     "Hierarchy": {
                       "Expression": {
-                        "PropertyVariationSource": {
-                          "Expression": {
-                            "SourceRef": {
-                              "Entity": "marts dim_date"
-                            }
-                          },
-                          "Name": "Variation",
-                          "Property": "full_date"
+                        "SourceRef": {
+                          "Entity": "marts dim_date"
                         }
                       },
-                      "Hierarchy": "Date Hierarchy"
+                      "Hierarchy": "year Hierarchy"
                     }
                   },
-                  "Level": "Month"
+                  "Level": "month"
                 }
               },
-              "queryRef": "marts dim_date.full_date.Variation.Date Hierarchy.Month",
-              "nativeQueryRef": "full_date Month",
+              "queryRef": "marts dim_date.year Hierarchy.month",
+              "nativeQueryRef": "year Hierarchy month",
               "active": false
             }
           ]
@@ -149,6 +131,24 @@
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "All Measure"
+                  }
+                },
+                "Property": "Total Revenue"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
       }
     },
     "objects": {
@@ -404,89 +404,64 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "81a287ed30c26660baf3",
+        "name": "fbea8a5be8693700911a",
         "field": {
           "HierarchyLevel": {
             "Expression": {
               "Hierarchy": {
                 "Expression": {
-                  "PropertyVariationSource": {
-                    "Expression": {
-                      "SourceRef": {
-                        "Entity": "marts dim_date"
-                      }
-                    },
-                    "Name": "Variation",
-                    "Property": "full_date"
+                  "SourceRef": {
+                    "Entity": "marts dim_date"
                   }
                 },
-                "Hierarchy": "Date Hierarchy"
+                "Hierarchy": "year Hierarchy"
               }
             },
-            "Level": "Year"
+            "Level": "year"
           }
         },
-        "type": "Categorical",
-        "objects": {
-          "general": [
-            {
-              "properties": {}
-            }
-          ]
-        }
+        "type": "Advanced"
       },
       {
-        "name": "fe970b703c3a9dc3e561",
+        "name": "6df0303d4200291cdb05",
         "field": {
           "HierarchyLevel": {
             "Expression": {
               "Hierarchy": {
                 "Expression": {
-                  "PropertyVariationSource": {
-                    "Expression": {
-                      "SourceRef": {
-                        "Entity": "marts dim_date"
-                      }
-                    },
-                    "Name": "Variation",
-                    "Property": "full_date"
+                  "SourceRef": {
+                    "Entity": "marts dim_date"
                   }
                 },
-                "Hierarchy": "Date Hierarchy"
+                "Hierarchy": "year Hierarchy"
               }
             },
-            "Level": "Quarter"
+            "Level": "quarter"
           }
         },
-        "type": "Categorical"
+        "type": "Advanced"
       },
       {
-        "name": "b11f71c848d7c7a387d0",
+        "name": "a3a0dbb0d86107e47c69",
         "field": {
           "HierarchyLevel": {
             "Expression": {
               "Hierarchy": {
                 "Expression": {
-                  "PropertyVariationSource": {
-                    "Expression": {
-                      "SourceRef": {
-                        "Entity": "marts dim_date"
-                      }
-                    },
-                    "Name": "Variation",
-                    "Property": "full_date"
+                  "SourceRef": {
+                    "Entity": "marts dim_date"
                   }
                 },
-                "Hierarchy": "Date Hierarchy"
+                "Hierarchy": "year Hierarchy"
               }
             },
-            "Level": "Month"
+            "Level": "month"
           }
         },
-        "type": "Categorical"
+        "type": "Advanced"
       },
       {
-        "name": "aaa9faa7fc0a41153536",
+        "name": "e042e2f391a1b97407e4",
         "field": {
           "Measure": {
             "Expression": {
@@ -500,7 +475,7 @@
         "type": "Advanced"
       },
       {
-        "name": "a35f188ca22e25b9b56b",
+        "name": "1cf8f2602170cb000bd0",
         "field": {
           "Measure": {
             "Expression": {
@@ -514,7 +489,7 @@
         "type": "Advanced"
       },
       {
-        "name": "7fa2d63994c28f1db34f",
+        "name": "a8bb6169353cb91a0410",
         "field": {
           "Measure": {
             "Expression": {

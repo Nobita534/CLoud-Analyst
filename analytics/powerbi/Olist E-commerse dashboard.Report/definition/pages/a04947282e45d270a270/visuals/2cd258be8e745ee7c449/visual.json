@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
   "name": "2cd258be8e745ee7c449",
   "position": {
-    "x": 459.6927921740733,
-    "y": 170.15494396891071,
+    "x": 460.8477049382065,
+    "y": 164.17699488423605,
     "z": 6000,
-    "height": 37.049866831940236,
-    "width": 146.82725003768908,
-    "tabOrder": 4000
+    "height": 37.443876026229276,
+    "width": 125.29296978007488,
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,31 +23,16 @@
                       "Entity": "All Measure"
                     }
                   },
-                  "Property": "Orders YoY %"
+                  "Property": "Order YoY Indicator"
                 }
               },
-              "queryRef": "All Measure.YoY Order Growth %",
-              "nativeQueryRef": "Orders YoY %"
+              "queryRef": "All Measure.Order YoY Indicator",
+              "nativeQueryRef": "Order YoY Indicator"
             }
           ]
         }
       },
       "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "All Measure"
-                  }
-                },
-                "Property": "Orders YoY %"
-              }
-            },
-            "direction": "Descending"
-          }
-        ],
         "isDefaultSort": true
       }
     },
@@ -126,63 +111,13 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "Conditional": {
-                      "Cases": [
-                        {
-                          "Condition": {
-                            "Comparison": {
-                              "ComparisonKind": 2,
-                              "Left": {
-                                "Measure": {
-                                  "Expression": {
-                                    "SourceRef": {
-                                      "Entity": "All Measure"
-                                    }
-                                  },
-                                  "Property": "Revenue YoY %"
-                                }
-                              },
-                              "Right": {
-                                "Literal": {
-                                  "Value": "0D"
-                                }
-                              }
-                            }
-                          },
-                          "Value": {
-                            "Literal": {
-                              "Value": "'#29BE51'"
-                            }
-                          }
-                        },
-                        {
-                          "Condition": {
-                            "Comparison": {
-                              "ComparisonKind": 4,
-                              "Left": {
-                                "Measure": {
-                                  "Expression": {
-                                    "SourceRef": {
-                                      "Entity": "All Measure"
-                                    }
-                                  },
-                                  "Property": "Revenue YoY %"
-                                }
-                              },
-                              "Right": {
-                                "Literal": {
-                                  "Value": "0D"
-                                }
-                              }
-                            }
-                          },
-                          "Value": {
-                            "Literal": {
-                              "Value": "'#D64554'"
-                            }
-                          }
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "All Measure"
                         }
-                      ]
+                      },
+                      "Property": "Orders YoY Color"
                     }
                   }
                 }
@@ -270,7 +205,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
@@ -529,7 +464,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "8850739f18eed386de45",
+        "name": "3c93285ed4409645ca8a",
         "field": {
           "Measure": {
             "Expression": {
@@ -537,7 +472,7 @@
                 "Entity": "All Measure"
               }
             },
-            "Property": "Orders YoY %"
+            "Property": "Order YoY Indicator"
           }
         },
         "type": "Advanced"

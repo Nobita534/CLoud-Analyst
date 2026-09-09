@@ -1,0 +1,61 @@
+table 'marts dim_customer_snapshot_location'
+	lineageTag: 081bb792-e13f-4b9b-a69e-d95b915ec726
+
+	column customer_snapshot_key
+		dataType: string
+		lineageTag: 2076aeb7-d586-48bc-8b79-60a2b525ff29
+		summarizeBy: none
+		sourceColumn: customer_snapshot_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_unique_id
+		dataType: string
+		lineageTag: 441efe71-5c42-43b5-9b9b-d5ace1f02408
+		summarizeBy: none
+		sourceColumn: customer_unique_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column analysis_date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: e9a9d1b8-4569-43ef-9a7b-d4c8215092aa
+		summarizeBy: none
+		sourceColumn: analysis_date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column location_order_id
+		dataType: string
+		lineageTag: 6f627d4a-78dd-4002-85cb-06379853b2cf
+		summarizeBy: none
+		sourceColumn: location_order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_state
+		dataType: string
+		lineageTag: 1488c876-ec59-46bf-8159-de74db540ba9
+		summarizeBy: none
+		sourceColumn: customer_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_city
+		dataType: string
+		lineageTag: e05ee3f1-98e6-493b-97ca-6e5b1ba6d6da
+		summarizeBy: none
+		sourceColumn: customer_city
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'marts dim_customer_snapshot_location' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("cloud-analyst-pg.postgres.database.azure.com", "cloud_analyst"),
+				    marts_dim_customer_snapshot_location = Source{[Schema="marts",Item="dim_customer_snapshot_location"]}[Data]
+				in
+				    marts_dim_customer_snapshot_location
+

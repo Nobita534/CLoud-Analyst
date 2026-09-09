@@ -7,7 +7,7 @@
     "z": 1000,
     "height": 81.428571428571431,
     "width": 200,
-    "tabOrder": 11000
+    "tabOrder": 10000
   },
   "visual": {
     "visualType": "slicer",
@@ -53,7 +53,7 @@
               },
               "queryRef": "marts dim_date.year Hierarchy.quarter",
               "nativeQueryRef": "year Hierarchy quarter",
-              "active": false
+              "active": true
             },
             {
               "field": {
@@ -137,22 +137,11 @@
               "identityValues": [
                 {
                   "Literal": {
-                    "Value": "2017L"
+                    "Value": "2018L"
                   }
                 }
               ],
-              "children": [
-                {
-                  "identityValues": [
-                    {
-                      "Literal": {
-                        "Value": "4L"
-                      }
-                    }
-                  ],
-                  "isToggled": true
-                }
-              ]
+              "isToggled": true
             }
           ]
         }
@@ -391,7 +380,7 @@
         }
       },
       {
-        "name": "2564f02e7374a5b02b64",
+        "name": "e809db39073aee4bc3e4",
         "field": {
           "HierarchyLevel": {
             "Expression": {
@@ -410,7 +399,7 @@
         "type": "Advanced"
       },
       {
-        "name": "2cd2f58f04c26ad63a14",
+        "name": "e6880ffcea2124d13069",
         "field": {
           "HierarchyLevel": {
             "Expression": {
@@ -429,7 +418,7 @@
         "type": "Advanced"
       },
       {
-        "name": "f6d53ffa300ea39bd0e5",
+        "name": "7c2c086a5ac530c7d67b",
         "field": {
           "HierarchyLevel": {
             "Expression": {

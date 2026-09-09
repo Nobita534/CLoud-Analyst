@@ -3,10 +3,11 @@
   "name": "2ac2ecad67b022703c86",
   "position": {
     "x": 0,
-    "y": 10.833333333333334,
+    "y": 11,
     "z": 0,
-    "height": 260.83333333333337,
-    "width": 368.33333333333337
+    "height": 261,
+    "width": 368,
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -38,13 +39,12 @@
                       "Entity": "All Measure"
                     }
                   },
-                  "Property": "Total Orders"
+                  "Property": "Orders Card"
                 }
               },
-              "queryRef": "All Measure.Total Orders",
+              "queryRef": "All Measure.Orders Card",
               "nativeQueryRef": "Orders",
-              "displayName": "Orders",
-              "format": "#,0"
+              "displayName": "Orders"
             },
             {
               "field": {
@@ -407,7 +407,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "8fdc63493da042d83c40",
+        "name": "ad49804ce9398428a0b7",
         "field": {
           "Measure": {
             "Expression": {
@@ -421,7 +421,7 @@
         "type": "Advanced"
       },
       {
-        "name": "fbc53ded1092c45eace7",
+        "name": "63761fe65dce48706072",
         "field": {
           "Measure": {
             "Expression": {
@@ -429,13 +429,13 @@
                 "Entity": "All Measure"
               }
             },
-            "Property": "Total Orders"
+            "Property": "Orders Card"
           }
         },
         "type": "Advanced"
       },
       {
-        "name": "71884be7650cbba00857",
+        "name": "61a4c2c0d5179c3260d1",
         "field": {
           "Measure": {
             "Expression": {
@@ -449,7 +449,7 @@
         "type": "Advanced"
       },
       {
-        "name": "13bbcde357ab296bcd3d",
+        "name": "4eb64f440998c69bb267",
         "field": {
           "Measure": {
             "Expression": {
@@ -463,7 +463,7 @@
         "type": "Advanced"
       },
       {
-        "name": "259996b7c70d39e57177",
+        "name": "88d9088180d579c10dc3",
         "field": {
           "Measure": {
             "Expression": {
@@ -477,7 +477,7 @@
         "type": "Advanced"
       },
       {
-        "name": "8a5307662c95de019a05",
+        "name": "63698e47302888d1b7ed",
         "field": {
           "Measure": {
             "Expression": {

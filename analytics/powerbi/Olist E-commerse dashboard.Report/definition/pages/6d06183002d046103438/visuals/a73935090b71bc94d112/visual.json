@@ -1,12 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "c570e0160802480c31ce",
+  "name": "a73935090b71bc94d112",
   "position": {
     "x": 0,
     "y": 0,
-    "z": 1000,
-    "height": 52.5,
-    "width": 170.83333333333334
+    "z": 2,
+    "height": 39.54545454545454,
+    "width": 290.45454545454544,
+    "tabOrder": 2
   },
   "visual": {
     "visualType": "textbox",
@@ -18,23 +19,30 @@
               {
                 "textRuns": [
                   {
-                    "value": "Revenue & Orders",
+                    "value": "Customer Profiles",
                     "textStyle": {
                       "fontWeight": "bold",
-                      "fontSize": "14pt",
-                      "color": "#205b50"
+                      "fontSize": "16pt"
                     }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "YoY Comparison Label"
                   }
                 ]
               }
             ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
           }
         }
       ]

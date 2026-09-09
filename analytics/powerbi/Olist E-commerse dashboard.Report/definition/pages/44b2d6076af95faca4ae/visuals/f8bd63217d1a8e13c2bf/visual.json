@@ -7,7 +7,7 @@
     "z": 7000,
     "height": 66.666666666666671,
     "width": 207.77777777777777,
-    "tabOrder": 5000
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "All Measure.Avg Recency",
-              "nativeQueryRef": "Avg Recency"
+              "nativeQueryRef": "Avg Recency (days)",
+              "displayName": "Avg Recency (days)"
             }
           ]
         }
@@ -210,5 +211,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "8081723cac2a208ce22d",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "All Measure"
+              }
+            },
+            "Property": "Avg Recency"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

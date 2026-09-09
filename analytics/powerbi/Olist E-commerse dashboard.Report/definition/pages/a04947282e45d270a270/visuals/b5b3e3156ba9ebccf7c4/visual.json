@@ -7,7 +7,7 @@
     "z": 11000,
     "height": 451.45948843364215,
     "width": 565.35352350960659,
-    "tabOrder": 9000
+    "tabOrder": 8000
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -361,48 +361,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "a33a5e48d8be4971b1ae",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "marts dim_customers"
-              }
-            },
-            "Property": "customer_city"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "d39755fcf0f14a369d73",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Total Orders"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "e02a2a7bab4cab8ee36c",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Total Revenue"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

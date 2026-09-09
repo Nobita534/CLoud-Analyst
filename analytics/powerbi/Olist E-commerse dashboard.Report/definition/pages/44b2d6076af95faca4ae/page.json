@@ -5,6 +5,64 @@
   "displayOption": "FitToPage",
   "height": 720,
   "width": 1280,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "1a2c667cac33de590494",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "marts customer_metrics"
+              }
+            },
+            "Property": "analysis_date_key"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "m",
+              "Entity": "marts customer_metrics",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "m"
+                          }
+                        },
+                        "Property": "analysis_date_key"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "20180830L"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      }
+    ]
+  },
   "objects": {
     "background": [
       {
@@ -59,37 +117,5 @@
         }
       }
     ]
-  },
-  "visualInteractions": [
-    {
-      "source": "3a3e3efb94ef44d52df9",
-      "target": "5b4f9b6b2d71b515f0b7",
-      "type": "DataFilter"
-    },
-    {
-      "source": "3a3e3efb94ef44d52df9",
-      "target": "f23f85cf3f5c51bc720f",
-      "type": "DataFilter"
-    },
-    {
-      "source": "3a3e3efb94ef44d52df9",
-      "target": "aa55b167c66c81d817f9",
-      "type": "DataFilter"
-    },
-    {
-      "source": "3a3e3efb94ef44d52df9",
-      "target": "74f1a240de2466ed10fe",
-      "type": "DataFilter"
-    },
-    {
-      "source": "3a3e3efb94ef44d52df9",
-      "target": "ac8c9eab1b322d1c5480",
-      "type": "DataFilter"
-    },
-    {
-      "source": "3a3e3efb94ef44d52df9",
-      "target": "f8bd63217d1a8e13c2bf",
-      "type": "DataFilter"
-    }
-  ]
+  }
 }

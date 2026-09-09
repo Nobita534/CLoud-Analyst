@@ -7,7 +7,7 @@
     "z": 6000,
     "height": 66.666666666666671,
     "width": 207.77777777777777,
-    "tabOrder": 4000
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "All Measure.Avg Frequency",
-              "nativeQueryRef": "Avg Frequency"
+              "nativeQueryRef": "Avg Orders per Customer",
+              "displayName": "Avg Orders per Customer"
             }
           ]
         }
@@ -210,5 +211,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "b720f906e69399293e52",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "All Measure"
+              }
+            },
+            "Property": "Avg Frequency"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

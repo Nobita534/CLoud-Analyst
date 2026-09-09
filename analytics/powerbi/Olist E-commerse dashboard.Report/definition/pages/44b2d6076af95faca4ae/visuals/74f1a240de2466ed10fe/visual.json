@@ -7,7 +7,7 @@
     "z": 4000,
     "height": 67.142857142857153,
     "width": 208.57142857142858,
-    "tabOrder": 2000
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -27,7 +27,9 @@
                 }
               },
               "queryRef": "All Measure.Vip Revenue",
-              "nativeQueryRef": "Vip Revenue"
+              "nativeQueryRef": "Vip Monetary (R$)",
+              "displayName": "Vip Monetary (R$)",
+              "format": "0"
             }
           ]
         }
@@ -66,6 +68,13 @@
               "expr": {
                 "Literal": {
                   "Value": "'''Segoe UI Semibold'', wf_segoe-ui_semibold, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -111,7 +120,7 @@
             "labelDisplayUnits": {
               "expr": {
                 "Literal": {
-                  "Value": "1000000D"
+                  "Value": "1000D"
                 }
               }
             },
@@ -235,7 +244,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "06253e20b5812ce3e706",
+        "name": "bab10b4bda6d85779494",
         "field": {
           "Measure": {
             "Expression": {

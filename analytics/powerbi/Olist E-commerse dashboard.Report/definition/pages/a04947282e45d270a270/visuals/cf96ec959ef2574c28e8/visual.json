@@ -7,7 +7,7 @@
     "z": 8000,
     "height": 66.666666666666671,
     "width": 207.77777777777777,
-    "tabOrder": 6000
+    "tabOrder": 5000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -211,23 +211,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "1ecf6ccbfd231c61fb3c",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "AOV"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

@@ -91,6 +91,7 @@ relationship AutoDetected_8cb30f9b-832c-4e99-977b-9a7c186018ef
 	toColumn: 'marts dim_orders'.order_id
 
 relationship AutoDetected_b61c4197-9a27-4b8a-9433-270794cdc26a
+	crossFilteringBehavior: bothDirections
 	fromColumn: 'marts customer_metrics'.customer_unique_id
 	toColumn: 'marts dim_unique_customer'.customer_unique_id
 
@@ -106,4 +107,8 @@ relationship AutoDetected_05d64c6c-87bf-425b-b9b2-8eed2564f463
 	isActive: false
 	fromColumn: 'marts revenue_metrics'.customer_unique_id
 	toColumn: 'marts dim_unique_customer'.customer_unique_id
+
+relationship c7dff49a-d06a-f5ce-0155-2590a30fbe02
+	fromColumn: 'marts customer_metrics'.customer_snapshot_key
+	toColumn: 'marts dim_customer_snapshot_location'.customer_snapshot_key
 

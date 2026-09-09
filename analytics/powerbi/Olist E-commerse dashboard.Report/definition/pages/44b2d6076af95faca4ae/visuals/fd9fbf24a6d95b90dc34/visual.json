@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
   "name": "fd9fbf24a6d95b90dc34",
   "position": {
-    "x": 127,
-    "y": 10,
+    "x": 127.62027875834868,
+    "y": 9.5036377798770282,
     "z": 1000,
-    "height": 98,
-    "width": 459,
-    "tabOrder": 10000
+    "height": 99.109365418717587,
+    "width": 676.11594491125152,
+    "tabOrder": 9000
   },
   "visual": {
     "visualType": "textbox",
@@ -33,6 +33,16 @@
                 "textRuns": [
                   {
                     "value": "Analyze customer purchasing behavior, value and geographic distribution",
+                    "textStyle": {
+                      "fontSize": "14pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Snapshot: 30 Aug 2018 | Rolling 12-month window",
                     "textStyle": {
                       "fontSize": "14pt"
                     }

@@ -8,7 +8,7 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBI_QueryOrder = ["marts customer_metrics","marts dim_customers","marts dim_date","marts dim_orders","marts dim_products","marts dim_sellers","marts fact_customer_rfm","marts fact_order_items","marts fact_order_payments","marts fact_review","marts order_metrics","marts product_metrics","marts revenue_metrics","marts seller_metrics","intermediate int_product_category_name_translation","marts dim_unique_customer"]
+annotation PBI_QueryOrder = ["marts customer_metrics","marts dim_customers","marts dim_date","marts dim_orders","marts dim_products","marts dim_sellers","marts fact_customer_rfm","marts fact_order_items","marts fact_order_payments","marts fact_review","marts order_metrics","marts product_metrics","marts revenue_metrics","marts seller_metrics","intermediate int_product_category_name_translation","marts dim_unique_customer","marts dim_customer_snapshot_location"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
@@ -31,6 +31,7 @@ ref table 'marts seller_metrics'
 ref table 'All Measure'
 ref table 'intermediate int_product_category_name_translation'
 ref table 'marts dim_unique_customer'
+ref table 'marts dim_customer_snapshot_location'
 
 ref cultureInfo en-US
 

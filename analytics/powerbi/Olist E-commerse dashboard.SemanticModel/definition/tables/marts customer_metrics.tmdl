@@ -90,6 +90,14 @@ table 'marts customer_metrics'
 
 		annotation SummarizationSetBy = Automatic
 
+	column customer_snapshot_key
+		dataType: string
+		lineageTag: 174fad81-690f-4f8f-a6d5-3ab5268c692a
+		summarizeBy: none
+		sourceColumn: customer_snapshot_key
+
+		annotation SummarizationSetBy = Automatic
+
 	partition 'marts customer_metrics' = m
 		mode: import
 		source =

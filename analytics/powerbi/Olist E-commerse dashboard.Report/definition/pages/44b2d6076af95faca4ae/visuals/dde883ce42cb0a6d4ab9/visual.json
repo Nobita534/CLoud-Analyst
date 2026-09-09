@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
   "name": "dde883ce42cb0a6d4ab9",
   "position": {
-    "x": 715.55555555555554,
-    "y": 257.77777777777777,
+    "x": 123.54729113840138,
+    "y": 473.824226453869,
     "z": 10000,
-    "height": 447.77777777777777,
-    "width": 564.44444444444446,
-    "tabOrder": 8000
+    "height": 229.44496925703112,
+    "width": 566.14527917267446,
+    "tabOrder": 7000
   },
   "visual": {
     "visualType": "barChart",
@@ -20,30 +20,32 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "marts dim_customers"
+                      "Entity": "marts dim_customer_snapshot_location"
                     }
                   },
                   "Property": "customer_state"
                 }
               },
-              "queryRef": "marts dim_customers.customer_state",
-              "nativeQueryRef": "customer_state",
-              "active": true
+              "queryRef": "marts dim_customer_snapshot_location.customer_state",
+              "nativeQueryRef": "Customer State",
+              "active": true,
+              "displayName": "Customer State"
             },
             {
               "field": {
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "marts dim_customers"
+                      "Entity": "marts dim_customer_snapshot_location"
                     }
                   },
                   "Property": "customer_city"
                 }
               },
-              "queryRef": "marts dim_customers.customer_city",
-              "nativeQueryRef": "customer_city",
-              "active": false
+              "queryRef": "marts dim_customer_snapshot_location.customer_city",
+              "nativeQueryRef": "Customer City",
+              "active": false,
+              "displayName": "Customer City"
             }
           ]
         },
@@ -65,24 +67,6 @@
             }
           ]
         },
-        "Tooltips": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "All Measure"
-                    }
-                  },
-                  "Property": "Total Orders"
-                }
-              },
-              "queryRef": "All Measure.Total Orders",
-              "nativeQueryRef": "Total Orders"
-            }
-          ]
-        },
         "Y": {
           "projections": [
             {
@@ -97,7 +81,9 @@
                 }
               },
               "queryRef": "All Measure.Segment Revenue",
-              "nativeQueryRef": "Segment Revenue"
+              "nativeQueryRef": "Monetary (R$)",
+              "displayName": "Monetary (R$)",
+              "format": "\"R$\"#,0.00;-\"R$\"#,0.00;\"R$\"#,0.00"
             }
           ]
         }
@@ -168,6 +154,308 @@
             }
           }
         }
+      ],
+      "dataPoint": [
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#68A99A'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "marts customer_metrics"
+                          }
+                        },
+                        "Property": "customer_segment"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Recent One-time Customer'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#AAB7B2'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "marts customer_metrics"
+                          }
+                        },
+                        "Property": "customer_segment"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Others'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#B96535'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "marts customer_metrics"
+                          }
+                        },
+                        "Property": "customer_segment"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'High-Value Lapsed Customer'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#4C78A8'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "marts customer_metrics"
+                          }
+                        },
+                        "Property": "customer_segment"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Potential Loyalist'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#B54848'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "marts customer_metrics"
+                          }
+                        },
+                        "Property": "customer_segment"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'At Risk'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#368577'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "marts customer_metrics"
+                          }
+                        },
+                        "Property": "customer_segment"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Active Repeat Customer'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#B08A30'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "marts customer_metrics"
+                          }
+                        },
+                        "Property": "customer_segment"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'VIP'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "ribbonBands": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "visualContainerObjects": {
@@ -177,7 +465,20 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Top 10 States by Revenue'"
+                  "Value": "'Top 10 States by Customer Monetary Value'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "section": {
+              "expr": {
+                "Literal": {
+                  "Value": "'6d06183002d046103438'"
                 }
               }
             }
@@ -190,12 +491,40 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "9985cfd1488e8cf411ea",
+        "name": "9e4ef8e986ab50492396",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "marts dim_customers"
+                "Entity": "marts customer_metrics"
+              }
+            },
+            "Property": "customer_segment"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "50f5980994be7436519b",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "All Measure"
+              }
+            },
+            "Property": "Segment Revenue"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "d9ff6c7086a93c936665",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "marts dim_customer_snapshot_location"
               }
             },
             "Property": "customer_state"
@@ -214,7 +543,7 @@
                     "From": [
                       {
                         "Name": "m",
-                        "Entity": "marts dim_customers",
+                        "Entity": "marts dim_customer_snapshot_location",
                         "Type": 0
                       },
                       {
@@ -259,7 +588,7 @@
             },
             {
               "Name": "m",
-              "Entity": "marts dim_customers",
+              "Entity": "marts dim_customer_snapshot_location",
               "Type": 0
             }
           ],
@@ -288,78 +617,21 @@
               }
             }
           ]
-        },
-        "objects": {
-          "general": [
-            {
-              "properties": {
-                "isInvertedSelectionMode": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "true"
-                    }
-                  }
-                }
-              }
-            }
-          ]
         }
       },
       {
-        "name": "cda81820400c05103554",
+        "name": "8beef1257838bb64d270",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "marts dim_customers"
+                "Entity": "marts dim_customer_snapshot_location"
               }
             },
             "Property": "customer_city"
           }
         },
         "type": "Categorical"
-      },
-      {
-        "name": "c909bcad5a2e53abc878",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "marts customer_metrics"
-              }
-            },
-            "Property": "customer_segment"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "d095fe13a6423bbe65c9",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Total Orders"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "4a11ddcbb0121ba1777b",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Segment Revenue"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

@@ -7,7 +7,7 @@
     "z": 5000,
     "height": 66.666666666666671,
     "width": 207.77777777777777,
-    "tabOrder": 3000
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "All Measure.Avg Monetary",
-              "nativeQueryRef": "Avg Monetary"
+              "nativeQueryRef": "Avg Spend (R$)",
+              "displayName": "Avg Spend (R$)"
             }
           ]
         }
@@ -210,5 +211,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "bef2632d63b6795eeb8a",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "All Measure"
+              }
+            },
+            "Property": "Avg Monetary"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }
