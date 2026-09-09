@@ -102,17 +102,22 @@
           "projections": [
             {
               "field": {
-                "Measure": {
+                "Aggregation": {
                   "Expression": {
-                    "SourceRef": {
-                      "Entity": "All Measure"
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "marts seller_metrics"
+                        }
+                      },
+                      "Property": "total_sales"
                     }
                   },
-                  "Property": "Total Sales"
+                  "Function": 0
                 }
               },
-              "queryRef": "All Measure.Total Sales",
-              "nativeQueryRef": "Total Sales"
+              "queryRef": "Sum(marts seller_metrics.total_sales)",
+              "nativeQueryRef": "Sum of total_sales"
             }
           ]
         }
@@ -161,6 +166,91 @@
         },
         "type": "TopN",
         "howCreated": "User"
+      },
+      {
+        "name": "5a2a5b1529c862a7dd30",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "marts seller_metrics"
+              }
+            },
+            "Property": "seller_id"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "cc8a21946cd26ee8a16b",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "marts dim_sellers"
+              }
+            },
+            "Property": "seller_state"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "504480e18a83d0b3d03d",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "marts seller_metrics"
+                  }
+                },
+                "Property": "total_orders"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "862936cedb0755750b6c",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "marts seller_metrics"
+                  }
+                },
+                "Property": "average_review_score"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "ca247c935083b78c3a87",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "marts seller_metrics"
+                  }
+                },
+                "Property": "total_sales"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
       }
     ]
   }

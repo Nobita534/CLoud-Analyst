@@ -10591,17 +10591,17 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "all_measure.total_sales": {
+			    "all_measure.product_sales": {
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "All Measure",
-			          "ConceptualProperty": "Total Sales"
+			          "ConceptualProperty": "Product Sales"
 			        }
 			      },
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "total sales": {
+			          "product sales": {
 			            "State": "Generated"
 			          }
 			        },
@@ -10612,7 +10612,17 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "aggregate sale": {
+			          "artifact sale": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.6
+			          }
+			        },
+			        {
+			          "item sale": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
@@ -10622,7 +10632,17 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "overall sale": {
+			          "merchandise sale": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.582
+			          }
+			        },
+			        {
+			          "produce sale": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
@@ -10649,12 +10669,6 @@ cultureInfo en-US
 			        },
 			        {
 			          "sales": {
-			            "State": "Generated",
-			            "Weight": 0.97
-			          }
-			        },
-			        {
-			          "product sales": {
 			            "State": "Generated",
 			            "Weight": 0.97
 			          }
@@ -10712,16 +10726,6 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "artifact sale": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.6
-			          }
-			        },
-			        {
 			          "best 5 product sale": {
 			            "Type": "Noun",
 			            "State": "Suggested",
@@ -10763,6 +10767,16 @@ cultureInfo en-US
 			        },
 			        {
 			          "peak 5 product sale": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
+			          }
+			        },
+			        {
+			          "upper 5 product sale": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
@@ -12471,6 +12485,16 @@ cultureInfo en-US
 			              "Agent": "Thesaurus"
 			            },
 			            "Weight": 0.514
+			          }
+			        },
+			        {
+			          "Delivered Orders": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -18364,6 +18388,160 @@ cultureInfo en-US
 			          }
 			        }
 			      ]
+			    },
+			    "all_measure.average_product_review_score": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "All Measure",
+			          "ConceptualProperty": "Average Category Review Score"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "average product review score": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "score": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "product review score": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "average artifact review score": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.617
+			          }
+			        },
+			        {
+			          "artifact review score": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.609
+			          }
+			        },
+			        {
+			          "average item review score": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
+			          }
+			        },
+			        {
+			          "average merchandise review score": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
+			          }
+			        },
+			        {
+			          "average produce review score": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
+			          }
+			        },
+			        {
+			          "item review score": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.591
+			          }
+			        },
+			        {
+			          "merchandise review score": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.591
+			          }
+			        },
+			        {
+			          "produce review score": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.591
+			          }
+			        },
+			        {
+			          "average product review notch": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "average product review slash": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        }
+			      ]
+			    },
+			    "all_measure.top_1_state_by_product_sales": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "All Measure",
+			          "ConceptualProperty": "Top 1 State by Product Sales"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "top 1 state by product sales": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "Top Customer State by Sales": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
 			    }
 			  },
 			  "Relationships": {
@@ -19399,6 +19577,72 @@ cultureInfo en-US
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "marts_dim_unique_customers_have_marts_customer_metrics"
+			        }
+			      ]
+			    },
+			    "all_measure_has_top_1_state_by_product_sales": {
+			      "Binding": {
+			        "ConceptualEntity": "All Measure"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "all_measure": {
+			          "Target": {
+			            "Entity": "all_measure"
+			          }
+			        },
+			        "all_measure.top_1_state_by_product_sales": {
+			          "Target": {
+			            "Entity": "all_measure.top_1_state_by_product_sales"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "all_measure"
+			            },
+			            "Object": {
+			              "Role": "all_measure.top_1_state_by_product_sales"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "all_measures_have_top_1_state_by_product_sales"
+			        }
+			      ]
+			    },
+			    "marts_product_metric_has_all_measure_average_product_review_score": {
+			      "Binding": {
+			        "ConceptualEntity": "marts product_metrics"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "marts_product_metric": {
+			          "Target": {
+			            "Entity": "marts_product_metric"
+			          }
+			        },
+			        "all_measure.average_product_review_score": {
+			          "Target": {
+			            "Entity": "all_measure.average_product_review_score"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "marts_product_metric"
+			            },
+			            "Object": {
+			              "Role": "all_measure.average_product_review_score"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "marts_product_metrics_have_average_product_review_score"
 			        }
 			      ]
 			    },
@@ -20986,15 +21230,15 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "marts_dim_order_has_all_measure_total_orders_by_product": {
+			    "marts_fact_order_item_has_all_measure_total_orders_by_product": {
 			      "Binding": {
-			        "ConceptualEntity": "marts dim_orders"
+			        "ConceptualEntity": "marts fact_order_items"
 			      },
 			      "State": "Generated",
 			      "Roles": {
-			        "marts_dim_order": {
+			        "marts_fact_order_item": {
 			          "Target": {
-			            "Entity": "marts_dim_order"
+			            "Entity": "marts_fact_order_item"
 			          }
 			        },
 			        "all_measure.total_orders_by_product": {
@@ -21007,7 +21251,7 @@ cultureInfo en-US
 			        {
 			          "Attribute": {
 			            "Subject": {
-			              "Role": "marts_dim_order"
+			              "Role": "marts_fact_order_item"
 			            },
 			            "Object": {
 			              "Role": "all_measure.total_orders_by_product"
@@ -21015,7 +21259,7 @@ cultureInfo en-US
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "marts_dim_orders_have_total_orders_by_product"
+			          "ID": "marts_fact_order_items_have_total_orders_by_product"
 			        }
 			      ]
 			    },
@@ -21613,15 +21857,15 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "marts_fact_order_item_has_all_measure_top_5_product_sales_by_state": {
+			    "marts_product_metric_has_all_measure_top_5_product_sales_by_state": {
 			      "Binding": {
-			        "ConceptualEntity": "marts fact_order_items"
+			        "ConceptualEntity": "marts product_metrics"
 			      },
 			      "State": "Generated",
 			      "Roles": {
-			        "marts_fact_order_item": {
+			        "marts_product_metric": {
 			          "Target": {
-			            "Entity": "marts_fact_order_item"
+			            "Entity": "marts_product_metric"
 			          }
 			        },
 			        "all_measure.top_5_product_sales_by_state": {
@@ -21634,7 +21878,7 @@ cultureInfo en-US
 			        {
 			          "Attribute": {
 			            "Subject": {
-			              "Role": "marts_fact_order_item"
+			              "Role": "marts_product_metric"
 			            },
 			            "Object": {
 			              "Role": "all_measure.top_5_product_sales_by_state"
@@ -21642,24 +21886,24 @@ cultureInfo en-US
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "marts_fact_order_items_have_top_5_product_sales_by_state"
+			          "ID": "marts_product_metrics_have_top_5_product_sales_by_state"
 			        }
 			      ]
 			    },
-			    "marts_fact_order_item_has_all_measure_total_sales": {
+			    "marts_product_metric_has_all_measure_product_sales": {
 			      "Binding": {
-			        "ConceptualEntity": "marts fact_order_items"
+			        "ConceptualEntity": "marts product_metrics"
 			      },
 			      "State": "Generated",
 			      "Roles": {
-			        "marts_fact_order_item": {
+			        "marts_product_metric": {
 			          "Target": {
-			            "Entity": "marts_fact_order_item"
+			            "Entity": "marts_product_metric"
 			          }
 			        },
-			        "all_measure.total_sales": {
+			        "all_measure.product_sales": {
 			          "Target": {
-			            "Entity": "all_measure.total_sales"
+			            "Entity": "all_measure.product_sales"
 			          }
 			        }
 			      },
@@ -21667,15 +21911,15 @@ cultureInfo en-US
 			        {
 			          "Attribute": {
 			            "Subject": {
-			              "Role": "marts_fact_order_item"
+			              "Role": "marts_product_metric"
 			            },
 			            "Object": {
-			              "Role": "all_measure.total_sales"
+			              "Role": "all_measure.product_sales"
 			            }
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "marts_fact_order_items_have_total_sales"
+			          "ID": "marts_product_metrics_have_product_sales"
 			        }
 			      ]
 			    },
@@ -24020,6 +24264,51 @@ cultureInfo en-US
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "marts_customer_metrics_have_analysis_date_keys"
+			        }
+			      ]
+			    },
+			    "all_measure_in_top_1_state_by_product_sales": {
+			      "Binding": {
+			        "ConceptualEntity": "All Measure"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "all_measure": {
+			          "Target": {
+			            "Entity": "all_measure"
+			          }
+			        },
+			        "all_measure.top_1_state_by_product_sales": {
+			          "Target": {
+			            "Entity": "all_measure.top_1_state_by_product_sales"
+			          }
+			        }
+			      },
+			      "SemanticSlots": {
+			        "Where": {
+			          "Role": "all_measure.top_1_state_by_product_sales"
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Preposition": {
+			            "Subject": {
+			              "Role": "all_measure"
+			            },
+			            "Prepositions": [
+			              {
+			                "in": {
+			                  "State": "Generated"
+			                }
+			              }
+			            ],
+			            "Object": {
+			              "Role": "all_measure.top_1_state_by_product_sales"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "all_measures_are_in_top_1_state_by_product_sales"
 			        }
 			      ]
 			    },

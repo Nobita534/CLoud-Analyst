@@ -61,12 +61,23 @@ table 'All Measure'
 		formatString: 0
 		lineageTag: dc30680a-6aeb-4247-8998-185bedea52ed
 
-	measure 'Average Review Score' = AVERAGE('marts seller_metrics'[average_review_score])
+	measure 'Average Review Score' =
+			
+			DIVIDE(
+			    SUMX(
+			        'marts seller_metrics',
+			        'marts seller_metrics'[average_review_score]
+			            * 'marts seller_metrics'[reviewed_orders]
+			    ),
+			    SUM('marts seller_metrics'[reviewed_orders])
+			)
 		lineageTag: bbc51395-d206-463a-be9f-e43c3a569fb8
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Total Sales' = SUM('marts fact_order_items'[price])
+	measure 'Product Sales' =
+			
+			SUM('marts product_metrics'[total_product_sales])
 		lineageTag: 7a0daa14-e881-40a7-91ea-bee3ad162f5a
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -77,12 +88,12 @@ table 'All Measure'
 			    TOPN(
 			        5,
 			        ALLSELECTED('intermediate int_product_category_name_translation'[product_category_name_english]),
-			        [Total Sales],
+			        [Product Sales],
 			        DESC
 			    )
 			RETURN
 			    CALCULATE(
-			        [Total Sales],
+			        [Product Sales],
 			        KEEPFILTERS(TopProducts)
 			    )
 		lineageTag: 22b403e1-9303-4b14-a84d-4c88628550d8
@@ -323,25 +334,26 @@ table 'All Measure'
 			VAR Ranking = 
 			    RANKX(
 			        ALLSELECTED('intermediate int_product_category_name_translation'[product_category_name_english]), 
-			        [Total Sales], 
+			        [Product Sales], 
 			        , 
 			        DESC, 
 			        Dense
 			    )
 			RETURN
-			    IF(Ranking <= 10, [Total Sales], BLANK())
+			    IF(Ranking <= 10, [Product Sales], BLANK())
 			```
 		lineageTag: cab61594-5b7e-4adc-93f5-d9ca90ff09b5
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Total Orders by Product' = ```
+	measure 'Total Orders by Product' =
 			
-			    CALCULATE(
-			        DISTINCTCOUNT('marts dim_orders'[order_id]),
-			        'marts fact_order_items'
+			CALCULATE(
+			    DISTINCTCOUNT('marts fact_order_items'[order_id]),
+			    KEEPFILTERS(
+			        'marts dim_orders'[order_status] = "delivered"
+			    )
 			)
-			```
 		formatString: 0
 		lineageTag: 71954ff5-8ede-4a17-a822-177d0a742e97
 
@@ -668,6 +680,82 @@ table 'All Measure'
 			RETURN
 			    StateName & " | " & SegmentName
 		lineageTag: 270dee06-8153-4c01-9f96-a77d4f728304
+
+	measure 'Average Category Review Score' =
+			
+			VAR CategoryOrders =
+			    CALCULATETABLE(
+			        VALUES('marts fact_order_items'[order_id]),
+			        KEEPFILTERS(
+			            'marts dim_orders'[order_status] = "delivered"
+			        )
+			    )
+			
+			RETURN
+			    AVERAGEX(
+			        CategoryOrders,
+			        VAR CurrentOrder =
+			            'marts fact_order_items'[order_id]
+			        RETURN
+			            CALCULATE(
+			                AVERAGE('marts fact_review'[review_score]),
+			                KEEPFILTERS(
+			                    TREATAS(
+			                        { CurrentOrder },
+			                        'marts fact_review'[order_id]
+			                    )
+			                )
+			            )
+			    )
+		lineageTag: af549005-142b-45d9-b9e1-70077aaf38e7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Top 1 State by Product Sales' =
+			
+			VAR StateSales =
+			    CALCULATETABLE(
+			        ADDCOLUMNS(
+			            VALUES('marts product_metrics'[customer_state]),
+			            "@Sales", CALCULATE([Product Sales])
+			        ),
+			        REMOVEFILTERS('marts product_metrics'[customer_state])
+			    )
+			
+			VAR TopState =
+			    TOPN(
+			        1,
+			        FILTER(
+			            StateSales,
+			            NOT ISBLANK('marts product_metrics'[customer_state])
+			                && [@Sales] > 0
+			        ),
+			        [@Sales], DESC,
+			        'marts product_metrics'[customer_state], ASC
+			    )
+			
+			RETURN
+			    IF(
+			        COUNTROWS(TopState) = 0,
+			        "--",
+			        CONCATENATEX(
+			            TopState,
+			            'marts product_metrics'[customer_state]
+			                & " | "
+			                & FORMAT([@Sales], "R$ #,##0.00"),
+			            ""
+			        )
+			    )
+		lineageTag: 8d018076-ca92-4ef6-94f0-d0df1b2b4aaa
+
+	measure 'Category Name' =
+			
+			SELECTEDVALUE(
+			    'intermediate int_product_category_name_translation'
+			        [product_category_name_english],
+			    "All / Multiple categories"
+			)
+		lineageTag: a95707f4-8a7a-419c-8ce5-9012a8b693ac
 
 	column Column
 		formatString: 0

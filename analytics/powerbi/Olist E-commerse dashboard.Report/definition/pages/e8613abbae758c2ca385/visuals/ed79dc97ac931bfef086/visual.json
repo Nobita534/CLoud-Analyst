@@ -32,38 +32,6 @@
             }
           ]
         },
-        "Tooltips": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "All Measure"
-                    }
-                  },
-                  "Property": "Total Orders by Product"
-                }
-              },
-              "queryRef": "All Measure.Total Orders by Product",
-              "nativeQueryRef": "Total Orders by Product"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "All Measure"
-                    }
-                  },
-                  "Property": "Product Category Review Score"
-                }
-              },
-              "queryRef": "All Measure.Product Category Review Score",
-              "nativeQueryRef": "Product Category Review Score"
-            }
-          ]
-        },
         "Y": {
           "projections": [
             {
@@ -172,8 +140,53 @@
             }
           }
         }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "section": {
+              "expr": {
+                "Literal": {
+                  "Value": "'aaf844aa1ed606346602'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "9bab737b1c1abc1d24a3",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "intermediate int_product_category_name_translation"
+              }
+            },
+            "Property": "product_category_name_english"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "0bd83291cbe76cea3eab",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "All Measure"
+              }
+            },
+            "Property": "Top 10 Product Sales Dynamic"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

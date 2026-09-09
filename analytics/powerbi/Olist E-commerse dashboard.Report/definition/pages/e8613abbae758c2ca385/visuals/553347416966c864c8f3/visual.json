@@ -224,5 +224,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "a8f2841e2b5d750ab68b",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "All Measure"
+              }
+            },
+            "Property": "Active Seller"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }
