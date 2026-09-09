@@ -16,17 +16,23 @@
           "projections": [
             {
               "field": {
-                "Measure": {
+                "Aggregation": {
                   "Expression": {
-                    "SourceRef": {
-                      "Entity": "All Measure"
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "marts seller_metrics"
+                        }
+                      },
+                      "Property": "total_sales"
                     }
                   },
-                  "Property": "Total Sales"
+                  "Function": 0
                 }
               },
-              "queryRef": "All Measure.Total Sales",
-              "nativeQueryRef": "Total Sales"
+              "queryRef": "Sum(marts seller_metrics.total_sales)",
+              "nativeQueryRef": "Sales",
+              "displayName": "Sales"
             }
           ]
         }
@@ -35,13 +41,18 @@
         "sort": [
           {
             "field": {
-              "Measure": {
+              "Aggregation": {
                 "Expression": {
-                  "SourceRef": {
-                    "Entity": "All Measure"
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "marts seller_metrics"
+                      }
+                    },
+                    "Property": "total_sales"
                   }
                 },
-                "Property": "Total Sales"
+                "Function": 0
               }
             },
             "direction": "Descending"
@@ -209,5 +220,28 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "4deef3a256195d0060e5",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "marts seller_metrics"
+                  }
+                },
+                "Property": "total_sales"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

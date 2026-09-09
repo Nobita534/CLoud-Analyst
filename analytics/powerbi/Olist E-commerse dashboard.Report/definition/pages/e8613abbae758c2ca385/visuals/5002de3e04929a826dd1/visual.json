@@ -17,18 +17,23 @@
           "projections": [
             {
               "field": {
-                "Measure": {
+                "Aggregation": {
                   "Expression": {
-                    "SourceRef": {
-                      "Entity": "All Measure"
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "marts seller_metrics"
+                        }
+                      },
+                      "Property": "total_item_sold"
                     }
                   },
-                  "Property": "Total Item Sold"
+                  "Function": 0
                 }
               },
-              "queryRef": "All Measure.Total Item Sold",
-              "nativeQueryRef": "Total Item Sold",
-              "format": "#,0"
+              "queryRef": "Sum(marts seller_metrics.total_item_sold)",
+              "nativeQueryRef": "Items sold",
+              "displayName": "Items sold"
             }
           ]
         }
@@ -37,13 +42,18 @@
         "sort": [
           {
             "field": {
-              "Measure": {
+              "Aggregation": {
                 "Expression": {
-                  "SourceRef": {
-                    "Entity": "All Measure"
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "marts seller_metrics"
+                      }
+                    },
+                    "Property": "total_item_sold"
                   }
                 },
-                "Property": "Total Item Sold"
+                "Function": 0
               }
             },
             "direction": "Descending"
@@ -105,20 +115,6 @@
           },
           "selector": {
             "id": "default"
-          }
-        },
-        {
-          "properties": {
-            "labelDisplayUnits": {
-              "expr": {
-                "Literal": {
-                  "Value": "1D"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "All Measure.Total Item Sold"
           }
         }
       ],
@@ -225,5 +221,28 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "c88afe1c4a3d4bdcc9cc",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "marts seller_metrics"
+                  }
+                },
+                "Property": "total_item_sold"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }
