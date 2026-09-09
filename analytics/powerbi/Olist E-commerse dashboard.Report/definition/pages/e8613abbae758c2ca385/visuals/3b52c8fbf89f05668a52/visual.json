@@ -7,7 +7,7 @@
     "z": 7000,
     "height": 66.666666666666671,
     "width": 207.77777777777777,
-    "tabOrder": 5000
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,11 +23,11 @@
                       "Entity": "All Measure"
                     }
                   },
-                  "Property": "Bad Seller Rate (%)"
+                  "Property": "Low-rated Seller Rate (%)"
                 }
               },
               "queryRef": "All Measure.Bad Seller Rate (%)",
-              "nativeQueryRef": "Bad Seller Rate (%)"
+              "nativeQueryRef": "Low-rated Seller Rate (%)"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "All Measure"
                   }
                 },
-                "Property": "Bad Seller Rate (%)"
+                "Property": "Low-rated Seller Rate (%)"
               }
             },
             "direction": "Descending"
@@ -210,5 +210,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "ee9e105218d45447c4a0",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "All Measure"
+              }
+            },
+            "Property": "Low-rated Seller Rate (%)"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

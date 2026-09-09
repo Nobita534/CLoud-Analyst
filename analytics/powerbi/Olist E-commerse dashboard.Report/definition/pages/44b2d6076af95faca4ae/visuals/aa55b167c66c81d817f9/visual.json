@@ -4,9 +4,10 @@
   "position": {
     "x": 137.77777777777777,
     "y": 150,
-    "z": 3000,
+    "z": 2000,
     "height": 66.666666666666671,
-    "width": 207.77777777777777
+    "width": 207.77777777777777,
+    "tabOrder": 9000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -224,23 +225,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "7c954e3c1103073a4075",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "VIP Customers"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

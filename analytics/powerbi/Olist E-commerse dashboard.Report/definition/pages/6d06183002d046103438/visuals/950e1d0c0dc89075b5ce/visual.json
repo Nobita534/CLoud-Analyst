@@ -4,10 +4,10 @@
   "position": {
     "x": 160,
     "y": 62.941176470588239,
-    "z": 1,
+    "z": 1000,
     "height": 257.05882352941177,
     "width": 160,
-    "tabOrder": 1
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -196,65 +196,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "19fb17fe76e00046426d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Avg Monetary"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "82f0786bd4cac39a55e9",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Avg Frequency"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "8f28837074dbbeed8b09",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Avg Recency"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "cbdf3b319d5a6a10a4a0",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "RFM Base Count"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

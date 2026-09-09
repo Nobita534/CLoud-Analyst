@@ -4,10 +4,9 @@
   "position": {
     "x": 367.14285714285717,
     "y": 150,
-    "z": 4000,
+    "z": 3000,
     "height": 67.142857142857153,
-    "width": 208.57142857142858,
-    "tabOrder": 1000
+    "width": 208.57142857142858
   },
   "visual": {
     "visualType": "cardVisual",
@@ -240,23 +239,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "bab10b4bda6d85779494",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Vip Revenue"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

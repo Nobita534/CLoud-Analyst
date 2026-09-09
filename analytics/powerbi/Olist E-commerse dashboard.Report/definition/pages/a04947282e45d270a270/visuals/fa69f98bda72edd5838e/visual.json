@@ -7,7 +7,7 @@
     "z": 10000,
     "height": 453.33333333333337,
     "width": 558.33333333333337,
-    "tabOrder": 7000
+    "tabOrder": 6000
   },
   "visual": {
     "visualType": "lineClusteredColumnComboChart",
@@ -400,108 +400,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "fbea8a5be8693700911a",
-        "field": {
-          "HierarchyLevel": {
-            "Expression": {
-              "Hierarchy": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "marts dim_date"
-                  }
-                },
-                "Hierarchy": "year Hierarchy"
-              }
-            },
-            "Level": "year"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "6df0303d4200291cdb05",
-        "field": {
-          "HierarchyLevel": {
-            "Expression": {
-              "Hierarchy": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "marts dim_date"
-                  }
-                },
-                "Hierarchy": "year Hierarchy"
-              }
-            },
-            "Level": "quarter"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "a3a0dbb0d86107e47c69",
-        "field": {
-          "HierarchyLevel": {
-            "Expression": {
-              "Hierarchy": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "marts dim_date"
-                  }
-                },
-                "Hierarchy": "year Hierarchy"
-              }
-            },
-            "Level": "month"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "e042e2f391a1b97407e4",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Active Customer"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "1cf8f2602170cb000bd0",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Total Revenue"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "a8bb6169353cb91a0410",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Total Orders"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

@@ -4,10 +4,10 @@
   "position": {
     "x": 126.26261621836623,
     "y": 256.59822005667979,
-    "z": 8000,
+    "z": 7000,
     "height": 217.22600639718922,
     "width": 562.07229155272717,
-    "tabOrder": 5000
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "clusteredColumnChart",
@@ -471,65 +471,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "ead52ab2e04370061cc8",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "marts customer_metrics"
-              }
-            },
-            "Property": "customer_segment"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "d3f5cc0c6de8c0906e50",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Segment Revenue %"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "ebd850d9cd71c0ebc177",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Segment Customer"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "32bb7b0b02524a067c2e",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Segment Revenue"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

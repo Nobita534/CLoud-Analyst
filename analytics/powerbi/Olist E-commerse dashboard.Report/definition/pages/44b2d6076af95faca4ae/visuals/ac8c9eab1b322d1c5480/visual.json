@@ -4,10 +4,10 @@
   "position": {
     "x": 828.88888888888891,
     "y": 150,
-    "z": 6000,
+    "z": 5000,
     "height": 66.666666666666671,
     "width": 207.77777777777777,
-    "tabOrder": 3000
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -211,23 +211,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "b720f906e69399293e52",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Avg Frequency"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

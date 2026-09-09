@@ -4,10 +4,10 @@
   "position": {
     "x": 718.20348365070686,
     "y": 257.95588259666221,
-    "z": 10001,
+    "z": 9000,
     "height": 339.41563499560817,
     "width": 562.07229155272717,
-    "tabOrder": 10001
+    "tabOrder": 8000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -397,107 +397,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "5978d316b95210e4d1d0",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "marts customer_metrics"
-              }
-            },
-            "Property": "customer_segment"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "0c73519fa22eacb3669c",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Avg Recency"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "b729ce44958d0c173d7d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Avg Frequency"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "35418af692105114cb10",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Avg Monetary"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "f7daaf5008854627221b",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Segment Revenue"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "8d99485c828030ab7403",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Segment Revenue %"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "fdbece9c0ec07a40bad0",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Segment Customer"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

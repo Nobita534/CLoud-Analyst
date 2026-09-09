@@ -7,7 +7,7 @@
     "z": 6000,
     "height": 37.443876026229276,
     "width": 125.29296978007488,
-    "tabOrder": 3000
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -460,23 +460,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "3c93285ed4409645ca8a",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Order YoY Indicator"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

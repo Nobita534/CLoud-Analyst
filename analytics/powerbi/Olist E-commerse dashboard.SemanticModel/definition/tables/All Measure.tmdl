@@ -275,17 +275,46 @@ table 'All Measure'
 		formatString: 0
 		lineageTag: 3a0e94de-34fa-42b2-8bc0-585650a28a19
 
-	measure 'Bad Seller Rate (%)' = ```
+	measure 'Low-rated Seller Rate (%)' =
 			
-			VAR TotalSellers = COUNTROWS('marts seller_metrics')
-			VAR BadSellers = 
-			    CALCULATE(
-			        COUNTROWS('marts seller_metrics'),
-			        'marts seller_metrics'[average_review_score] <= 2
+			VAR SellerScores =
+			    ADDCOLUMNS(
+			        VALUES('marts seller_metrics'[seller_id]),
+			        "@ReviewCount",
+			            CALCULATE(
+			                SUM('marts seller_metrics'[reviewed_orders])
+			            ),
+			        "@Score",
+			            CALCULATE(
+			                DIVIDE(
+			                    SUMX(
+			                        'marts seller_metrics',
+			                        'marts seller_metrics'[average_review_score]
+			                            * 'marts seller_metrics'[reviewed_orders]
+			                    ),
+			                    SUM('marts seller_metrics'[reviewed_orders])
+			                )
+			            )
 			    )
+			
+			VAR ReviewedSellers =
+			    FILTER(
+			        SellerScores,
+			        [@ReviewCount] > 0
+			            && NOT ISBLANK([@Score])
+			    )
+			
+			VAR LowRatedSellers =
+			    FILTER(
+			        ReviewedSellers,
+			        [@Score] <= 2
+			    )
+			
 			RETURN
-			    DIVIDE(BadSellers, TotalSellers, 0)
-			```
+			    DIVIDE(
+			        COUNTROWS(LowRatedSellers),
+			        COUNTROWS(ReviewedSellers)
+			    )
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: ac9d4a21-c2b2-485c-861a-5848f6fa728a
 

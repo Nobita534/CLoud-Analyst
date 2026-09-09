@@ -4,10 +4,10 @@
   "position": {
     "x": 0,
     "y": 31.176470588235293,
-    "z": 3,
+    "z": 3000,
     "height": 25.882352941176471,
     "width": 311.1764705882353,
-    "tabOrder": 3
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "card",
@@ -77,23 +77,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "ee3e0b72d50c6632233d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Customer Tooltip Context"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

@@ -12073,7 +12073,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "All Measure",
-			          "ConceptualProperty": "Bad Seller Rate (%)"
+			          "ConceptualProperty": "Low-rated Seller Rate (%)"
 			        }
 			      },
 			      "State": "Generated",

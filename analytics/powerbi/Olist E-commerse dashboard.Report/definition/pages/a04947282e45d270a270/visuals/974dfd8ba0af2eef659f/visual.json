@@ -6,8 +6,7 @@
     "y": 168,
     "z": 4000,
     "height": 37.049866831940236,
-    "width": 115.26625236603628,
-    "tabOrder": 1000
+    "width": 115.26625236603628
   },
   "visual": {
     "visualType": "cardVisual",
@@ -310,23 +309,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "c16b1bed33010241e467",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Revenue YoY Indicator"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

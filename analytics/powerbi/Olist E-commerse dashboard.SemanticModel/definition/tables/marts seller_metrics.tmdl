@@ -85,6 +85,25 @@ table 'marts seller_metrics'
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	column order_purchase_date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 78ec07a6-e94d-4da4-ade4-838baa016156
+		summarizeBy: sum
+		sourceColumn: order_purchase_date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_item_sold
+		dataType: double
+		lineageTag: 307a0c75-f8f5-4782-9f99-e878954e978a
+		summarizeBy: sum
+		sourceColumn: total_item_sold
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	partition 'marts seller_metrics' = m
 		mode: import
 		source =

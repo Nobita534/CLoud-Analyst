@@ -7,7 +7,7 @@
     "z": 1000,
     "height": 81.428571428571431,
     "width": 200,
-    "tabOrder": 10000
+    "tabOrder": 9000
   },
   "visual": {
     "visualType": "slicer",
@@ -378,63 +378,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "e809db39073aee4bc3e4",
-        "field": {
-          "HierarchyLevel": {
-            "Expression": {
-              "Hierarchy": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "marts dim_date"
-                  }
-                },
-                "Hierarchy": "year Hierarchy"
-              }
-            },
-            "Level": "year"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "e6880ffcea2124d13069",
-        "field": {
-          "HierarchyLevel": {
-            "Expression": {
-              "Hierarchy": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "marts dim_date"
-                  }
-                },
-                "Hierarchy": "year Hierarchy"
-              }
-            },
-            "Level": "quarter"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "7c2c086a5ac530c7d67b",
-        "field": {
-          "HierarchyLevel": {
-            "Expression": {
-              "Hierarchy": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "marts dim_date"
-                  }
-                },
-                "Hierarchy": "year Hierarchy"
-              }
-            },
-            "Level": "month"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

@@ -6,8 +6,7 @@
     "y": 272,
     "z": 2000,
     "height": 128,
-    "width": 380,
-    "tabOrder": 1000
+    "width": 380
   },
   "visual": {
     "visualType": "card",
@@ -84,23 +83,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "f3702b1c4b007907a5d8",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "YoY Comparison Label"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

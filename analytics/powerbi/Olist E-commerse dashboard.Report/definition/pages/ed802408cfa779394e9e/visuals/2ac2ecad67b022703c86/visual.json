@@ -7,7 +7,7 @@
     "z": 0,
     "height": 261,
     "width": 368,
-    "tabOrder": 2000
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -403,93 +403,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "ad49804ce9398428a0b7",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Total Revenue"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "63761fe65dce48706072",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Orders Card"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "61a4c2c0d5179c3260d1",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Revenue SPLY Display"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "4eb64f440998c69bb267",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Orders LY Display"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "88d9088180d579c10dc3",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Revenue Yoy Display"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "63698e47302888d1b7ed",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Orders Yoy Display"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

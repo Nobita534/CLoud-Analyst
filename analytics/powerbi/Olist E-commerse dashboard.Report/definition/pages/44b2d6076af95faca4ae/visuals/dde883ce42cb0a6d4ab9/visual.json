@@ -4,10 +4,10 @@
   "position": {
     "x": 123.54729113840138,
     "y": 473.824226453869,
-    "z": 10000,
+    "z": 8000,
     "height": 229.44496925703112,
     "width": 566.14527917267446,
-    "tabOrder": 7000
+    "tabOrder": 5000
   },
   "visual": {
     "visualType": "barChart",
@@ -491,34 +491,6 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "9e4ef8e986ab50492396",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "marts customer_metrics"
-              }
-            },
-            "Property": "customer_segment"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "50f5980994be7436519b",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Segment Revenue"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
         "name": "d9ff6c7086a93c936665",
         "field": {
           "Column": {
@@ -618,20 +590,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "8beef1257838bb64d270",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "marts dim_customer_snapshot_location"
-              }
-            },
-            "Property": "customer_city"
-          }
-        },
-        "type": "Categorical"
       }
     ]
   }

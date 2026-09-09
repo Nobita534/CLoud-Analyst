@@ -236,12 +236,15 @@ models:
           Unique identifier of the seller.
         data_tests:
           - not_null
-          - unique
           - relationships:
               arguments: 
                 to: ref('dim_sellers')
                 field: seller_id
 
+      - name: order_purchase_date_key
+        description: Date key for when the order was purchased.
+        data_tests:
+          - not_null
 
       - name: seller_state
         description: >
@@ -302,4 +305,9 @@ models:
       - dbt_utils.expression_is_true:
           arguments:
             expression: "reviewed_orders <= total_orders"
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - seller_id
+              - order_purchase_date_key
 
