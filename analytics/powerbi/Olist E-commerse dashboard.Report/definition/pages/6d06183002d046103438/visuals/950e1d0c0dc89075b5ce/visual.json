@@ -3,7 +3,7 @@
   "name": "950e1d0c0dc89075b5ce",
   "position": {
     "x": 160,
-    "y": 42.941176470588239,
+    "y": 62.941176470588239,
     "z": 1,
     "height": 257.05882352941177,
     "width": 160,
@@ -29,7 +29,7 @@
               "queryRef": "All Measure.RFM Base Count",
               "nativeQueryRef": "Customers",
               "displayName": "Customers",
-              "format": "#,0"
+              "format": "#,0.00"
             },
             {
               "field": {

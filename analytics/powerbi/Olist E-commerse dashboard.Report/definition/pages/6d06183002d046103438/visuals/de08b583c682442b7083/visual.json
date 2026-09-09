@@ -1,12 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "2c26980db69b6128c6ca",
+  "name": "de08b583c682442b7083",
   "position": {
     "x": 0,
-    "y": 62.941176470588239,
-    "z": 0,
-    "height": 257.05882352941177,
-    "width": 160
+    "y": 31.176470588235293,
+    "z": 3,
+    "height": 25.882352941176471,
+    "width": 311.1764705882353,
+    "tabOrder": 3
   },
   "visual": {
     "visualType": "card",
@@ -22,50 +23,24 @@
                       "Entity": "All Measure"
                     }
                   },
-                  "Property": "Latest Purchase Date"
+                  "Property": "Customer Tooltip Context"
                 }
               },
-              "queryRef": "All Measure.Latest Purchase Date",
-              "nativeQueryRef": "Latest Purchase Date",
-              "format": "dd-MMM-yy"
+              "queryRef": "All Measure.Customer Tooltip Context",
+              "nativeQueryRef": "Customer Tooltip Context"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "All Measure"
-                  }
-                },
-                "Property": "Latest Purchase Date"
-              }
-            },
-            "direction": "Ascending"
-          }
-        ],
-        "isDefaultSort": true
       }
     },
     "objects": {
       "categoryLabels": [
         {
           "properties": {
-            "fontSize": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -78,18 +53,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "20D"
-                }
-              }
-            },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#205B50'"
-                    }
-                  }
+                  "Value": "12D"
                 }
               }
             }
@@ -117,7 +81,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "e901dc29da698ac3aeba",
+        "name": "ee3e0b72d50c6632233d",
         "field": {
           "Measure": {
             "Expression": {
@@ -125,7 +89,7 @@
                 "Entity": "All Measure"
               }
             },
-            "Property": "Latest Purchase Date"
+            "Property": "Customer Tooltip Context"
           }
         },
         "type": "Advanced"

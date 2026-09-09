@@ -5,8 +5,8 @@
     "x": 0,
     "y": 0,
     "z": 2,
-    "height": 39.54545454545454,
-    "width": 290.45454545454544,
+    "height": 36.875,
+    "width": 172.5,
     "tabOrder": 2
   },
   "visual": {
@@ -22,7 +22,7 @@
                     "value": "Customer Profiles",
                     "textStyle": {
                       "fontWeight": "bold",
-                      "fontSize": "16pt"
+                      "fontSize": "14pt"
                     }
                   }
                 ]

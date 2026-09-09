@@ -624,6 +624,22 @@ table 'All Measure'
 		formatString: 0
 		lineageTag: 9e6a183f-cf6e-4846-887d-31319df66b21
 
+	measure 'Customer Tooltip Context' =
+			
+			VAR StateName =
+			    SELECTEDVALUE(
+			        'marts dim_customer_snapshot_location'[customer_state],
+			        "Multiple states"
+			    )
+			VAR SegmentName =
+			    SELECTEDVALUE(
+			        'marts customer_metrics'[customer_segment],
+			        "All segments"
+			    )
+			RETURN
+			    StateName & " | " & SegmentName
+		lineageTag: 270dee06-8153-4c01-9f96-a77d4f728304
+
 	column Column
 		formatString: 0
 		lineageTag: 8546f429-230a-449c-b0e7-ab54e2f2b962
