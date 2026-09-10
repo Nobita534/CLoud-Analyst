@@ -10,7 +10,7 @@
     "tabOrder": 5000
   },
   "visual": {
-    "visualType": "clusteredColumnChart",
+    "visualType": "clusteredBarChart",
     "query": {
       "queryState": {
         "Category": {
@@ -47,7 +47,8 @@
               },
               "queryRef": "All Measure.Top 10 Product Sales Dynamic",
               "nativeQueryRef": "Total Sales",
-              "displayName": "Total Sales"
+              "displayName": "Total Sales",
+              "format": "\"R$\"#,0.00;-\"R$\"#,0.00;\"R$\"#,0.00"
             }
           ]
         }
@@ -122,6 +123,51 @@
                   "Value": "'Product category'"
                 }
               }
+            },
+            "labelColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#37877B'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "valueAxis": [
+        {
+          "properties": {
+            "labelColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#344B46'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dataPoint": [
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#37877B'"
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -134,7 +180,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Top 10 Product by Sales'"
+                  "Value": "'Top 10 Categories by Sales'"
                 }
               }
             }
@@ -156,37 +202,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "9bab737b1c1abc1d24a3",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "intermediate int_product_category_name_translation"
-              }
-            },
-            "Property": "product_category_name_english"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "0bd83291cbe76cea3eab",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Top 10 Product Sales Dynamic"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

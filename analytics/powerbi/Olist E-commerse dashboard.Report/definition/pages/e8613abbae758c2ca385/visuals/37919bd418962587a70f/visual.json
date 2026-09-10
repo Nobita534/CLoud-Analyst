@@ -20,33 +20,15 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "marts seller_metrics"
+                      "Entity": "marts dim_sellers"
                     }
                   },
                   "Property": "seller_id"
                 }
               },
-              "queryRef": "marts seller_metrics.seller_id",
+              "queryRef": "marts dim_sellers.seller_id",
               "nativeQueryRef": "seller_id",
               "active": true
-            }
-          ]
-        },
-        "Series": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "marts dim_sellers"
-                    }
-                  },
-                  "Property": "seller_state"
-                }
-              },
-              "queryRef": "marts dim_sellers.seller_state",
-              "nativeQueryRef": "seller_state"
             }
           ]
         },
@@ -77,24 +59,18 @@
           "projections": [
             {
               "field": {
-                "Aggregation": {
+                "Measure": {
                   "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "marts seller_metrics"
-                        }
-                      },
-                      "Property": "average_review_score"
+                    "SourceRef": {
+                      "Entity": "All Measure"
                     }
                   },
-                  "Function": 0
+                  "Property": "Average Review Score"
                 }
               },
-              "queryRef": "Sum(marts seller_metrics.average_review_score)",
+              "queryRef": "All Measure.Average Review Score",
               "nativeQueryRef": "Average Review Score",
-              "active": true,
-              "displayName": "Average Review Score"
+              "active": true
             }
           ]
         },
@@ -117,7 +93,8 @@
                 }
               },
               "queryRef": "Sum(marts seller_metrics.total_sales)",
-              "nativeQueryRef": "Sum of total_sales"
+              "nativeQueryRef": "Sales (R$)",
+              "displayName": "Sales (R$)"
             }
           ]
         }
@@ -131,6 +108,118 @@
         {
           "properties": {}
         }
+      ],
+      "dataPoint": [
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "All Measure"
+                        }
+                      },
+                      "Property": "Seller Review Color"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "xAxisReferenceLine": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "displayName": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Low-rated threshold'"
+                }
+              }
+            },
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
+            "lineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#BE654A'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "dataLabelShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "dataLabelColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 1,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            },
+            "dataLabelText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'ValueAndName'"
+                }
+              }
+            },
+            "dataLabelVerticalPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'above'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "1"
+          }
+        }
       ]
     },
     "visualContainerObjects": {
@@ -140,7 +229,20 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Sellers and Customer Satisfaction'"
+                  "Value": "'Seller Sales vs. Review Score'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "section": {
+              "expr": {
+                "Literal": {
+                  "Value": "'ae752236a54257398c55'"
                 }
               }
             }
@@ -168,34 +270,6 @@
         "howCreated": "User"
       },
       {
-        "name": "5a2a5b1529c862a7dd30",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "marts seller_metrics"
-              }
-            },
-            "Property": "seller_id"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "cc8a21946cd26ee8a16b",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "marts dim_sellers"
-              }
-            },
-            "Property": "seller_state"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
         "name": "504480e18a83d0b3d03d",
         "field": {
           "Aggregation": {
@@ -207,25 +281,6 @@
                   }
                 },
                 "Property": "total_orders"
-              }
-            },
-            "Function": 0
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "862936cedb0755750b6c",
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "marts seller_metrics"
-                  }
-                },
-                "Property": "average_review_score"
               }
             },
             "Function": 0
@@ -251,6 +306,34 @@
           }
         },
         "type": "Advanced"
+      },
+      {
+        "name": "acc1771520331003070e",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "All Measure"
+              }
+            },
+            "Property": "Average Review Score"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "794a9d9200269c9d9b43",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "marts dim_sellers"
+              }
+            },
+            "Property": "seller_id"
+          }
+        },
+        "type": "Categorical"
       }
     ]
   }

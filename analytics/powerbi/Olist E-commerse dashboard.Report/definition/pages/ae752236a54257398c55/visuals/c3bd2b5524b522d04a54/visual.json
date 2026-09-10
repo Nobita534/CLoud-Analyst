@@ -1,13 +1,12 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "5f1040f4a7044d29b042",
+  "name": "c3bd2b5524b522d04a54",
   "position": {
     "x": 0,
     "y": 112,
-    "z": 1,
+    "z": 1000,
     "height": 288,
-    "width": 400,
-    "tabOrder": 1
+    "width": 400
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,12 +22,11 @@
                       "Entity": "All Measure"
                     }
                   },
-                  "Property": "Top 1 State by Product Sales"
+                  "Property": "Seller State and Sales"
                 }
               },
-              "queryRef": "All Measure.Top 1 State by Product Sales",
-              "nativeQueryRef": "Top Customer State by Sales",
-              "displayName": "Top Customer State by Sales"
+              "queryRef": "All Measure.Top 1 State by Seller Sales",
+              "nativeQueryRef": "Seller State and Sales"
             },
             {
               "field": {
@@ -38,26 +36,32 @@
                       "Entity": "All Measure"
                     }
                   },
-                  "Property": "Average Category Review Score"
+                  "Property": "Average Review Score"
                 }
               },
-              "queryRef": "All Measure.Average Product Review Score",
-              "nativeQueryRef": "Average Category Review Score"
+              "queryRef": "All Measure.Average Review Score",
+              "nativeQueryRef": "Average Review Seller Score",
+              "displayName": "Average Review Seller Score"
             },
             {
               "field": {
-                "Measure": {
+                "Aggregation": {
                   "Expression": {
-                    "SourceRef": {
-                      "Entity": "All Measure"
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "marts seller_metrics"
+                        }
+                      },
+                      "Property": "total_orders"
                     }
                   },
-                  "Property": "Total Orders by Product"
+                  "Function": 0
                 }
               },
-              "queryRef": "All Measure.Total Orders by Product",
-              "nativeQueryRef": "Delivered Orders",
-              "displayName": "Delivered Orders",
+              "queryRef": "Sum(marts seller_metrics.total_orders)",
+              "nativeQueryRef": "Seller Orders",
+              "displayName": "Seller Orders",
               "format": "0.00"
             },
             {
@@ -67,18 +71,18 @@
                     "Column": {
                       "Expression": {
                         "SourceRef": {
-                          "Entity": "marts product_metrics"
+                          "Entity": "marts seller_metrics"
                         }
                       },
-                      "Property": "total_items_sold"
+                      "Property": "total_item_sold"
                     }
                   },
                   "Function": 0
                 }
               },
-              "queryRef": "Sum(marts product_metrics.total_items_sold)",
-              "nativeQueryRef": "Items Sold",
-              "displayName": "Items Sold"
+              "queryRef": "Sum(marts seller_metrics.total_item_sold)",
+              "nativeQueryRef": "Seller Items Sold",
+              "displayName": "Seller Items Sold"
             }
           ]
         }
@@ -93,7 +97,7 @@
                     "Entity": "All Measure"
                   }
                 },
-                "Property": "Top 1 State by Product Sales"
+                "Property": "Seller State and Sales"
               }
             },
             "direction": "Ascending"
@@ -212,70 +216,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "5f6fb423ece145c09259",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Average Category Review Score"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "83d62b9e0083d130b4e8",
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "marts product_metrics"
-                  }
-                },
-                "Property": "total_items_sold"
-              }
-            },
-            "Function": 0
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "0623d0f3634078c62e0c",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Top 1 State by Product Sales"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "54d822026066c3e3dec9",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "All Measure"
-              }
-            },
-            "Property": "Total Orders by Product"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

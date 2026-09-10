@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "673cb4651d20277b995b",
+  "name": "11681bba8eed7a00e72c",
   "position": {
-    "x": 50,
+    "x": 0,
     "y": 56,
-    "z": 2,
+    "z": 2000,
     "height": 56,
-    "width": 300,
-    "tabOrder": 2
+    "width": 400,
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "card",
@@ -23,11 +23,11 @@
                       "Entity": "All Measure"
                     }
                   },
-                  "Property": "Category Name"
+                  "Property": "Seller Name"
                 }
               },
               "queryRef": "All Measure.Category Name",
-              "nativeQueryRef": "Category Name"
+              "nativeQueryRef": "Seller Name"
             }
           ]
         }
@@ -53,7 +53,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "20D"
+                  "Value": "16D"
                 }
               }
             }
@@ -77,5 +77,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "65b1a52a56700340914d",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "All Measure"
+              }
+            },
+            "Property": "Seller Name"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

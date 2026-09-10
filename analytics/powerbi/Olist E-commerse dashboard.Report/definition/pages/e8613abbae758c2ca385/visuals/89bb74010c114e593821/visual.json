@@ -1,0 +1,62 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "89bb74010c114e593821",
+  "position": {
+    "x": 959.12030370467335,
+    "y": 258.17829558842777,
+    "z": 10002,
+    "height": 69.97355674826548,
+    "width": 182.1725356722084,
+    "tabOrder": 10001
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Gray: Review ≤2 "
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Green: Review >2 "
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Darker green: Higher score"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

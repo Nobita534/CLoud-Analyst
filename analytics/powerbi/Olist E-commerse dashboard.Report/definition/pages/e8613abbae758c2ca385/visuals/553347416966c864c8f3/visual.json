@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "All Measure.Active Seller",
-              "nativeQueryRef": "Active Seller"
+              "nativeQueryRef": "Active Sellers",
+              "displayName": "Active Sellers"
             }
           ]
         }

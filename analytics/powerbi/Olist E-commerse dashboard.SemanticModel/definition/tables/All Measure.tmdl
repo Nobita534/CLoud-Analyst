@@ -748,6 +748,30 @@ table 'All Measure'
 			    )
 		lineageTag: 8d018076-ca92-4ef6-94f0-d0df1b2b4aaa
 
+	measure 'Seller Name' =
+			
+			SELECTEDVALUE(
+			    'marts dim_sellers'
+			        [seller_id],
+			    "All / Multiple seller"
+			)
+		lineageTag: a95707f4-8a7a-419c-8ce5-9012a8b693ac
+
+	measure 'Seller Review Color' =
+			
+			VAR Score = [Average Review Score]
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        ISBLANK(Score), BLANK(),
+			        Score < 1.5, "#8B9391",
+			        Score <= 2, "#BDC5C2",
+			        Score <= 3, "#A8D5C5",
+			        Score <= 4, "#62A998",
+			        "#247568"
+			    )
+		lineageTag: 15062d65-69a1-4bf5-8c41-9585e3b74ea9
+
 	measure 'Category Name' =
 			
 			SELECTEDVALUE(
@@ -755,7 +779,29 @@ table 'All Measure'
 			        [product_category_name_english],
 			    "All / Multiple categories"
 			)
-		lineageTag: a95707f4-8a7a-419c-8ce5-9012a8b693ac
+		lineageTag: 7180edd8-fa1d-484e-a180-f1a60645b309
+
+	measure 'Seller State and Sales' =
+			
+			VAR SellerCount =
+			    DISTINCTCOUNT('marts seller_metrics'[seller_id])
+			VAR SellerState =
+			    SELECTEDVALUE('marts seller_metrics'[seller_state])
+			RETURN
+			    IF(
+			        SellerCount = 1,
+			        SellerState & " | "
+			            & FORMAT([Seller Sale], "R$ #,##0.00"),
+			        "--"
+			    )
+		lineageTag: 513d456d-aaab-46fd-bd77-9178c81bf545
+
+	measure 'Seller Sale' =
+			
+			SUM('marts seller_metrics'[total_sales])
+		lineageTag: d03ea221-2ba4-4294-a6d2-70e1f1b95d90
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	column Column
 		formatString: 0
