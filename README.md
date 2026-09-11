@@ -1,468 +1,225 @@
 # Cloud Analyst — Olist E-commerce Analytics Platform
 
-> An end-to-end data platform project that combines **Business Analytics, Cloud ETL, Analytics Engineering, and Business Intelligence** using the Olist Brazilian e-commerce dataset.
+> An e-commerce analytics platform combining Azure Data Factory, PostgreSQL, dbt Core, and Power BI to explore sales performance, customer behavior, and seller contribution.
 
 ## 1. Project Overview
 
-**Cloud Analyst** transforms raw Olist e-commerce data into an analytics-ready data warehouse and Power BI dashboard.
+**Cloud Analyst** transforms Olist Brazilian e-commerce transaction data into analytical data models and a Power BI dashboard, supporting business analysis across time, geography, customers, products, and sellers.
 
-The project is designed around a business-first workflow:
+The project focuses on:
 
-**Business Problem → Business Questions → Business Requirements → Data Requirements → Metrics → Data Platform → Analytics → Dashboard**
+- Monitoring revenue and purchasing activity over time.
+- Segmenting customers with RFM to evaluate customer behavior and value.
+- Analyzing customer value across geographic areas.
+- Identifying product categories with high sales contribution.
+- Evaluating seller contribution and customer review scores.
 
-The main analytical focus is **sales performance, customer behavior, customer segmentation, RFM analysis, and voucher usage**.
+The workflow follows a business-driven approach:
 
-### Business Questions
+**Business Problem → Business Questions → Business Requirements → Metric Dictionary → Data Requirements → Analytical Models → Dashboard**
 
-The project is designed to answer the following business questions:
+The source data includes orders, order items, payments, customers, products, sellers, and reviews. These sources are standardized and aggregated at appropriate levels of detail before being used in reporting.
 
-1. **BQ1 — Customer Segmentation**
-   Which customer segments should be prioritized for marketing and customer engagement based on purchasing behavior and business value?
+## 2. Business Questions
 
-2. **BQ2 — Customer Value by Geography**
-   Which customer segments generate the highest business value across different geographic areas?
+- **BQ1 — Customer Segmentation:** Which customer segments should be prioritized for marketing and customer engagement based on purchasing behavior and business value?
 
-3. **BQ3 — Product Performance by Geography**
-   Which product categories and products contribute the most to sales performance across different geographic areas?
+- **BQ2 — Customer Value by Geography:** Which customer segments generate the highest business value across different geographic areas?
 
-4. **BQ4 — Seller Performance**
-   Which sellers have the greatest impact on sales performance and customer satisfaction, and which sellers require performance improvement?
+- **BQ3 — Product Performance by Geography:** Which product categories and products contribute the most to sales performance across different geographic areas?
 
-5. **BQ5 — Sales Performance Over Time**
-   How does sales performance change across different time periods, and which periods contribute most to business revenue?
+- **BQ4 — Seller Performance:** Which sellers have the greatest impact on sales performance and customer satisfaction, and which sellers require performance improvement?
 
-6. **BQ6 — Payment Behavior**
-   Which payment methods are most commonly used by customers, and how do payment behaviors vary across different customer segments?
+- **BQ5 — Sales Performance Over Time:** How does sales performance change across different time periods, and which periods contribute most to business revenue?
 
-7. **BQ7 — Geographic Performance**
-   Which geographic areas have the highest sales activity and customer concentration?
+- **BQ7 — Geographic Performance:** Which geographic areas have the highest sales activity and customer concentration?
 
-8. **BQ8 — Customer Satisfaction**
-   How does customer satisfaction vary across product categories and sellers?
+- **BQ8 — Customer Satisfaction:** How does customer satisfaction vary across product categories and sellers?
 
-Detailed business documentation is available in [`documents/business-understanding`](documents/business-understanding/).
+Detailed analytical scope and requirements are available in [`documents/business-understanding`](documents/business-understanding/).
 
----
+## 3. Dashboard Overview
 
-## 2. Architecture
+The dashboard contains three pages, covering business performance at an overview level and more detailed analysis of customers, product categories, and sellers.
 
-Cloud Analyst uses a hybrid **ETL + ELT** architecture.
+### 3.1. Executive Overview
 
-Azure Data Factory is responsible for cloud data ingestion and pipeline orchestration, while PostgreSQL and dbt Core provide the analytical transformation and data modeling layer.
+**Purpose:** Monitor the scale of business activity, changes over time, and the contribution of geographic areas.
 
-```text
-Business Problem → Questions → Requirements → Metrics
-                              │
-                              ▼
-Source Dataset → Azure Data Factory → ADLS Gen2 / PostgreSQL Landing
-                                             │
-                                             ▼
-                                          dbt Core
-                                             │
-                              ┌──────────────┼──────────────┐
-                              ▼              ▼              ▼
-                           Staging      Intermediate      Marts
-                              │              │              │
-                              └──────────────┴──────────────┘
-                                             │
-                                             ▼
-                                   Analytics Data Warehouse
-                                             │
-                                             ▼
-                                   Power BI Semantic Model
-                                             │
-                                             ▼
-                                   Dashboard & Analysis
+The page summarizes revenue, orders, and customers, combining time trends with a ranking of customer states by revenue.
+
+The analysis covers:
+
+- Revenue and order trends by year, quarter, and month.
+- Changes in revenue and orders compared with the same period in the previous year.
+- Customer states with the highest revenue contribution.
+- Order value and repeat purchasing within the selected scope.
+
+YoY figures should be interpreted by checking the date ranges of both periods. For example, revenue from January through September 2018 should be compared with January through September 2017, rather than the whole of 2017. The dataset does not cover every year in full, so comparability depends on the selected period.
+
+**Business questions supported:** BQ5, BQ7.
+
+### 3.2. Customer Analytics
+
+**Purpose:** Evaluate purchasing behavior, value, and geographic distribution across customer segments.
+
+The page uses a **30 August 2018 snapshot** with a **rolling 12-month analysis window**.
+
+| KPI | Meaning |
+|---|---|
+| **VIP Customers** | Number of customers in the VIP segment at the snapshot |
+| **VIP Monetary** | Total monetary value of VIP customers within the analysis window |
+| **Avg Monetary** | Average monetary value per customer |
+| **Avg Frequency** | Average number of orders per customer |
+| **Avg Recency** | Average number of days between the latest purchase and the snapshot date |
+
+The analysis covers:
+
+- Comparing total monetary value across customer segments.
+- Evaluating each segment through customer count, monetary share, average spending, purchasing frequency, and recency.
+- Identifying the **10 states with the highest total customer monetary value** and examining each segment's contribution within those states.
+- Exploring customer characteristics by state and segment, including customer count, average spending, average orders, and latest purchase date.
+
+Customer value is attributed to the selected location at the snapshot; it is not an allocation of revenue to the location of each historical transaction.
+
+**Business questions supported:** BQ1, BQ2.
+
+### 3.3. Seller & Product Analytics
+
+**Purpose:** Evaluate sales contribution from product categories and sellers, alongside review scores, to identify areas for further investigation.
+
+| KPI | Meaning |
+|---|---|
+| **Sales** | Total item sales value from delivered orders within the analytical scope |
+| **Items Sold** | Total number of items sold through delivered orders |
+| **Active Sellers** | Number of sellers with delivered orders in the selected period |
+| **Average Review Score** | Average review score weighted by the number of reviewed orders |
+| **Low-rated Seller Rate** | Proportion of reviewed sellers whose average review score is at most 2 |
+
+The analysis covers:
+
+- Ranking the **10 product categories with the highest sales**.
+- Examining each category's leading customer state by sales, average review score, delivered order count, and items sold.
+- Comparing sales and review scores across sellers, with delivered order count representing the scale of seller activity.
+- Identifying sellers with average review scores of at most 2 and examining their sales contribution.
+- Exploring individual sellers through their identifier, state, sales, review score, order count, and items sold.
+
+Review scores reflect the order experience associated with products or sellers; they do not directly establish the cause of customer satisfaction or dissatisfaction.
+
+**Business questions supported:** BQ3, BQ4, BQ8.
+
+The report project and semantic model are available in [`analytics/powerbi`](analytics/powerbi/).
+
+## 4. Architecture & Technology Stack
+
+The project separates responsibilities for ingestion, storage, data transformation, and analysis.
+
+```mermaid
+flowchart TD
+    A["Olist source data"] --> B["Azure Data Factory"]
+    B --> C["ADLS Gen2"]
+    C --> D["Data loading with ADF"]
+    D --> E["PostgreSQL — source data"]
+    E --> F["dbt Core — standardization and modeling"]
+    F --> G["PostgreSQL — analytical data"]
+    G --> H["Power BI — semantic model and dashboard"]
 ```
 
-### ETL Workflow
+| Technology | Role in the project |
+|---|---|
+| **Azure Data Factory** | Ingest data and orchestrate loading workflows |
+| **Azure Data Lake Storage Gen2** | Store data files in the cloud |
+| **PostgreSQL** | Store source data and analytical tables |
+| **dbt Core** | Standardize and transform data, organize business logic, and run data tests |
+| **Power BI** | Build the semantic model, calculate context-dependent measures, and visualize data |
+| **Python / Pandas** | Profile data quality and perform exploratory analysis |
+| **Git / GitHub** | Version source code, documentation, and report definitions |
 
-**Source → Azure Data Factory → ADLS Gen2 / PostgreSQL Landing**
+dbt models execute in PostgreSQL. Power BI consumes analytical data from the warehouse to produce business reports.
 
-Azure Data Factory is used to simulate a cloud-based ingestion and orchestration workflow.
+## 5. Role of dbt in the Project
 
-ADF is responsible for:
+Olist data is distributed across multiple tables with different levels of detail. An order can contain multiple items, have multiple payment records, or involve multiple sellers. Incorrect joins and aggregations can therefore duplicate metric values.
 
-* source connections;
-* dataset configuration;
-* pipeline orchestration;
-* schema handling;
-* column mapping;
-* data loading;
-* scheduled execution.
+**dbt organizes SQL transformations into a system of reusable, testable models with explicit dependencies.**
 
-The cloud ETL layer is intended to demonstrate how ingestion can be separated from downstream analytical transformation.
+### 5.1. Standardizing Source Data
 
-See [`pipelines/README.md`](pipelines/README.md) for pipeline documentation.
+The **staging** layer standardizes column names and data types and handles source-data cases according to defined rules, providing consistent inputs for downstream models.
 
-### ELT Workflow
+### 5.2. Centralizing and Reusing Business Logic
 
-**PostgreSQL Landing → dbt Core → Analytics Data Warehouse → Power BI**
+The **intermediate** layer organizes shared transformations, including:
 
-Once data is available in PostgreSQL, dbt Core handles analytical transformation and business modeling.
+- Linking orders to customer identities.
+- Aggregating payments at the order level.
+- Preparing data for RFM calculations.
+- Processing data before aggregation into product and seller metrics.
 
-The dbt project separates transformations into structured layers:
+This structure reduces duplication of the same logic across tables and reports.
 
-* **Staging** — source-level standardization and preparation.
-* **Intermediate** — reusable transformations and business logic.
-* **Marts** — analytics-ready models designed around business requirements.
+### 5.3. Building Analytical Datasets
 
-The dbt project is located at [`dbt/cloud_analyst`](dbt/cloud_analyst/).
+The **marts** layer provides facts, dimensions, and metric tables for Power BI.
 
----
+Its main outputs support:
 
-## 3. Technology Stack
+- Revenue at the order level.
+- RFM at the customer and snapshot level.
+- Product sales by date and customer state.
+- Seller performance by date.
+- Unique customer identity and customer location at each snapshot.
 
-| Layer                 | Technology                         | Purpose                                                               |
-| --------------------- | ---------------------------------- | --------------------------------------------------------------------- |
-| Data Source           | Olist Brazilian E-commerce Dataset | Raw transactional data                                                |
-| Cloud ETL             | Azure Data Factory                 | Data ingestion, orchestration, and scheduling                         |
-| Cloud Storage         | Azure Data Lake Storage Gen2       | Raw / landing data storage                                            |
-| Data Warehouse        | PostgreSQL                         | Landing and analytical data storage                                   |
-| Analytics Engineering | dbt Core                           | Data transformation, business logic, testing, and analytical modeling |
-| BI                    | Power BI                           | Semantic modeling, metrics, analysis, and visualization               |
-| Modeling              | Snowflake Schema                   | Analytical data model                                                 |
+Each model specifies what one row represents, helping determine the appropriate aggregation method for analysis.
 
----
+### 5.4. Managing Dependencies and Testing
 
-## 4. Business Understanding
+dbt declares model dependencies through `ref()`, supporting execution in dependency order and data tests alongside the models.
 
-The project starts from business requirements rather than directly from the dataset.
+Within the project:
 
-The business documentation is organized into:
+- **dbt** handles standardization and shared transformation logic.
+- **DAX** handles filter-context calculations, time comparisons, and aggregations that require report-level processing.
 
-* [Business Problem](documents/business-understanding/Business_problem.md)
-* [Business Questions](documents/business-understanding/Business_question.md)
-* [Business Requirements](documents/business-understanding/Business_requirement.md)
-* [Data Requirements](documents/business-understanding/Data_requirement.md)
-* [Metric Dictionary](documents/business-understanding/Metric_dictionary.md)
-* [Metric Mapping to Business Questions](documents/business-understanding/Metric_mapping_Business_Question.md)
+Source code is available in [`dbt/cloud_analyst`](dbt/cloud_analyst/).
 
-This documentation defines the analytical scope before data modeling and dashboard development.
+## 6. Data Quality & Validation
 
----
+Data is checked at both the model and reporting layers.
 
-## 5. Data Modeling
+| Validation area | Purpose |
+|---|---|
+| **Required fields** | Check that keys and required attributes are not missing |
+| **Uniqueness** | Validate individual or composite keys against the table's grain |
+| **References between tables** | Check that referenced keys exist in the related model |
+| **Valid value domains** | Validate segment labels, review scores, and bounded values |
+| **Business consistency** | Check relationships between metrics, such as reviewed orders not exceeding total orders |
+| **Report reconciliation** | Compare selected Power BI metrics with SQL aggregates |
 
-The analytical warehouse follows a **Snowflake Schema** designed around the project's business requirements.
+Validation combines automated tests with checks of filter context and aggregation behavior. Passing tests confirms the conditions tested; it does not replace the assessment of business definitions.
 
-The model covers transactional facts and supporting dimensions for:
-
-* orders;
-* order items;
-* payments;
-* customers;
-* sellers;
-* products;
-* dates;
-* RFM analysis.
-
-Model documentation:
-
-* [`Snowflake Schema – E-commerce Data Warehouse.dbml`](documents/modeling/Snowflake%20Schema%20%E2%80%93%20E-commerce%20Data%20Warehouse.dbml)
-* [`Snowflake Schema – E-commerce Data Warehouse.png`](documents/modeling/Snowflake%20Schema%20%E2%80%93%20E-commerce%20Data%20Warehouse.png)
-
-The model supports:
-
-* sales analysis;
-* customer analysis;
-* product and seller analysis;
-* time-based analysis;
-* geographic analysis;
-* RFM segmentation;
-* Power BI reporting.
-
----
-
-## 6. Analytics Engineering with dbt
-
-The dbt project follows a modular transformation structure:
+## 7. Repository Structure
 
 ```text
-dbt/cloud_analyst/
-├── models/
-│   ├── staging/
-│   ├── intermediate/
-│   └── marts/
-├── analyses/
-├── macros/
-├── seeds/
-├── snapshots/
-├── tests/
-├── dbt_project.yml
-└── packages.yml
-```
-
-This structure separates source preparation from reusable business logic and final analytical models.
-
-### Staging Layer
-
-The staging layer prepares source data for downstream transformations.
-
-Typical responsibilities include:
-
-* column renaming;
-* data type standardization;
-* source-level cleaning;
-* basic data validation.
-
-### Intermediate Layer
-
-The intermediate layer contains reusable transformation logic that combines or enriches staging models before analytical datasets are created.
-
-### Marts Layer
-
-The marts layer contains analytics-ready models designed to support business questions, metrics, and downstream Power BI reporting.
-
-The dbt layer is intended to make business transformations:
-
-* modular;
-* reusable;
-* testable;
-* maintainable;
-* traceable;
-* easier to connect to downstream analytics.
-
----
-
-## 7. Data Profiling & Exploratory Analysis
-
-Before analytical modeling, the source data is examined through data profiling and exploratory data analysis.
-
-The repository contains:
-
-### Data Profiling
-
-[`Data_Profiling.ipynb`](Notebook/analysis/Data_Profiling.ipynb)
-
-Used to assess:
-
-* dataset structure;
-* data types;
-* missing values;
-* duplicate records;
-* key relationships;
-* basic data quality issues.
-
-### Exploratory Data Analysis
-
-[`EDA.ipynb`](Notebook/analysis/EDA.ipynb)
-
-Used to explore:
-
-* customer behavior;
-* sales patterns;
-* product performance;
-* geographic distributions;
-* payment behavior;
-* relationships relevant to the project's business questions.
-
-These notebooks support understanding the source data before implementing analytical transformations in dbt.
-
----
-
-## 8. Power BI Analytics
-
-The Power BI project is stored in [`analytics/powerbi`](analytics/powerbi/).
-
-It contains:
-
-* Power BI report definition;
-* semantic model;
-* `.pbip` project file.
-
-The Power BI layer consumes analytics-ready data from the data warehouse rather than directly transforming the raw source dataset.
-
-The dashboard is organized around the project's business questions and metrics, with emphasis on:
-
-* Executive KPIs;
-* Sales Analytics;
-* Customer Analytics;
-* Customer Segmentation;
-* RFM Analysis.
-
-This separation allows transformation logic to remain primarily in the analytical data layer while Power BI focuses on semantic modeling, metrics, visualization, and business analysis.
-
----
-
-## 9. Repository Structure
-
-```text
-Cloud-Analyst/
-│
-├── Data/                         # Source datasets
-│
+CLoud-Analyst/
+├── Data/                         # Source data
 ├── Notebook/
 │   └── analysis/                 # Data profiling and exploratory analysis
-│
-├── pipelines/
-│   ├── adf_pipelines/            # Azure Data Factory configuration
-│   └── README.md                 # ETL pipeline documentation
-│
+├── pipelines/                    # Pipeline configuration and documentation
 ├── dbt/
-│   └── cloud_analyst/            # Analytics Engineering project
+│   └── cloud_analyst/
 │       ├── models/
-│       │   ├── staging/
-│       │   ├── intermediate/
-│       │   └── marts/
-│       ├── analyses/
-│       ├── macros/
-│       └── tests/
-│
+│       │   ├── staging/          # Source data standardization
+│       │   ├── intermediate/     # Shared transformation logic
+│       │   └── marts/            # Facts, dimensions, and metrics
+│       ├── macros/               # Shared SQL/Jinja macros
+│       ├── tests/                # Additional data tests
+│       ├── dbt_project.yml       # dbt project configuration
+│       └── packages.yml          # Package declarations
 ├── analytics/
 │   └── powerbi/                  # Power BI report and semantic model
-│
 ├── documents/
-│   ├── business-understanding/   # Business and metric documentation
-│   ├── modeling/                 # Data model documentation
-│   └── release.md                # Version 2.0 release documentation
-│
-└── README.md
+│   ├── business-understanding/   # Business problem, requirements, and metrics
+│   └── modeling/                 # Data model documentation
+└── README.md                     # Project overview
 ```
-
----
-
-## 10. Project Workflow
-
-The recommended way to understand the project is to follow the dependency between business, data, and analytics layers:
-
-1. **Understand the business problem**
-   Start with [`Business_problem.md`](documents/business-understanding/Business_problem.md).
-
-2. **Review business questions and requirements**
-   Understand what analytical decisions the platform is expected to support.
-
-3. **Review metrics**
-   Examine definitions and calculation logic in the [Metric Dictionary](documents/business-understanding/Metric_dictionary.md).
-
-4. **Profile and explore the source data**
-   Review the data profiling and EDA notebooks under [`Notebook/analysis`](Notebook/analysis/).
-
-5. **Review the data model**
-   Open the [Snowflake Schema](documents/modeling/Snowflake%20Schema%20%E2%80%93%20E-commerce%20Data%20Warehouse.dbml).
-
-6. **Review cloud ingestion and orchestration**
-   Inspect [`pipelines/adf_pipelines`](pipelines/adf_pipelines).
-
-7. **Review analytical transformation**
-   Inspect [`dbt/cloud_analyst/models`](dbt/cloud_analyst/models).
-
-8. **Review the BI layer**
-   Open [`analytics/powerbi`](analytics/powerbi/).
-
-This workflow makes it easier to understand not only *how* data is processed, but also *why* each data model, transformation, metric, and dashboard component exists.
-
----
-
-## 11. Running the Project
-
-The repository contains cloud-specific configuration, so complete reproduction requires access to the corresponding Azure, PostgreSQL, and Power BI environments.
-
-At a high level:
-
-### Step 1 — Prepare the Source Data
-
-Place or access the Olist source dataset according to the project's configured data locations.
-
-### Step 2 — Run the ETL Pipeline
-
-Use the Azure Data Factory configuration under [`pipelines/adf_pipelines`](pipelines/adf_pipelines) to ingest source data into ADLS Gen2 and/or the PostgreSQL landing layer.
-
-The ETL pipeline handles source ingestion and orchestration before analytical transformation begins.
-
-### Step 3 — Configure PostgreSQL
-
-Prepare the PostgreSQL environment used for landing and analytical storage.
-
-Environment-specific credentials and connection information should be configured locally and are not committed to the repository.
-
-### Step 4 — Run dbt Transformations
-
-From [`dbt/cloud_analyst`](dbt/cloud_analyst/), configure the target profile and execute the dbt project.
-
-Typical commands are:
-
-```bash
-dbt deps
-dbt build
-```
-
-`dbt build` executes the project's analytical models and associated data tests.
-
-### Step 5 — Refresh Power BI
-
-Open the Power BI project under [`analytics/powerbi`](analytics/powerbi/), verify the semantic model connection, and refresh the report.
-
-> **Note:** Environment-specific credentials, connection strings, and cloud resources are intentionally not included in the repository.
-
----
-
-## 12. Version 2.0
-
-Version 2.0 evolves the project from a cloud ETL exercise into a broader **business-driven analytics platform** combining:
-
-* Business Understanding;
-* Cloud ETL;
-* Analytics Engineering;
-* Data Warehouse Modeling;
-* Business Intelligence.
-
-The architecture was simplified to keep each technology focused on a clear responsibility:
-
-```text
-Azure Data Factory
-        ↓
-Ingestion & Orchestration
-
-PostgreSQL
-        ↓
-Data Storage
-
-dbt Core
-        ↓
-Analytical Transformation
-
-Power BI
-        ↓
-Business Analytics
-```
-
-Key improvements include:
-
-* standardized business documentation;
-* Azure Data Factory ingestion and orchestration;
-* PostgreSQL landing and analytical storage;
-* modular dbt staging, intermediate, and mart layers;
-* centralized analytical transformation logic;
-* business-oriented metrics and analytical models;
-* refactored Power BI dashboard;
-* simplified data architecture;
-* portfolio-oriented project documentation.
-
-See [`documents/release.md`](documents/release.md) for the complete Version 2.0 release note.
-
----
-
-## 13. Project Outcome
-
-Cloud Analyst demonstrates an end-to-end workflow in which **business requirements drive data ingestion, data modeling, transformation, analytical metrics, and dashboard design**.
-
-The project demonstrates practical understanding of:
-
-* **Data Analytics** — business questions, metrics, data profiling, EDA, and customer analysis;
-* **Data Engineering** — cloud ingestion, pipeline orchestration, scheduling, and data storage;
-* **Analytics Engineering** — modular dbt transformations, testing, and analytical marts;
-* **Business Intelligence** — semantic modeling, KPI design, Power BI reporting, and business analysis.
-
-The project intentionally separates the responsibilities of each layer:
-
-```text
-ADF           → Ingestion & Orchestration
-PostgreSQL    → Data Storage
-dbt           → Transformation & Analytical Modeling
-Power BI      → Analytics & Visualization
-```
-
-The dataset itself does not require large-scale distributed processing. Instead, the cloud ingestion layer is used to demonstrate how a scheduled and orchestrated ETL workflow can be designed separately from the analytical transformation layer.
-
-The main lesson from the project is that a useful analytics platform is not defined by the number of technologies it uses. Each technology should have a clear responsibility, while the business definition, data model, transformation logic, metrics, and analytical output remain connected throughout the workflow.
