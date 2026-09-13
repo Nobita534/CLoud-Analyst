@@ -110,3 +110,11 @@ relationship fcea991b-bccd-39b1-94fb-9526bd1e00f0
 	fromColumn: 'marts seller_metrics'.seller_id
 	toColumn: 'marts dim_sellers'.seller_id
 
+relationship 6c337e85-4273-4cc9-a681-f8ac329bf143
+	fromColumn: 'marts seller_metrics'.order_purchase_date_key
+	toColumn: 'marts dim_date'.date_key
+
+relationship 9b248d60-5f24-473a-bda1-14bf352e0f79
+	fromColumn: 'marts product_metrics'.order_purchase_date_key
+	toColumn: 'marts dim_date'.date_key
+
