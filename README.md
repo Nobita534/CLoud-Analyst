@@ -114,16 +114,9 @@ The report project and semantic model are available in [`analytics/powerbi`](ana
 
 The project separates responsibilities for ingestion, storage, data transformation, and analysis.
 
-```mermaid
-flowchart TD
-    A["Olist source data"] --> B["Azure Data Factory"]
-    B --> C["ADLS Gen2"]
-    C --> D["Data loading with ADF"]
-    D --> E["PostgreSQL — source data"]
-    E --> F["dbt Core — standardization and modeling"]
-    F --> G["PostgreSQL — analytical data"]
-    G --> H["Power BI — semantic model and dashboard"]
-```
+![Olist data flow from source data through Azure Data Factory, ADLS Gen2, PostgreSQL and dbt to Power BI](documents/modeling/architecture.svg)
+
+[Editable Mermaid source](documents/modeling/architecture.mmd)
 
 | Technology | Role in the project |
 |---|---|

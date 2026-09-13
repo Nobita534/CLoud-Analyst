@@ -1,0 +1,8 @@
+flowchart TD
+    A["Olist source data"] --> B["Azure Data Factory"]
+    B --> C["ADLS Gen2"]
+    C --> D["Data loading with ADF"]
+    D --> E["PostgreSQL — source data"]
+    E --> F["dbt Core — standardization and modeling"]
+    F --> G["PostgreSQL — analytical data"]
+    G --> H["Power BI — semantic model and dashboard"]
