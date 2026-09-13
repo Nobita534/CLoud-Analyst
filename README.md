@@ -108,7 +108,7 @@ Review scores reflect the order experience associated with products or sellers; 
 
 **Business questions supported:** BQ3, BQ4, BQ8.
 
-The report project and semantic model are available in [`analytics/powerbi`](analytics/powerbi/).
+The report project and semantic model are available in [`analytics`](analytics/).
 
 ## 4. Architecture & Technology Stack
 
